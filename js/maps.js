@@ -1,6 +1,19 @@
 
-function draw_area_map (elementId) {
-	var mymap = L.map(elementId).setView([51.45921, -2.58229], 17);
+function draw_area_map (elementId, areaId) {
+	var latLong,
+		zoomLevel = 17;
+
+	// TODO: Move area co-ordinates into CSV lookup file
+	if (areaId === "cabot") {
+		latLong = [51.45921, -2.58229];
+		zoomLevel = 17;
+	} else if (areaId === "mary-le-port") {
+		latLong = [51.45482, -2.5909];
+		zoomLevel = 18;
+	} else {
+		latLong = [51.45921, -2.58229];
+	}
+	var mymap = L.map(elementId).setView(latLong, zoomLevel);
 
 	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw', {
 		maxZoom: 18,
