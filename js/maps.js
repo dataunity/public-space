@@ -40,6 +40,28 @@ function draw_area_map (elementId, areaId) {
 
 	mymap.on('click', onMapClick);
 
+	// 1910 Valuation Survey building points
+	var valuationBuildingPoints = new L.geoJson();
+	valuationBuildingPoints.addTo(mymap);
+
+	var valuationBuildingPointsPopupTemplate = "{HouseNum} {StreetName}<br>Assessment Number: {AssessNum}";
+	valuationBuildingPoints.bindPopup(function(e){
+		return L.Util.template(valuationBuildingPointsPopupTemplate, e.feature.properties)
+	});
+
+	$.get("../csv/37271-6a.csv")
+		.done(function (valuationsData) {
+			// TODO: extend GeoJSON with properties from CSV file
+			console.log(d3.csvParse(valuationsData));
+			$.getJSON("../geojson/Valuations_1910_Building.geojson").
+				done(function (data) {
+					valuationBuildingPoints.addData(data);
+				});
+		});
+	
+
+
+
 	return mymap;
 }
 
