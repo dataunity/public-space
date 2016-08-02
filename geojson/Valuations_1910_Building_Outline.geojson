@@ -1,0 +1,77 @@
+{
+"type": "FeatureCollection",
+"features": [
+{ "type": "Feature", "properties": { "id": 1, "AssessNum": 0, "HouseNum": 0, "Street": "", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.592478, 51.454636 ], [ -2.592343, 51.454700 ], [ -2.592281, 51.454626 ], [ -2.592387, 51.454587 ], [ -2.592418, 51.454586 ], [ -2.592478, 51.454636 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 2, "AssessNum": 0, "HouseNum": 0, "Street": "", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.592343, 51.454700 ], [ -2.592286, 51.454724 ], [ -2.592227, 51.454647 ], [ -2.592281, 51.454626 ], [ -2.592343, 51.454700 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 3, "AssessNum": 0, "HouseNum": 0, "Street": "", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.592286, 51.454724 ], [ -2.592280, 51.454738 ], [ -2.592180, 51.454775 ], [ -2.592093, 51.454695 ], [ -2.592227, 51.454647 ], [ -2.592286, 51.454724 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 4, "AssessNum": 0, "HouseNum": 0, "Street": "", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.592093, 51.454695 ], [ -2.592180, 51.454775 ], [ -2.592222, 51.454815 ], [ -2.592314, 51.454769 ], [ -2.592348, 51.454801 ], [ -2.592334, 51.454808 ], [ -2.592377, 51.454852 ], [ -2.592227, 51.454918 ], [ -2.592177, 51.454867 ], [ -2.592150, 51.454878 ], [ -2.591998, 51.454731 ], [ -2.592093, 51.454695 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 5, "AssessNum": 0, "HouseNum": 0, "Street": "", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.592150, 51.454878 ], [ -2.592121, 51.454891 ], [ -2.592176, 51.454942 ], [ -2.592113, 51.454968 ], [ -2.591887, 51.454767 ], [ -2.591939, 51.454745 ], [ -2.591945, 51.454750 ], [ -2.591998, 51.454731 ], [ -2.592150, 51.454878 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 6, "AssessNum": 0, "HouseNum": 0, "Street": "", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.592113, 51.454968 ], [ -2.592176, 51.454942 ], [ -2.592348, 51.455072 ], [ -2.592404, 51.455124 ], [ -2.592085, 51.455242 ], [ -2.591844, 51.455003 ], [ -2.591874, 51.454989 ], [ -2.591739, 51.454838 ], [ -2.591732, 51.454830 ], [ -2.591768, 51.454811 ], [ -2.591793, 51.454811 ], [ -2.591809, 51.454806 ], [ -2.591802, 51.454797 ], [ -2.591864, 51.454772 ], [ -2.591887, 51.454767 ], [ -2.592113, 51.454968 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 7, "AssessNum": 0, "HouseNum": 0, "Street": "", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.592085, 51.455242 ], [ -2.591710, 51.455367 ], [ -2.591533, 51.455169 ], [ -2.591452, 51.455196 ], [ -2.591282, 51.455011 ], [ -2.591290, 51.455000 ], [ -2.591739, 51.454838 ], [ -2.591874, 51.454989 ], [ -2.591844, 51.455003 ], [ -2.592085, 51.455242 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 8, "AssessNum": 0, "HouseNum": 0, "Street": "", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.591299, 51.455118 ], [ -2.591225, 51.455144 ], [ -2.591136, 51.455052 ], [ -2.591202, 51.455031 ], [ -2.591225, 51.455039 ], [ -2.591299, 51.455118 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 9, "AssessNum": 0, "HouseNum": 0, "Street": "", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.591225, 51.455144 ], [ -2.591234, 51.455154 ], [ -2.591217, 51.455160 ], [ -2.591224, 51.455168 ], [ -2.591168, 51.455187 ], [ -2.591064, 51.455076 ], [ -2.591136, 51.455052 ], [ -2.591225, 51.455144 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 10, "AssessNum": 0, "HouseNum": 0, "Street": "", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.591168, 51.455187 ], [ -2.591171, 51.455192 ], [ -2.591096, 51.455219 ], [ -2.590986, 51.455104 ], [ -2.591064, 51.455076 ], [ -2.591168, 51.455187 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 173, "AssessNum": 173, "HouseNum": 19, "Street": "Mary le Port Street", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.591096, 51.455219 ], [ -2.591155, 51.455286 ], [ -2.591095, 51.455305 ], [ -2.591077, 51.455287 ], [ -2.591044, 51.455249 ], [ -2.591034, 51.455250 ], [ -2.591011, 51.455223 ], [ -2.591018, 51.455220 ], [ -2.590926, 51.455123 ], [ -2.590986, 51.455104 ], [ -2.591096, 51.455219 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 172, "AssessNum": 172, "HouseNum": 20, "Street": "Mary le Port Street", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.591018, 51.455220 ], [ -2.591011, 51.455223 ], [ -2.590955, 51.455241 ], [ -2.590867, 51.455146 ], [ -2.590887, 51.455139 ], [ -2.590887, 51.455135 ], [ -2.590926, 51.455123 ], [ -2.591018, 51.455220 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 11, "AssessNum": 0, "HouseNum": 0, "Street": "", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.590955, 51.455241 ], [ -2.590999, 51.455292 ], [ -2.590932, 51.455313 ], [ -2.590797, 51.455169 ], [ -2.590802, 51.455167 ], [ -2.590809, 51.455159 ], [ -2.590827, 51.455159 ], [ -2.590844, 51.455155 ], [ -2.590852, 51.455146 ], [ -2.590867, 51.455146 ], [ -2.590955, 51.455241 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 171, "AssessNum": 171, "HouseNum": 22, "Street": "Mary le Port Street", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.590932, 51.455313 ], [ -2.590857, 51.455335 ], [ -2.590843, 51.455337 ], [ -2.590806, 51.455291 ], [ -2.590771, 51.455249 ], [ -2.590718, 51.455189 ], [ -2.590797, 51.455169 ], [ -2.590932, 51.455313 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 170, "AssessNum": 170, "HouseNum": 23, "Street": "Mary le Port Street", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.590771, 51.455249 ], [ -2.590698, 51.455265 ], [ -2.590648, 51.455207 ], [ -2.590718, 51.455189 ], [ -2.590771, 51.455249 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 169, "AssessNum": 169, "HouseNum": 24, "Street": "Mary le Port Street", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.590698, 51.455265 ], [ -2.590636, 51.455280 ], [ -2.590491, 51.455316 ], [ -2.590450, 51.455258 ], [ -2.590445, 51.455253 ], [ -2.590445, 51.455247 ], [ -2.590457, 51.455246 ], [ -2.590460, 51.455249 ], [ -2.590540, 51.455230 ], [ -2.590543, 51.455225 ], [ -2.590553, 51.455225 ], [ -2.590557, 51.455227 ], [ -2.590594, 51.455219 ], [ -2.590648, 51.455207 ], [ -2.590698, 51.455265 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 1361, "AssessNum": 136, "HouseNum": 0, "Street": "", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.590543, 51.455165 ], [ -2.590408, 51.455199 ], [ -2.590386, 51.455190 ], [ -2.590359, 51.455143 ], [ -2.590505, 51.455106 ], [ -2.590543, 51.455165 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 1362, "AssessNum": 136, "HouseNum": 0, "Street": "", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.590359, 51.455143 ], [ -2.590333, 51.455102 ], [ -2.590478, 51.455067 ], [ -2.590505, 51.455106 ], [ -2.590359, 51.455143 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 136, "AssessNum": 136, "HouseNum": 0, "Street": "", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.590333, 51.455102 ], [ -2.590304, 51.455051 ], [ -2.590293, 51.455021 ], [ -2.590510, 51.454961 ], [ -2.590537, 51.454992 ], [ -2.590548, 51.455008 ], [ -2.590500, 51.455024 ], [ -2.590514, 51.455041 ], [ -2.590560, 51.455027 ], [ -2.590651, 51.455142 ], [ -2.590543, 51.455165 ], [ -2.590478, 51.455067 ], [ -2.590333, 51.455102 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 167, "AssessNum": 167, "HouseNum": 28, "Street": "Mary le Port Street", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.590651, 51.455142 ], [ -2.590560, 51.455027 ], [ -2.590621, 51.455010 ], [ -2.590710, 51.455127 ], [ -2.590651, 51.455142 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 166, "AssessNum": 166, "HouseNum": 29, "Street": "Mary le Port Street", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.590621, 51.455010 ], [ -2.590680, 51.454993 ], [ -2.590772, 51.455111 ], [ -2.590710, 51.455127 ], [ -2.590621, 51.455010 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 165, "AssessNum": 165, "HouseNum": 30, "Street": "Mary le Port Street", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.590680, 51.454993 ], [ -2.590742, 51.454974 ], [ -2.590835, 51.455088 ], [ -2.590772, 51.455111 ], [ -2.590680, 51.454993 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 164, "AssessNum": 164, "HouseNum": 31, "Street": "Mary le Port Street", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.590742, 51.454974 ], [ -2.590711, 51.454931 ], [ -2.590719, 51.454923 ], [ -2.590773, 51.454906 ], [ -2.590812, 51.454952 ], [ -2.590905, 51.455064 ], [ -2.590835, 51.455088 ], [ -2.590742, 51.454974 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 163, "AssessNum": 163, "HouseNum": 32, "Street": "Mary le Port Street", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.590812, 51.454952 ], [ -2.590882, 51.454931 ], [ -2.590971, 51.455044 ], [ -2.590905, 51.455064 ], [ -2.590812, 51.454952 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 1621, "AssessNum": 162, "HouseNum": 33, "Street": "", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.590882, 51.454931 ], [ -2.590732, 51.454745 ], [ -2.590862, 51.454672 ], [ -2.591152, 51.454984 ], [ -2.591069, 51.455015 ], [ -2.590971, 51.455044 ], [ -2.590882, 51.454931 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 162, "AssessNum": 162, "HouseNum": 34, "Street": "Mary le Port Street", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.590862, 51.454672 ], [ -2.590939, 51.454629 ], [ -2.591262, 51.454938 ], [ -2.591152, 51.454984 ], [ -2.590862, 51.454672 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 161, "AssessNum": 161, "HouseNum": 36, "Street": "", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.590939, 51.454629 ], [ -2.591030, 51.454579 ], [ -2.591199, 51.454679 ], [ -2.591246, 51.454661 ], [ -2.591429, 51.454867 ], [ -2.591262, 51.454938 ], [ -2.590939, 51.454629 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 160, "AssessNum": 160, "HouseNum": 38, "Street": "Mary le Port Street", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.591453, 51.454866 ], [ -2.591448, 51.454861 ], [ -2.591442, 51.454861 ], [ -2.591414, 51.454828 ], [ -2.591553, 51.454791 ], [ -2.591576, 51.454822 ], [ -2.591453, 51.454866 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 159, "AssessNum": 159, "HouseNum": 40, "Street": "Mary le Port Street", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.591553, 51.454791 ], [ -2.591630, 51.454770 ], [ -2.591651, 51.454797 ], [ -2.591576, 51.454822 ], [ -2.591553, 51.454791 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 158, "AssessNum": 158, "HouseNum": 41, "Street": "Mary le Port Street", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.591695, 51.454782 ], [ -2.591676, 51.454759 ], [ -2.591790, 51.454726 ], [ -2.591805, 51.454747 ], [ -2.591695, 51.454782 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 157, "AssessNum": 157, "HouseNum": 42, "Street": "Mary le Port Street", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.591790, 51.454726 ], [ -2.591771, 51.454697 ], [ -2.591833, 51.454678 ], [ -2.591846, 51.454681 ], [ -2.591851, 51.454678 ], [ -2.591850, 51.454673 ], [ -2.591865, 51.454692 ], [ -2.591872, 51.454689 ], [ -2.591876, 51.454691 ], [ -2.591898, 51.454717 ], [ -2.591805, 51.454747 ], [ -2.591790, 51.454726 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 12, "AssessNum": 0, "HouseNum": 0, "Street": "", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.591921, 51.454704 ], [ -2.591860, 51.454630 ], [ -2.591932, 51.454604 ], [ -2.591992, 51.454679 ], [ -2.591921, 51.454704 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 13, "AssessNum": 0, "HouseNum": 0, "Street": "", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.591932, 51.454604 ], [ -2.592010, 51.454578 ], [ -2.592071, 51.454658 ], [ -2.592004, 51.454682 ], [ -2.591995, 51.454682 ], [ -2.591992, 51.454679 ], [ -2.591932, 51.454604 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 14, "AssessNum": 0, "HouseNum": 0, "Street": "", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.592010, 51.454578 ], [ -2.592082, 51.454553 ], [ -2.592146, 51.454631 ], [ -2.592071, 51.454658 ], [ -2.592010, 51.454578 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 15, "AssessNum": 0, "HouseNum": 0, "Street": "", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.592082, 51.454553 ], [ -2.592148, 51.454530 ], [ -2.592210, 51.454604 ], [ -2.592150, 51.454627 ], [ -2.592146, 51.454631 ], [ -2.592082, 51.454553 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 17, "AssessNum": 0, "HouseNum": 0, "Street": "", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.592148, 51.454530 ], [ -2.592325, 51.454469 ], [ -2.592327, 51.454472 ], [ -2.592328, 51.454481 ], [ -2.592366, 51.454520 ], [ -2.592367, 51.454532 ], [ -2.592357, 51.454550 ], [ -2.592240, 51.454592 ], [ -2.592239, 51.454596 ], [ -2.592216, 51.454605 ], [ -2.592210, 51.454604 ], [ -2.592148, 51.454530 ] ] ] } }
+
+]
+}
