@@ -1,59 +1,59 @@
 {
 "type": "FeatureCollection",
 "features": [
-{ "type": "Feature", "properties": { "AssessNum": 157, "HouseNum": 42, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central" }, "geometry": { "type": "Point", "coordinates": [ -2.591833, 51.454710 ] } }
+{ "type": "Feature", "properties": { "AssessNum": 157, "HouseNum": 42, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central", "Street": "Mary le Port Street" }, "geometry": { "type": "Point", "coordinates": [ -2.591833, 51.454710 ] } }
 ,
-{ "type": "Feature", "properties": { "AssessNum": 158, "HouseNum": 41, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central" }, "geometry": { "type": "Point", "coordinates": [ -2.591742, 51.454754 ] } }
+{ "type": "Feature", "properties": { "AssessNum": 158, "HouseNum": 41, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central", "Street": "Mary le Port Street" }, "geometry": { "type": "Point", "coordinates": [ -2.591742, 51.454754 ] } }
 ,
-{ "type": "Feature", "properties": { "AssessNum": 159, "HouseNum": 40, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central" }, "geometry": { "type": "Point", "coordinates": [ -2.591604, 51.454794 ] } }
+{ "type": "Feature", "properties": { "AssessNum": 159, "HouseNum": 40, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central", "Street": "Mary le Port Street" }, "geometry": { "type": "Point", "coordinates": [ -2.591604, 51.454794 ] } }
 ,
-{ "type": "Feature", "properties": { "AssessNum": 160, "HouseNum": 38, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central" }, "geometry": { "type": "Point", "coordinates": [ -2.591504, 51.454823 ] } }
+{ "type": "Feature", "properties": { "AssessNum": 160, "HouseNum": 38, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central", "Street": "Mary le Port Street" }, "geometry": { "type": "Point", "coordinates": [ -2.591504, 51.454823 ] } }
 ,
-{ "type": "Feature", "properties": { "AssessNum": 161, "HouseNum": 36, "StreetName": "", "AssessArea": "", "District": "Bristol East Central" }, "geometry": { "type": "Point", "coordinates": [ -2.591328, 51.454880 ] } }
+{ "type": "Feature", "properties": { "AssessNum": 161, "HouseNum": 36, "StreetName": "", "AssessArea": "", "District": "Bristol East Central", "Street": "" }, "geometry": { "type": "Point", "coordinates": [ -2.591328, 51.454880 ] } }
 ,
-{ "type": "Feature", "properties": { "AssessNum": 162, "HouseNum": 34, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central" }, "geometry": { "type": "Point", "coordinates": [ -2.591176, 51.454933 ] } }
+{ "type": "Feature", "properties": { "AssessNum": 162, "HouseNum": 34, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central", "Street": "Mary le Port Street" }, "geometry": { "type": "Point", "coordinates": [ -2.591176, 51.454933 ] } }
 ,
-{ "type": "Feature", "properties": { "AssessNum": 162, "HouseNum": 33, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central" }, "geometry": { "type": "Point", "coordinates": [ -2.591037, 51.454987 ] } }
+{ "type": "Feature", "properties": { "AssessNum": 162, "HouseNum": 33, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central", "Street": "Mary le Port Street" }, "geometry": { "type": "Point", "coordinates": [ -2.591037, 51.454987 ] } }
 ,
-{ "type": "Feature", "properties": { "AssessNum": 163, "HouseNum": 32, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central" }, "geometry": { "type": "Point", "coordinates": [ -2.590917, 51.455024 ] } }
+{ "type": "Feature", "properties": { "AssessNum": 163, "HouseNum": 32, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central", "Street": "Mary le Port Street" }, "geometry": { "type": "Point", "coordinates": [ -2.590917, 51.455024 ] } }
 ,
-{ "type": "Feature", "properties": { "AssessNum": 164, "HouseNum": 31, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central" }, "geometry": { "type": "Point", "coordinates": [ -2.590847, 51.455046 ] } }
+{ "type": "Feature", "properties": { "AssessNum": 164, "HouseNum": 31, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central", "Street": "Mary le Port Street" }, "geometry": { "type": "Point", "coordinates": [ -2.590847, 51.455046 ] } }
 ,
-{ "type": "Feature", "properties": { "AssessNum": 165, "HouseNum": 30, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central" }, "geometry": { "type": "Point", "coordinates": [ -2.590781, 51.455068 ] } }
+{ "type": "Feature", "properties": { "AssessNum": 165, "HouseNum": 30, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central", "Street": "Mary le Port Street" }, "geometry": { "type": "Point", "coordinates": [ -2.590781, 51.455068 ] } }
 ,
-{ "type": "Feature", "properties": { "AssessNum": 166, "HouseNum": 29, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central" }, "geometry": { "type": "Point", "coordinates": [ -2.590715, 51.455085 ] } }
+{ "type": "Feature", "properties": { "AssessNum": 166, "HouseNum": 29, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central", "Street": "Mary le Port Street" }, "geometry": { "type": "Point", "coordinates": [ -2.590715, 51.455085 ] } }
 ,
-{ "type": "Feature", "properties": { "AssessNum": 167, "HouseNum": 28, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central" }, "geometry": { "type": "Point", "coordinates": [ -2.590657, 51.455100 ] } }
+{ "type": "Feature", "properties": { "AssessNum": 167, "HouseNum": 28, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central", "Street": "Mary le Port Street" }, "geometry": { "type": "Point", "coordinates": [ -2.590657, 51.455100 ] } }
 ,
-{ "type": "Feature", "properties": { "AssessNum": 169, "HouseNum": 24, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central" }, "geometry": { "type": "Point", "coordinates": [ -2.590574, 51.455255 ] } }
+{ "type": "Feature", "properties": { "AssessNum": 169, "HouseNum": 24, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central", "Street": "Mary le Port Street" }, "geometry": { "type": "Point", "coordinates": [ -2.590574, 51.455255 ] } }
 ,
-{ "type": "Feature", "properties": { "AssessNum": 170, "HouseNum": 23, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central" }, "geometry": { "type": "Point", "coordinates": [ -2.590711, 51.455226 ] } }
+{ "type": "Feature", "properties": { "AssessNum": 170, "HouseNum": 23, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central", "Street": "Mary le Port Street" }, "geometry": { "type": "Point", "coordinates": [ -2.590711, 51.455226 ] } }
 ,
-{ "type": "Feature", "properties": { "AssessNum": 171, "HouseNum": 22, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central" }, "geometry": { "type": "Point", "coordinates": [ -2.590787, 51.455205 ] } }
+{ "type": "Feature", "properties": { "AssessNum": 171, "HouseNum": 22, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central", "Street": "Mary le Port Street" }, "geometry": { "type": "Point", "coordinates": [ -2.590787, 51.455205 ] } }
 ,
-{ "type": "Feature", "properties": { "AssessNum": 172, "HouseNum": 20, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central" }, "geometry": { "type": "Point", "coordinates": [ -2.590924, 51.455161 ] } }
+{ "type": "Feature", "properties": { "AssessNum": 172, "HouseNum": 20, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central", "Street": "Mary le Port Street" }, "geometry": { "type": "Point", "coordinates": [ -2.590924, 51.455161 ] } }
 ,
-{ "type": "Feature", "properties": { "AssessNum": 173, "HouseNum": 19, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central" }, "geometry": { "type": "Point", "coordinates": [ -2.590986, 51.455143 ] } }
+{ "type": "Feature", "properties": { "AssessNum": 173, "HouseNum": 19, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central", "Street": "Mary le Port Street" }, "geometry": { "type": "Point", "coordinates": [ -2.590986, 51.455143 ] } }
 ,
-{ "type": "Feature", "properties": { "AssessNum": 174, "HouseNum": 18, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central" }, "geometry": { "type": "Point", "coordinates": [ -2.591060, 51.455121 ] } }
+{ "type": "Feature", "properties": { "AssessNum": 174, "HouseNum": 18, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central", "Street": "Mary le Port Street" }, "geometry": { "type": "Point", "coordinates": [ -2.591060, 51.455121 ] } }
 ,
-{ "type": "Feature", "properties": { "AssessNum": 175, "HouseNum": 17, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central" }, "geometry": { "type": "Point", "coordinates": [ -2.591131, 51.455095 ] } }
+{ "type": "Feature", "properties": { "AssessNum": 175, "HouseNum": 17, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central", "Street": "Mary le Port Street" }, "geometry": { "type": "Point", "coordinates": [ -2.591131, 51.455095 ] } }
 ,
-{ "type": "Feature", "properties": { "AssessNum": 176, "HouseNum": 16, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central" }, "geometry": { "type": "Point", "coordinates": [ -2.591209, 51.455072 ] } }
+{ "type": "Feature", "properties": { "AssessNum": 176, "HouseNum": 16, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central", "Street": "Mary le Port Street" }, "geometry": { "type": "Point", "coordinates": [ -2.591209, 51.455072 ] } }
 ,
-{ "type": "Feature", "properties": { "AssessNum": 154, "HouseNum": 0, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central" }, "geometry": { "type": "Point", "coordinates": [ -2.591941, 51.454671 ] } }
+{ "type": "Feature", "properties": { "AssessNum": 154, "HouseNum": 0, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central", "Street": "Mary le Port Street" }, "geometry": { "type": "Point", "coordinates": [ -2.591941, 51.454671 ] } }
 ,
-{ "type": "Feature", "properties": { "AssessNum": 153, "HouseNum": 44, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central" }, "geometry": { "type": "Point", "coordinates": [ -2.592016, 51.454649 ] } }
+{ "type": "Feature", "properties": { "AssessNum": 153, "HouseNum": 44, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central", "Street": "Mary le Port Street" }, "geometry": { "type": "Point", "coordinates": [ -2.592016, 51.454649 ] } }
 ,
-{ "type": "Feature", "properties": { "AssessNum": 152, "HouseNum": 45, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central" }, "geometry": { "type": "Point", "coordinates": [ -2.592093, 51.454622 ] } }
+{ "type": "Feature", "properties": { "AssessNum": 152, "HouseNum": 45, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central", "Street": "Mary le Port Street" }, "geometry": { "type": "Point", "coordinates": [ -2.592093, 51.454622 ] } }
 ,
-{ "type": "Feature", "properties": { "AssessNum": 151, "HouseNum": 46, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central" }, "geometry": { "type": "Point", "coordinates": [ -2.592162, 51.454597 ] } }
+{ "type": "Feature", "properties": { "AssessNum": 151, "HouseNum": 46, "StreetName": "Mary le Port Street", "AssessArea": "", "District": "Bristol East Central", "Street": "Mary le Port Street" }, "geometry": { "type": "Point", "coordinates": [ -2.592162, 51.454597 ] } }
 ,
-{ "type": "Feature", "properties": { "AssessNum": 65, "HouseNum": 0, "StreetName": "", "AssessArea": "", "District": "" }, "geometry": { "type": "Point", "coordinates": [ -2.592269, 51.454560 ] } }
+{ "type": "Feature", "properties": { "AssessNum": 65, "HouseNum": 0, "StreetName": "", "AssessArea": "", "District": "", "Street": "" }, "geometry": { "type": "Point", "coordinates": [ -2.592269, 51.454560 ] } }
 ,
-{ "type": "Feature", "properties": { "AssessNum": 66, "HouseNum": 0, "StreetName": "", "AssessArea": "", "District": "" }, "geometry": { "type": "Point", "coordinates": [ -2.592353, 51.454626 ] } }
+{ "type": "Feature", "properties": { "AssessNum": 66, "HouseNum": 0, "StreetName": "", "AssessArea": "", "District": "", "Street": "" }, "geometry": { "type": "Point", "coordinates": [ -2.592353, 51.454626 ] } }
 ,
-{ "type": "Feature", "properties": { "AssessNum": 67, "HouseNum": 0, "StreetName": "", "AssessArea": "", "District": "" }, "geometry": { "type": "Point", "coordinates": [ -2.592194, 51.454685 ] } }
+{ "type": "Feature", "properties": { "AssessNum": 67, "HouseNum": 0, "StreetName": "", "AssessArea": "", "District": "", "Street": "" }, "geometry": { "type": "Point", "coordinates": [ -2.592194, 51.454685 ] } }
 
 ]
 }

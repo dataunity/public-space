@@ -52,11 +52,27 @@ function draw_area_map (elementId, areaId) {
     // };
 
     var geojsonMarkerOptions = function (feature) {
-        var fillColor;
+        var fillColor = "#ff7800";
+
+        // TODO: Swap out for D3 scale
+        switch (feature.properties.TypeOfProperty) {
+            case "Shop":
+                fillColor = "#ff0000";
+                break;
+            case "House and shop":
+                fillColor = "#00ff00";
+                break;
+            case "Offices and shop":
+                fillColor = "#0000ff";
+                break;
+            default:
+                fillColor = "#ff7800";
+                break;
+        }
 
         return {
             radius: 8,
-            fillColor: "#ff7800",
+            fillColor: fillColor,
             color: "#000",
             weight: 1,
             opacity: 1,
@@ -70,7 +86,7 @@ function draw_area_map (elementId, areaId) {
         }
     }).addTo(mymap);
 
-    var valuationBuildingPointsPopupTemplate = '{HouseNum} {StreetName}<br>{TypeOfProperty}<br><small>Assessment Number: {AssessNum}</small>';
+    var valuationBuildingPointsPopupTemplate = '{HouseNum} {Street}<br>{TypeOfProperty}<br><small>Assessment Number: {AssessNum}</small>';
     valuationBuildingPoints.bindPopup(function(e){
         return L.Util.template(valuationBuildingPointsPopupTemplate, e.feature.properties)
     });
@@ -122,8 +138,9 @@ function draw_area_map (elementId, areaId) {
             //     });
         })
         .then(function (geojsonData) {
-            console.log(districtValuations);
-            console.log(geojsonData);
+            // console.log(districtValuations);
+            // console.log(geojsonData);
+
             // Mark up the GeoJSON with property type from
             // valuations data
             $.each(geojsonData.features, function (ind, feature) {
@@ -149,11 +166,12 @@ function draw_area_map (elementId, areaId) {
         .then(function (geojsonData) {
             // console.log(districtValuations);
             // console.log(geojsonData);
+
             // Mark up the GeoJSON with property type from
             // valuations data
             $.each(geojsonData.features, function (ind, feature) {
                 var districtRecords = (districtValuations[feature.properties.District] || {}),
-                    streetRecords = (districtRecords || {})[feature.properties.StreetName],
+                    streetRecords = (districtRecords || {})[feature.properties.Street],
                     assessmentRecords = (streetRecords || {})[feature.properties.AssessNum];
                 // console.log("streetRecords", streetRecords);
                 // console.log("assessmentRecords", assessmentRecords);
