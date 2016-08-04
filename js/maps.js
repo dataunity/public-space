@@ -13,7 +13,9 @@ function draw_area_map (elementId, areaId) {
     } else {
         latLong = [51.45921, -2.58229];
     }
-    var mymap = L.map(elementId).setView(latLong, zoomLevel);
+    var mymap = L.map(elementId, {
+            scrollWheelZoom: false
+        }).setView(latLong, zoomLevel);
 
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw', {
         maxZoom: 18,
@@ -51,24 +53,30 @@ function draw_area_map (elementId, areaId) {
     //     fillOpacity: 0.8
     // };
 
+    // Note: domain for this scale is set when the valuations data is loaded
+    var propertyTypeScale = d3.scaleOrdinal(d3.schemeCategory10);//d3.scale.category10();
+
     var geojsonMarkerOptions = function (feature) {
         var fillColor = "#ff7800";
 
-        // TODO: Swap out for D3 scale
-        switch (feature.properties.TypeOfProperty) {
-            case "Shop":
-                fillColor = "#ff0000";
-                break;
-            case "House and shop":
-                fillColor = "#00ff00";
-                break;
-            case "Offices and shop":
-                fillColor = "#0000ff";
-                break;
-            default:
-                fillColor = "#ff7800";
-                break;
-        }
+        // switch (feature.properties.TypeOfProperty) {
+        //     case "Shop":
+        //         fillColor = "#ff0000";
+        //         break;
+        //     case "House and shop":
+        //         fillColor = "#00ff00";
+        //         break;
+        //     case "Offices and shop":
+        //         fillColor = "#0000ff";
+        //         break;
+        //     case "Public house":
+        //         fillColor = "#00aaff";
+        //         break;
+        //     default:
+        //         fillColor = "#ff7800";
+        //         break;
+        // }
+        fillColor = propertyTypeScale(feature.properties.TypeOfProperty);
 
         return {
             radius: 8,
@@ -94,9 +102,10 @@ function draw_area_map (elementId, areaId) {
     // 1910 Valuation Survey building outlines 
     var valuationBuildingOutlines = new L.geoJson(null, {
         style: function (feature) {
+            var fillColor = propertyTypeScale(feature.properties.TypeOfProperty);
             return {
                 radius: 8,
-                fillColor: "#ff7800",
+                fillColor: fillColor,
                 color: "#000",
                 weight: 1,
                 opacity: 1,
@@ -113,36 +122,28 @@ function draw_area_map (elementId, areaId) {
 
     
     // Load data
-    var districtValuations = {};
+    var districtValuations = {},
+        distinctPropertyTypes = [];
     $.get("../csv/37271-6a.csv")
         .then(function (valuationsData) {
-            // TODO: extend GeoJSON with properties from CSV file
             // Index the district valuations area (by district, street, assessment number)
-            var bristolEastCentralVal = d3.csvParse(valuationsData);
+            var bristolEastCentralVals = d3.csvParse(valuationsData);
             districtValuations = d3.nest()
                 .key(function (d) { return "Bristol East Central"; })
                 .key(function (d) { return d.Street; })
                 .key(function (d) { return d["Source: No. of Assessment"]; })
-                .object(bristolEastCentralVal);
-            // console.log(districtValuations);
+                .object(bristolEastCentralVals);
+
+            // Set the domain of Type of Property colour scale
+            distinctPropertyTypes = d3.map(bristolEastCentralVals, function (d) {
+                    return d["Type of Property"];
+                }).keys();
+            propertyTypeScale.domain(distinctPropertyTypes);
+
             return $.getJSON("../geojson/Valuations_1910_Building_Outline.geojson");
-            // $.getJSON("../geojson/Valuations_1910_Building.geojson").
-            //     done(function (geojsonData) {
-            //         // Mark up the GeoJSON with property type from
-            //         // valuations data
-            //         $.each(geojsonData.features, function (ind, feature) {
-            //             var valuationsRecord = 
-            //             console.log(feature);
-            //         });
-            //         valuationBuildingPoints.addData(geojsonData);
-            //     });
         })
         .then(function (geojsonData) {
-            // console.log(districtValuations);
-            // console.log(geojsonData);
-
-            // Mark up the GeoJSON with property type from
-            // valuations data
+            // Extend the GeoJSON with property type from valuations data
             $.each(geojsonData.features, function (ind, feature) {
                 var districtRecords = (districtValuations[feature.properties.District] || {}),
                     streetRecords = (districtRecords || {})[feature.properties.Street],
@@ -150,40 +151,49 @@ function draw_area_map (elementId, areaId) {
                 console.log("streetRecords", streetRecords);
                 console.log("assessmentRecords", assessmentRecords);
                 if (assessmentRecords && assessmentRecords.length > 0) {
-
-                    // console.log(assessmentRecords[0]["Type of Property"]);
                     feature.properties["TypeOfProperty"] = assessmentRecords[0]["Type of Property"];
                 } else {
-                    feature.properties["TypeOfProperty"] = "";
+                    feature.properties["TypeOfProperty"] = "Unknown";
                 }
-                
-                // feature.properties["TypeOfProperty"] = "dd";// (assessmentRecord || {})["Type of Property"];
             });
+
+            // Add building outline data
             valuationBuildingOutlines.addData(geojsonData);
+
+            // Add map legend for property type colours
+            var legend = L.control({position: 'bottomright'});
+
+            legend.onAdd = function (map) {
+                var div = L.DomUtil.create('div', 'map-info map-legend'),
+                    tmpColour;
+
+                // loop through our density intervals and generate a label with a colored square for each interval
+                for (var i = 0; i < distinctPropertyTypes.length; i++) {
+                    tmpColour = propertyTypeScale(distinctPropertyTypes[i]);
+                    div.innerHTML +=
+                        '<i style="background:' + tmpColour + '"></i> ' +
+                        distinctPropertyTypes[i] + (typeof distinctPropertyTypes[i + 1] !== "undefined" ? '<br>' : '');
+                }
+
+                return div;
+            };
+
+            legend.addTo(mymap);
 
             return $.getJSON("../geojson/Valuations_1910_Building.geojson");
         })
         .then(function (geojsonData) {
-            // console.log(districtValuations);
-            // console.log(geojsonData);
-
-            // Mark up the GeoJSON with property type from
-            // valuations data
+            // Extend the GeoJSON with property type from valuations data
             $.each(geojsonData.features, function (ind, feature) {
                 var districtRecords = (districtValuations[feature.properties.District] || {}),
                     streetRecords = (districtRecords || {})[feature.properties.Street],
                     assessmentRecords = (streetRecords || {})[feature.properties.AssessNum];
-                // console.log("streetRecords", streetRecords);
-                // console.log("assessmentRecords", assessmentRecords);
-                if (assessmentRecords && assessmentRecords.length > 0) {
 
-                    // console.log(assessmentRecords[0]["Type of Property"]);
+                if (assessmentRecords && assessmentRecords.length > 0) {
                     feature.properties["TypeOfProperty"] = assessmentRecords[0]["Type of Property"];
                 } else {
-                    feature.properties["TypeOfProperty"] = "";
+                    feature.properties["TypeOfProperty"] = "Unknown";
                 }
-                
-                // feature.properties["TypeOfProperty"] = "dd";// (assessmentRecord || {})["Type of Property"];
             });
             valuationBuildingPoints.addData(geojsonData);
         });
