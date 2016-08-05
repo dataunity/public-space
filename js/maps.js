@@ -10,6 +10,9 @@ function draw_area_map (elementId, areaId) {
     } else if (areaId === "mary-le-port") {
         latLong = [51.45482, -2.5909];
         zoomLevel = 18;
+    } else if (areaId === "merchant-street") {
+        latLong = [51.45707, -2.58852];
+        zoomLevel = 18;
     } else {
         latLong = [51.45921, -2.58229];
     }
@@ -25,59 +28,22 @@ function draw_area_map (elementId, areaId) {
         id: 'mapbox.streets'
     }).addTo(mymap);
 
-    L.polygon([
-        [51.45974, -2.58196],
-        [51.45958, -2.58143],
-        [51.45925, -2.58181]
-    ]).addTo(mymap).bindPopup("I am a polygon.");
-
+    // Co-ordinates popup
     var popup = L.popup();
-
     function onMapClick(e) {
         popup
             .setLatLng(e.latlng)
             .setContent("You clicked the map at " + e.latlng.toString())
             .openOn(mymap);
     }
-
     mymap.on('click', onMapClick);
 
-    // 1910 Valuation Survey building points
-    // var geojsonMarkerOptions = {
-    //     radius: 8,
-    //     // fillColor: "#ff7800",
-    //     fillColor: function () { return "#ff7800"; },
-    //     color: "#000",
-    //     weight: 1,
-    //     opacity: 1,
-    //     fillOpacity: 0.8
-    // };
-
     // Note: domain for this scale is set when the valuations data is loaded
-    var propertyTypeScale = d3.scaleOrdinal(d3.schemeCategory10);//d3.scale.category10();
+    var propertyTypeScale = d3.scaleOrdinal(d3.schemeCategory10);
 
+    // Styling for buildings
     var geojsonMarkerOptions = function (feature) {
-        var fillColor = "#ff7800";
-
-        // switch (feature.properties.TypeOfProperty) {
-        //     case "Shop":
-        //         fillColor = "#ff0000";
-        //         break;
-        //     case "House and shop":
-        //         fillColor = "#00ff00";
-        //         break;
-        //     case "Offices and shop":
-        //         fillColor = "#0000ff";
-        //         break;
-        //     case "Public house":
-        //         fillColor = "#00aaff";
-        //         break;
-        //     default:
-        //         fillColor = "#ff7800";
-        //         break;
-        // }
-        fillColor = propertyTypeScale(feature.properties.TypeOfProperty);
-
+        var fillColor = propertyTypeScale(feature.properties.TypeOfProperty);
         return {
             radius: 8,
             fillColor: fillColor,
@@ -123,42 +89,50 @@ function draw_area_map (elementId, areaId) {
     
     // Load data
     var districtValuations = {},
-        distinctPropertyTypes = [];
-    $.get("../csv/37271-6a.csv")
+        distinctPropertyTypesLookup = {},
+        unknownTypeOfProperty = "Unknown";
+    // Bristol East Central valuation records
+    // $.get("../csv/37271-6a.csv")
+    $.get("../csv/Bristol_Valuation_Records_1910.csv")
         .then(function (valuationsData) {
             // Index the district valuations area (by district, street, assessment number)
-            var bristolEastCentralVals = d3.csvParse(valuationsData);
+            var valuationRecords = d3.csvParse(valuationsData);
             districtValuations = d3.nest()
-                .key(function (d) { return "Bristol East Central"; })
+                .key(function (d) { return d.District; })
                 .key(function (d) { return d.Street; })
                 .key(function (d) { return d["Source: No. of Assessment"]; })
-                .object(bristolEastCentralVals);
+                .object(valuationRecords);
 
-            // Set the domain of Type of Property colour scale
-            distinctPropertyTypes = d3.map(bristolEastCentralVals, function (d) {
-                    return d["Type of Property"];
-                }).keys();
-            propertyTypeScale.domain(distinctPropertyTypes);
-
+            // Get building outline geojson
             return $.getJSON("../geojson/Valuations_1910_Building_Outline.geojson");
         })
         .then(function (geojsonData) {
-            // Extend the GeoJSON with property type from valuations data
+            // Extend the GeoJSON with Property Type from valuations data
             $.each(geojsonData.features, function (ind, feature) {
                 var districtRecords = (districtValuations[feature.properties.District] || {}),
                     streetRecords = (districtRecords || {})[feature.properties.Street],
-                    assessmentRecords = (streetRecords || {})[feature.properties.AssessNum];
-                console.log("streetRecords", streetRecords);
-                console.log("assessmentRecords", assessmentRecords);
+                    assessmentRecords = (streetRecords || {})[feature.properties.AssessNum],
+                    typeOfProperty;
+
+                typeOfProperty = unknownTypeOfProperty;
                 if (assessmentRecords && assessmentRecords.length > 0) {
-                    feature.properties["TypeOfProperty"] = assessmentRecords[0]["Type of Property"];
-                } else {
-                    feature.properties["TypeOfProperty"] = "Unknown";
-                }
+                    typeOfProperty = assessmentRecords[0]["Type of Property"];
+                    typeOfProperty = typeOfProperty === "" ? unknownTypeOfProperty : typeOfProperty;
+                } 
+
+                feature.properties["TypeOfProperty"] = typeOfProperty;
+                distinctPropertyTypesLookup[typeOfProperty] = true;
             });
 
             // Add building outline data
             valuationBuildingOutlines.addData(geojsonData);
+
+            // Get distinct Property Types and set colour scale
+            var distinctPropertyTypes = [];
+            for (var i in distinctPropertyTypesLookup) {
+                distinctPropertyTypes.push(i);
+            }
+            propertyTypeScale.domain(distinctPropertyTypes);
 
             // Add map legend for property type colours
             var legend = L.control({position: 'bottomright'});
@@ -167,7 +141,7 @@ function draw_area_map (elementId, areaId) {
                 var div = L.DomUtil.create('div', 'map-info map-legend'),
                     tmpColour;
 
-                // loop through our density intervals and generate a label with a colored square for each interval
+                // Add a legend entry for each Property Type
                 for (var i = 0; i < distinctPropertyTypes.length; i++) {
                     tmpColour = propertyTypeScale(distinctPropertyTypes[i]);
                     div.innerHTML +=
@@ -180,6 +154,7 @@ function draw_area_map (elementId, areaId) {
 
             legend.addTo(mymap);
 
+            // Load the building points geojson
             return $.getJSON("../geojson/Valuations_1910_Building.geojson");
         })
         .then(function (geojsonData) {

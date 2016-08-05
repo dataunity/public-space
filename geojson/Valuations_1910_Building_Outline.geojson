@@ -72,6 +72,88 @@
 { "type": "Feature", "properties": { "id": 15, "AssessNum": 151, "HouseNum": 46, "Street": "Mary le Port Street", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.592082, 51.454553 ], [ -2.592148, 51.454530 ], [ -2.592210, 51.454604 ], [ -2.592150, 51.454627 ], [ -2.592146, 51.454631 ], [ -2.592082, 51.454553 ] ] ] } }
 ,
 { "type": "Feature", "properties": { "id": 17, "AssessNum": 65, "HouseNum": 0, "Street": "", "District": "Bristol East Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.592148, 51.454530 ], [ -2.592325, 51.454469 ], [ -2.592327, 51.454472 ], [ -2.592328, 51.454481 ], [ -2.592366, 51.454520 ], [ -2.592367, 51.454532 ], [ -2.592357, 51.454550 ], [ -2.592240, 51.454592 ], [ -2.592239, 51.454596 ], [ -2.592216, 51.454605 ], [ -2.592210, 51.454604 ], [ -2.592148, 51.454530 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 6068, "AssessNum": 6068, "HouseNum": 1, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588986, 51.457649 ], [ -2.589032, 51.457698 ], [ -2.589028, 51.457711 ], [ -2.588861, 51.457762 ], [ -2.588822, 51.457715 ], [ -2.588939, 51.457676 ], [ -2.588932, 51.457667 ], [ -2.588986, 51.457649 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 6069, "AssessNum": 6069, "HouseNum": 2, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588822, 51.457715 ], [ -2.588775, 51.457664 ], [ -2.588946, 51.457603 ], [ -2.588986, 51.457649 ], [ -2.588932, 51.457667 ], [ -2.588939, 51.457676 ], [ -2.588822, 51.457715 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 6070, "AssessNum": 6070, "HouseNum": 3, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588946, 51.457603 ], [ -2.588775, 51.457664 ], [ -2.588749, 51.457673 ], [ -2.588711, 51.457628 ], [ -2.588908, 51.457561 ], [ -2.588946, 51.457603 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 6071, "AssessNum": 6071, "HouseNum": 4, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588711, 51.457628 ], [ -2.588671, 51.457583 ], [ -2.588871, 51.457520 ], [ -2.588908, 51.457561 ], [ -2.588711, 51.457628 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 0, "AssessNum": 0, "HouseNum": 0, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588871, 51.457520 ], [ -2.588671, 51.457583 ], [ -2.588639, 51.457543 ], [ -2.588833, 51.457479 ], [ -2.588871, 51.457520 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 6073, "AssessNum": 6073, "HouseNum": 6, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588639, 51.457543 ], [ -2.588604, 51.457498 ], [ -2.588796, 51.457437 ], [ -2.588833, 51.457479 ], [ -2.588639, 51.457543 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 6074, "AssessNum": 6074, "HouseNum": 7, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588604, 51.457498 ], [ -2.588573, 51.457458 ], [ -2.588760, 51.457397 ], [ -2.588796, 51.457437 ], [ -2.588604, 51.457498 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 6076, "AssessNum": 6076, "HouseNum": 9, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588573, 51.457458 ], [ -2.588428, 51.457503 ], [ -2.588438, 51.457518 ], [ -2.588424, 51.457522 ], [ -2.588331, 51.457422 ], [ -2.588381, 51.457407 ], [ -2.588390, 51.457398 ], [ -2.588667, 51.457312 ], [ -2.588700, 51.457353 ], [ -2.588588, 51.457388 ], [ -2.588600, 51.457404 ], [ -2.588564, 51.457415 ], [ -2.588592, 51.457451 ], [ -2.588573, 51.457458 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 6075, "AssessNum": 6075, "HouseNum": 8, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588760, 51.457397 ], [ -2.588592, 51.457451 ], [ -2.588564, 51.457415 ], [ -2.588600, 51.457404 ], [ -2.588588, 51.457388 ], [ -2.588700, 51.457353 ], [ -2.588716, 51.457353 ], [ -2.588752, 51.457397 ], [ -2.588760, 51.457397 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 6077, "AssessNum": 6077, "HouseNum": 10, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588637, 51.457285 ], [ -2.588337, 51.457384 ], [ -2.588307, 51.457348 ], [ -2.588612, 51.457251 ], [ -2.588637, 51.457285 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 6078, "AssessNum": 6078, "HouseNum": 11, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588612, 51.457251 ], [ -2.588307, 51.457348 ], [ -2.588277, 51.457314 ], [ -2.588582, 51.457213 ], [ -2.588612, 51.457251 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 6079, "AssessNum": 6079, "HouseNum": 12, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588582, 51.457213 ], [ -2.588277, 51.457314 ], [ -2.588254, 51.457288 ], [ -2.588561, 51.457187 ], [ -2.588582, 51.457213 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 6080, "AssessNum": 6080, "HouseNum": 13, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588561, 51.457187 ], [ -2.588254, 51.457288 ], [ -2.588223, 51.457254 ], [ -2.588533, 51.457151 ], [ -2.588561, 51.457187 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 6081, "AssessNum": 6081, "HouseNum": 14, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588533, 51.457151 ], [ -2.588223, 51.457254 ], [ -2.588180, 51.457202 ], [ -2.588497, 51.457100 ], [ -2.588515, 51.457121 ], [ -2.588513, 51.457126 ], [ -2.588533, 51.457151 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 0, "AssessNum": 0, "HouseNum": 0, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588497, 51.457100 ], [ -2.588180, 51.457202 ], [ -2.588137, 51.457151 ], [ -2.588452, 51.457045 ], [ -2.588497, 51.457100 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 6084, "AssessNum": 6084, "HouseNum": 18, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588452, 51.457045 ], [ -2.588137, 51.457151 ], [ -2.588093, 51.457099 ], [ -2.588409, 51.456996 ], [ -2.588452, 51.457045 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 8174, "AssessNum": 8174, "HouseNum": 19, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588409, 51.456996 ], [ -2.588093, 51.457099 ], [ -2.588041, 51.457037 ], [ -2.588350, 51.456945 ], [ -2.588375, 51.456948 ], [ -2.588409, 51.456996 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 6085, "AssessNum": 6085, "HouseNum": 9, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588307, 51.456861 ], [ -2.588183, 51.456897 ], [ -2.588154, 51.456858 ], [ -2.588281, 51.456825 ], [ -2.588307, 51.456861 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 6086, "AssessNum": 6086, "HouseNum": 8, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588281, 51.456825 ], [ -2.588154, 51.456858 ], [ -2.588129, 51.456821 ], [ -2.588253, 51.456786 ], [ -2.588281, 51.456825 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 0, "AssessNum": 0, "HouseNum": 0, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588253, 51.456786 ], [ -2.588129, 51.456821 ], [ -2.588101, 51.456787 ], [ -2.588227, 51.456752 ], [ -2.588253, 51.456786 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 0, "AssessNum": 0, "HouseNum": 0, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588218, 51.456740 ], [ -2.588113, 51.456768 ], [ -2.588069, 51.456709 ], [ -2.588176, 51.456680 ], [ -2.588218, 51.456740 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 321, "AssessNum": 0, "HouseNum": 0, "Street": "", "District": "" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588176, 51.456680 ], [ -2.588069, 51.456709 ], [ -2.588062, 51.456700 ], [ -2.588074, 51.456697 ], [ -2.588020, 51.456631 ], [ -2.588121, 51.456602 ], [ -2.588176, 51.456680 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 322, "AssessNum": 0, "HouseNum": 0, "Street": "", "District": "" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588121, 51.456602 ], [ -2.588020, 51.456631 ], [ -2.587988, 51.456590 ], [ -2.588085, 51.456561 ], [ -2.588121, 51.456602 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 3923, "AssessNum": 3923, "HouseNum": 38, "Street": "Broadmead", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.589214, 51.457584 ], [ -2.589124, 51.457610 ], [ -2.589107, 51.457600 ], [ -2.589054, 51.457525 ], [ -2.589048, 51.457524 ], [ -2.589033, 51.457507 ], [ -2.589034, 51.457504 ], [ -2.589029, 51.457498 ], [ -2.589183, 51.457452 ], [ -2.589225, 51.457501 ], [ -2.589157, 51.457522 ], [ -2.589214, 51.457584 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 4008, "AssessNum": 4008, "HouseNum": 50, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.589183, 51.457452 ], [ -2.589029, 51.457498 ], [ -2.588999, 51.457459 ], [ -2.589030, 51.457448 ], [ -2.589013, 51.457427 ], [ -2.589130, 51.457388 ], [ -2.589183, 51.457452 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 4009, "AssessNum": 4009, "HouseNum": 49, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.589013, 51.457427 ], [ -2.588977, 51.457381 ], [ -2.589392, 51.457255 ], [ -2.589421, 51.457283 ], [ -2.589317, 51.457322 ], [ -2.589130, 51.457388 ], [ -2.589013, 51.457427 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 4010, "AssessNum": 4010, "HouseNum": 47, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588977, 51.457381 ], [ -2.588945, 51.457338 ], [ -2.589348, 51.457212 ], [ -2.589392, 51.457255 ], [ -2.588977, 51.457381 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 4010, "AssessNum": 4010, "HouseNum": 46, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588945, 51.457338 ], [ -2.588916, 51.457305 ], [ -2.588918, 51.457301 ], [ -2.588915, 51.457295 ], [ -2.588909, 51.457293 ], [ -2.589314, 51.457176 ], [ -2.589348, 51.457212 ], [ -2.588945, 51.457338 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 4011, "AssessNum": 4011, "HouseNum": 45, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588909, 51.457293 ], [ -2.588880, 51.457254 ], [ -2.589277, 51.457135 ], [ -2.589314, 51.457176 ], [ -2.588909, 51.457293 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 4012, "AssessNum": 4012, "HouseNum": 44, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588880, 51.457254 ], [ -2.588847, 51.457213 ], [ -2.589236, 51.457094 ], [ -2.589277, 51.457135 ], [ -2.588880, 51.457254 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 4013, "AssessNum": 4013, "HouseNum": 43, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588847, 51.457213 ], [ -2.588839, 51.457213 ], [ -2.588807, 51.457171 ], [ -2.589190, 51.457052 ], [ -2.589197, 51.457064 ], [ -2.589216, 51.457064 ], [ -2.589236, 51.457094 ], [ -2.588847, 51.457213 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 4014, "AssessNum": 4014, "HouseNum": 42, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588807, 51.457171 ], [ -2.588799, 51.457173 ], [ -2.588773, 51.457142 ], [ -2.588781, 51.457139 ], [ -2.588777, 51.457128 ], [ -2.589152, 51.457012 ], [ -2.589190, 51.457052 ], [ -2.588807, 51.457171 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 4015, "AssessNum": 4015, "HouseNum": 0, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588777, 51.457128 ], [ -2.588725, 51.457068 ], [ -2.588743, 51.457060 ], [ -2.588734, 51.457048 ], [ -2.588712, 51.457054 ], [ -2.588661, 51.456999 ], [ -2.588771, 51.456963 ], [ -2.588803, 51.457000 ], [ -2.588925, 51.456962 ], [ -2.588969, 51.457012 ], [ -2.588848, 51.457050 ], [ -2.588886, 51.457094 ], [ -2.588777, 51.457128 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 4015, "AssessNum": 4015, "HouseNum": 0, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588771, 51.456963 ], [ -2.589047, 51.456876 ], [ -2.589152, 51.457012 ], [ -2.588886, 51.457094 ], [ -2.588848, 51.457050 ], [ -2.588969, 51.457012 ], [ -2.588925, 51.456962 ], [ -2.588803, 51.457000 ], [ -2.588771, 51.456963 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 4016, "AssessNum": 4016, "HouseNum": 41, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588661, 51.456999 ], [ -2.588629, 51.456963 ], [ -2.588702, 51.456937 ], [ -2.588711, 51.456943 ], [ -2.588935, 51.456863 ], [ -2.588966, 51.456902 ], [ -2.588661, 51.456999 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 4017, "AssessNum": 4017, "HouseNum": 0, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588603, 51.456934 ], [ -2.588543, 51.456869 ], [ -2.588791, 51.456779 ], [ -2.588960, 51.456736 ], [ -2.589047, 51.456876 ], [ -2.588966, 51.456902 ], [ -2.588909, 51.456833 ], [ -2.588684, 51.456914 ], [ -2.588677, 51.456906 ], [ -2.588603, 51.456934 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 8191, "AssessNum": 8191, "HouseNum": 38, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588543, 51.456869 ], [ -2.588483, 51.456804 ], [ -2.588693, 51.456702 ], [ -2.588632, 51.456654 ], [ -2.588791, 51.456577 ], [ -2.588890, 51.456656 ], [ -2.588960, 51.456736 ], [ -2.588791, 51.456779 ], [ -2.588543, 51.456869 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 4018, "AssessNum": 4018, "HouseNum": 0, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588483, 51.456804 ], [ -2.588414, 51.456725 ], [ -2.588423, 51.456721 ], [ -2.588406, 51.456703 ], [ -2.588629, 51.456605 ], [ -2.588767, 51.456555 ], [ -2.588791, 51.456577 ], [ -2.588632, 51.456654 ], [ -2.588693, 51.456702 ], [ -2.588483, 51.456804 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 317, "AssessNum": 0, "HouseNum": 0, "Street": "", "District": "" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588501, 51.456546 ], [ -2.588340, 51.456603 ], [ -2.588312, 51.456602 ], [ -2.588162, 51.456423 ], [ -2.588322, 51.456457 ], [ -2.588310, 51.456482 ], [ -2.588457, 51.456503 ], [ -2.588501, 51.456546 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 309, "AssessNum": 0, "HouseNum": 0, "Street": "", "District": "" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588170, 51.456406 ], [ -2.588142, 51.456402 ], [ -2.588134, 51.456396 ], [ -2.588142, 51.456387 ], [ -2.588172, 51.456379 ], [ -2.588312, 51.456346 ], [ -2.588391, 51.456337 ], [ -2.588368, 51.456447 ], [ -2.588331, 51.456442 ], [ -2.588295, 51.456433 ], [ -2.588226, 51.456415 ], [ -2.588170, 51.456406 ] ] ] } }
+,
+{ "type": "Feature", "properties": { "id": 4017, "AssessNum": 4017, "HouseNum": 0, "Street": "Merchant Street", "District": "Bristol North Central" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.588629, 51.456963 ], [ -2.588603, 51.456934 ], [ -2.588677, 51.456906 ], [ -2.588684, 51.456914 ], [ -2.588909, 51.456833 ], [ -2.588935, 51.456863 ], [ -2.588711, 51.456943 ], [ -2.588702, 51.456937 ], [ -2.588629, 51.456963 ] ] ] } }
 
 ]
 }

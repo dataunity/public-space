@@ -14,7 +14,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 # Walkthrough
 
-![Walkthrough video]({{ site.url }}/images/tmp/YouTubeBlank.jpg)
+![Walkthrough video]({{ site.baseurl }}/images/tmp/YouTubeBlank.jpg)
 
 # History
 
