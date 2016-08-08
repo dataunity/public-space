@@ -54,6 +54,76 @@
 { "type": "Feature", "properties": { "AssessNum": 66, "HouseNum": 0, "StreetName": "", "AssessArea": "", "District": "", "Street": "" }, "geometry": { "type": "Point", "coordinates": [ -2.592353, 51.454626 ] } }
 ,
 { "type": "Feature", "properties": { "AssessNum": 67, "HouseNum": 0, "StreetName": "", "AssessArea": "", "District": "", "Street": "" }, "geometry": { "type": "Point", "coordinates": [ -2.592194, 51.454685 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 3923, "HouseNum": 38, "StreetName": "", "AssessArea": "", "District": "Bristol North Central", "Street": "Broadmead" }, "geometry": { "type": "Point", "coordinates": [ -2.589119, 51.457534 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 4008, "HouseNum": 50, "StreetName": "", "AssessArea": "", "District": "Bristol North Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.589095, 51.457445 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 4009, "HouseNum": 49, "StreetName": "", "AssessArea": "", "District": "Bristol North Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.589056, 51.457387 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 4010, "HouseNum": 47, "StreetName": "", "AssessArea": "", "District": "Bristol North Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.589022, 51.457340 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 4010, "HouseNum": 46, "StreetName": "", "AssessArea": "", "District": "Bristol North Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.588988, 51.457300 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 4011, "HouseNum": 45, "StreetName": "", "AssessArea": "", "District": "Bristol North Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.588958, 51.457258 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 4012, "HouseNum": 44, "StreetName": "", "AssessArea": "", "District": "Bristol North Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.588936, 51.457215 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 4013, "HouseNum": 43, "StreetName": "", "AssessArea": "", "District": "Bristol North Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.588900, 51.457171 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 4014, "HouseNum": 42, "StreetName": "", "AssessArea": "", "District": "Bristol North Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.588868, 51.457128 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 4015, "HouseNum": 0, "StreetName": "", "AssessArea": "", "District": "Bristol North Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.588797, 51.457037 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 4016, "HouseNum": 41, "StreetName": "", "AssessArea": "", "District": "Bristol North Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.588721, 51.456960 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 4017, "HouseNum": 0, "StreetName": "", "AssessArea": "", "District": "Bristol North Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.588642, 51.456885 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 8191, "HouseNum": 38, "StreetName": "", "AssessArea": "", "District": "Bristol North Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.588572, 51.456809 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 4018, "HouseNum": 0, "StreetName": "", "AssessArea": "", "District": "Bristol North Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.588499, 51.456734 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 6068, "HouseNum": 1, "StreetName": "", "AssessArea": "", "District": "Bristol North Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.588966, 51.457698 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 6069, "HouseNum": 2, "StreetName": "", "AssessArea": "", "District": "Bristol North Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.588918, 51.457643 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 6070, "HouseNum": 3, "StreetName": "", "AssessArea": "", "District": "Bristol North Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.588877, 51.457598 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 6071, "HouseNum": 4, "StreetName": "", "AssessArea": "", "District": "Bristol North Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.588839, 51.457557 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 6073, "HouseNum": 6, "StreetName": "", "AssessArea": "", "District": "Bristol North Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.588765, 51.457472 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 6074, "HouseNum": 7, "StreetName": "", "AssessArea": "", "District": "Bristol North Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.588731, 51.457431 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 6075, "HouseNum": 8, "StreetName": "", "AssessArea": "", "District": "Bristol North Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.588693, 51.457389 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 6076, "HouseNum": 9, "StreetName": "", "AssessArea": "", "District": "Bristol North Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.588642, 51.457345 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 6077, "HouseNum": 10, "StreetName": "", "AssessArea": "", "District": "Bristol North Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.588578, 51.457280 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 6078, "HouseNum": 11, "StreetName": "", "AssessArea": "", "District": "Bristol North Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.588552, 51.457246 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 6079, "HouseNum": 12, "StreetName": "", "AssessArea": "", "District": "Bristol North Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.588528, 51.457215 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 6080, "HouseNum": 13, "StreetName": "", "AssessArea": "", "District": "Bristol North Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.588502, 51.457183 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 6081, "HouseNum": 14, "StreetName": "", "AssessArea": "", "District": "Bristol North Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.588471, 51.457143 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 6084, "HouseNum": 18, "StreetName": "", "AssessArea": "", "District": "Bristol North Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.588384, 51.457034 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 8174, "HouseNum": 19, "StreetName": "", "AssessArea": "", "District": "Bristol North Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.588337, 51.456985 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 6085, "HouseNum": 9, "StreetName": "", "AssessArea": "", "District": "Bristol North Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.588256, 51.456855 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 6086, "HouseNum": 8, "StreetName": "", "AssessArea": "", "District": "Bristol North Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.588227, 51.456815 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 321, "HouseNum": 0, "StreetName": "", "AssessArea": "", "District": "Bristol East Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.588107, 51.456651 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 322, "HouseNum": 0, "StreetName": "", "AssessArea": "", "District": "Bristol East Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.588060, 51.456593 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 317, "HouseNum": 0, "StreetName": "", "AssessArea": "", "District": "Bristol East Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.588312, 51.456528 ] } }
+,
+{ "type": "Feature", "properties": { "AssessNum": 309, "HouseNum": 0, "StreetName": "", "AssessArea": "", "District": "Bristol East Central", "Street": "Merchant Street" }, "geometry": { "type": "Point", "coordinates": [ -2.588278, 51.456385 ] } }
 
 ]
 }

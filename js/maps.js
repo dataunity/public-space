@@ -42,21 +42,95 @@ function draw_area_map (elementId, areaId) {
     var propertyTypeScale = d3.scaleOrdinal(d3.schemeCategory10);
 
     // Styling for buildings
-    var geojsonMarkerOptions = function (feature) {
-        var fillColor = propertyTypeScale(feature.properties.TypeOfProperty);
-        return {
-            radius: 8,
-            fillColor: fillColor,
-            color: "#000",
-            weight: 1,
-            opacity: 1,
-            fillOpacity: 0.8
-        };
+
+    // OLD Circle markers (for colour coding type of property)
+    // var geojsonMarkerOptions = function (feature) {
+    //     var fillColor = propertyTypeScale(feature.properties.TypeOfProperty);
+    //     return {
+    //         radius: 8,
+    //         fillColor: fillColor,
+    //         color: "#000",
+    //         weight: 1,
+    //         opacity: 1,
+    //         fillOpacity: 0.8
+    //     };
+    // };
+    // var valuationBuildingPoints = new L.geoJson(null, {
+    //     pointToLayer: function (feature, latlng) {
+    //         return L.circleMarker(latlng, geojsonMarkerOptions(feature));
+    //     }
+    // }).addTo(mymap);
+
+    // Building icons
+    var PropertyTypeIcon = L.Icon.extend({
+        options: {
+            iconSize:     [20, 18],
+            iconAnchor:   [10, 9],
+            popupAnchor:  [-3, -9]
+        }
+    });
+
+    var propertyCategories = {
+        "Shop": "Shop",
+        "House": "House",
+        "Public house": "Public house",
+        "Industrial or storage": "Industrial or storage",
+        "Other": "Other"
     };
+
+    var propertyCategoryIcons = {
+        "Shop": "../images/icons/shop.png",
+        "House": "../images/icons/house.png",
+        "Public house": "../images/icons/public_house.png",
+        "Industrial or storage": "../images/icons/industrial_or_storage.png",
+        "Other": "../images/icons/other.png"
+    };
+
+    function propertyCategoryIconPath (propertyCategory) {
+        // Path to icon for building categories
+        var pathToIcon = propertyCategoryIcons[propertyCategory];
+        if (typeof pathToIcon === "undefined") {
+            pathToIcon = "../images/icons/other.png";
+        }
+        return pathToIcon;
+    }
+
+    function isPubliclyAccessible (propertyCategory) {
+        // Whether the building is publicly accessible
+        switch (propertyCategory) {
+            case "Shop":
+            case "Public house":
+                return true;
+            case "Other":
+            case "Unknown":
+                return undefined;
+            default:
+                return false;
+        }
+    }
+
+    var shopIcon = new PropertyTypeIcon({iconUrl: propertyCategoryIconPath(propertyCategories["Shop"])}),
+        houseIcon = new PropertyTypeIcon({iconUrl: propertyCategoryIconPath(propertyCategories["House"])}),
+        publicHouseIcon = new PropertyTypeIcon({iconUrl: propertyCategoryIconPath(propertyCategories["Public house"])}),
+        industrialIcon = new PropertyTypeIcon({iconUrl: propertyCategoryIconPath(propertyCategories["Industrial or storage"])}),
+        otherIcon = new PropertyTypeIcon({iconUrl: propertyCategoryIconPath(propertyCategories["Other"])});
 
     var valuationBuildingPoints = new L.geoJson(null, {
         pointToLayer: function (feature, latlng) {
-            return L.circleMarker(latlng, geojsonMarkerOptions(feature));
+            switch (feature.properties.PropertyCategory) {
+                case "Shop":
+                    return L.marker(latlng, {icon: shopIcon});
+                case "House":
+                    return L.marker(latlng, {icon: houseIcon});
+                case "Public house":
+                    return L.marker(latlng, {icon: publicHouseIcon});
+                case "Industrial or storage":
+                    return L.marker(latlng, {icon: industrialIcon});
+                default:
+                    return L.marker(latlng, {icon: otherIcon});
+            }
+            
+            // return L.circleMarker(latlng, geojsonMarkerOptions(feature));
         }
     }).addTo(mymap);
 
@@ -66,9 +140,22 @@ function draw_area_map (elementId, areaId) {
     });
 
     // 1910 Valuation Survey building outlines 
+    var publiclyAccessibleColour = "#2ca02c",
+        notPubliclyAccessibleColour = "#1f77b4",
+        unknownPubliclyAccessibleColour = "#aaaaaa";
+    function propertyPublicAccessibilityColour (propertyCategory) {
+        // Gives a colour corresponding to the public accessibility of the building
+        var isAccessible = isPubliclyAccessible(propertyCategory);
+        if (typeof isAccessible === "undefined") {
+            return unknownPubliclyAccessibleColour;
+        } else {
+            return isAccessible ? publiclyAccessibleColour : notPubliclyAccessibleColour;
+        }
+    }
     var valuationBuildingOutlines = new L.geoJson(null, {
         style: function (feature) {
-            var fillColor = propertyTypeScale(feature.properties.TypeOfProperty);
+            // var fillColor = propertyTypeScale(feature.properties.TypeOfProperty);
+            var fillColor = propertyPublicAccessibilityColour(feature.properties.PropertyCategory);
             return {
                 radius: 8,
                 fillColor: fillColor,
@@ -90,7 +177,46 @@ function draw_area_map (elementId, areaId) {
     // Load data
     var districtValuations = {},
         distinctPropertyTypesLookup = {},
+        distinctPropertyCategoriesLookup = {},
         unknownTypeOfProperty = "Unknown";
+
+    // How the property types should be mapped to broader categories
+    function propertyTypeToCategory (propertyType) {
+        switch (propertyType) {
+            case "Shop":
+            case "House and shop":
+            case "Shop and offices":
+            case "House, shop and offices":
+            case "Showroom":
+                return "Shop";
+            case "House":
+                return "House";
+            case "Public house":
+                return "Public house";
+            case "Almshouses":
+                return "Almshouses";
+            case "Warehouse":
+                return "Industrial or storage";
+            default:
+                return "Unknown";
+        }
+    }
+
+    function getTypeOfProperty (districtValuations, feature) {
+        var districtRecords = (districtValuations[feature.properties.District] || {}),
+            streetRecords = (districtRecords || {})[feature.properties.Street],
+            assessmentRecords = (streetRecords || {})[feature.properties.AssessNum],
+            typeOfProperty;
+
+        typeOfProperty = unknownTypeOfProperty;
+        if (assessmentRecords && assessmentRecords.length > 0) {
+            typeOfProperty = assessmentRecords[0]["Type of Property"];
+            typeOfProperty = typeOfProperty === "" ? unknownTypeOfProperty : typeOfProperty;
+        }
+
+        return typeOfProperty;
+    }
+
     // Bristol East Central valuation records
     // $.get("../csv/37271-6a.csv")
     $.get("../csv/Bristol_Valuation_Records_1910.csv")
@@ -109,45 +235,77 @@ function draw_area_map (elementId, areaId) {
         .then(function (geojsonData) {
             // Extend the GeoJSON with Property Type from valuations data
             $.each(geojsonData.features, function (ind, feature) {
-                var districtRecords = (districtValuations[feature.properties.District] || {}),
-                    streetRecords = (districtRecords || {})[feature.properties.Street],
-                    assessmentRecords = (streetRecords || {})[feature.properties.AssessNum],
-                    typeOfProperty;
-
-                typeOfProperty = unknownTypeOfProperty;
-                if (assessmentRecords && assessmentRecords.length > 0) {
-                    typeOfProperty = assessmentRecords[0]["Type of Property"];
-                    typeOfProperty = typeOfProperty === "" ? unknownTypeOfProperty : typeOfProperty;
-                } 
-
+                var typeOfProperty = getTypeOfProperty(districtValuations, feature),
+                    propertyCategory = propertyTypeToCategory(typeOfProperty);
+                
+                // propertyCategory = propertyTypeToCategory(typeOfProperty);
                 feature.properties["TypeOfProperty"] = typeOfProperty;
+                feature.properties["PropertyCategory"] = propertyCategory;
                 distinctPropertyTypesLookup[typeOfProperty] = true;
+                distinctPropertyCategoriesLookup[propertyCategory] = true;
             });
 
             // Add building outline data
             valuationBuildingOutlines.addData(geojsonData);
 
             // Get distinct Property Types and set colour scale
-            var distinctPropertyTypes = [];
-            for (var i in distinctPropertyTypesLookup) {
-                distinctPropertyTypes.push(i);
+            // var distinctPropertyTypes = [];
+            // for (var i in distinctPropertyTypesLookup) {
+            //     distinctPropertyTypes.push(i);
+            // }
+            // propertyTypeScale.domain(distinctPropertyTypes);
+
+            var distinctPropertyCategories = [];
+            for (var i in distinctPropertyCategoriesLookup) {
+                distinctPropertyCategories.push(i);
             }
-            propertyTypeScale.domain(distinctPropertyTypes);
+            propertyTypeScale.domain(distinctPropertyCategories);
 
             // Add map legend for property type colours
-            var legend = L.control({position: 'bottomright'});
+            var legend = L.control({position: 'topright'});
 
             legend.onAdd = function (map) {
                 var div = L.DomUtil.create('div', 'map-info map-legend'),
-                    tmpColour;
+                    tmpColour,
+                    tmpPropertyCategory,
+                    tmpPropertyCategories = Object.keys(propertyCategories);
+                    // numPropertyCategories = tmpPropertyCategories.length;
 
                 // Add a legend entry for each Property Type
-                for (var i = 0; i < distinctPropertyTypes.length; i++) {
-                    tmpColour = propertyTypeScale(distinctPropertyTypes[i]);
+                // for (var i = 0; i < distinctPropertyTypes.length; i++) {
+                //     tmpColour = propertyTypeScale(distinctPropertyTypes[i]);
+                //     div.innerHTML +=
+                //         '<i style="background:' + tmpColour + '"></i> ' +
+                //         distinctPropertyTypes[i] + (typeof distinctPropertyTypes[i + 1] !== "undefined" ? '<br>' : '');
+                // }
+
+                // Add a legend entry for each Property Cateogory
+                div.innerHTML += "Type of building<br>";
+                for (var i = 0; i < tmpPropertyCategories.length; i++) {
+                    tmpPropertyCategory = tmpPropertyCategories[i];
                     div.innerHTML +=
-                        '<i style="background:' + tmpColour + '"></i> ' +
-                        distinctPropertyTypes[i] + (typeof distinctPropertyTypes[i + 1] !== "undefined" ? '<br>' : '');
+                        '<img src="' + propertyCategoryIconPath(tmpPropertyCategory) + '"> ' +
+                        tmpPropertyCategories[i] + (typeof tmpPropertyCategories[i + 1] !== "undefined" ? '<br>' : '');
                 }
+
+                // Add entry for whether building is accessible to public
+                div.innerHTML += "<br><br>Public accessibility<br>";
+                div.innerHTML +=
+                    '<i style="background:' + publiclyAccessibleColour + '"></i> ' +
+                    'Publicly accessible<br>';
+                div.innerHTML +=
+                    '<i style="background:' + notPubliclyAccessibleColour + '"></i> ' +
+                    'Not publicly accessible<br>';
+                div.innerHTML +=
+                    '<i style="background:' + unknownPubliclyAccessibleColour + '"></i> ' +
+                    'Unknown accessibility<br>';
+                
+                // for (var i = 0; i < distinctPropertyTypes.length; i++) {
+                //     tmpColour = propertyTypeScale(distinctPropertyTypes[i]);
+                //     div.innerHTML +=
+                //         '<i style="background:' + tmpColour + '"></i> ' +
+                //         distinctPropertyTypes[i] + (typeof distinctPropertyTypes[i + 1] !== "undefined" ? '<br>' : '');
+                // }
 
                 return div;
             };
@@ -160,15 +318,25 @@ function draw_area_map (elementId, areaId) {
         .then(function (geojsonData) {
             // Extend the GeoJSON with property type from valuations data
             $.each(geojsonData.features, function (ind, feature) {
-                var districtRecords = (districtValuations[feature.properties.District] || {}),
-                    streetRecords = (districtRecords || {})[feature.properties.Street],
-                    assessmentRecords = (streetRecords || {})[feature.properties.AssessNum];
+                var typeOfProperty = getTypeOfProperty(districtValuations, feature),
+                    propertyCategory = propertyTypeToCategory(typeOfProperty);
+                
+                // propertyCategory = propertyTypeToCategory(typeOfProperty);
+                feature.properties["TypeOfProperty"] = typeOfProperty;
+                feature.properties["PropertyCategory"] = propertyCategory;
+                distinctPropertyTypesLookup[typeOfProperty] = true;
+                distinctPropertyCategoriesLookup[propertyCategory] = true;
 
-                if (assessmentRecords && assessmentRecords.length > 0) {
-                    feature.properties["TypeOfProperty"] = assessmentRecords[0]["Type of Property"];
-                } else {
-                    feature.properties["TypeOfProperty"] = "Unknown";
-                }
+
+                // var districtRecords = (districtValuations[feature.properties.District] || {}),
+                //     streetRecords = (districtRecords || {})[feature.properties.Street],
+                //     assessmentRecords = (streetRecords || {})[feature.properties.AssessNum];
+
+                // if (assessmentRecords && assessmentRecords.length > 0) {
+                //     feature.properties["TypeOfProperty"] = assessmentRecords[0]["Type of Property"];
+                // } else {
+                //     feature.properties["TypeOfProperty"] = "Unknown";
+                // }
             });
             valuationBuildingPoints.addData(geojsonData);
         });

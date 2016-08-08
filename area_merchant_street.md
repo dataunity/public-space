@@ -8,7 +8,7 @@ permalink: /areas-merchant-street/
 
 # Merchant Street in 1910
 
-This map shows the usage of the buildings in Merchant Street in 1910.
+This map shows the usage of the buildings in Merchant Street in 1910 (on top of present day Merchant Street).
 
 {% include map-area.html areaid="merchant-street" %}
 

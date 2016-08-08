@@ -10,7 +10,7 @@ Mary le Port Street is in the area currently covered by Castle Park. [More...]
 
 # Mary le Port Street in 1910
 
-This map shows the usage of the building in Mary le Port Street in 1910.
+This map shows the usage of the building in Mary le Port Street in 1910 (on top of present day Castle Park).
 
 {% include map-area.html areaid="mary-le-port" %}
 
