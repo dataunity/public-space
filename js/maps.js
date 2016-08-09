@@ -313,7 +313,8 @@ function draw_area_map (elementId, areaId) {
             legend.addTo(mymap);
 
             // Load the building points geojson
-            return $.getJSON("../geojson/Valuations_1910_Building.geojson");
+            // return $.getJSON("../geojson/Valuations_1910_Building.geojson");
+            return $.getJSON("../geojson/Valuations_1910_Building_Centres.geojson");
         })
         .then(function (geojsonData) {
             // Extend the GeoJSON with property type from valuations data
