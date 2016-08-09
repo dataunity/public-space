@@ -190,12 +190,14 @@ function draw_area_map (elementId, areaId) {
             case "Showroom":
                 return "Shop";
             case "House":
+            case "Almshouses":
                 return "House";
             case "Public house":
                 return "Public house";
             case "Almshouses":
                 return "Almshouses";
             case "Warehouse":
+            case "Saw mill":
                 return "Industrial or storage";
             default:
                 return "Unknown";
