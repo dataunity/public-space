@@ -438,7 +438,9 @@ function draw_area_map (elementId, areaId) {
 }
 
 function draw_main_map (elementId) {
-    var mymap = L.map(elementId).setView([51.457565, -2.590507], 16);
+    var mymap = L.map(elementId, {
+            scrollWheelZoom: false
+        }).setView([51.457565, -2.590507], 16);
     
 
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw', {
