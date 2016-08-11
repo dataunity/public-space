@@ -6,17 +6,19 @@ permalink: /areas-merchant-street/
 
 [Need a photo here...]
 
-# Merchant Street in 1910
+# Change in building use
 
-This map shows the usage of the buildings in Merchant Street in 1910 (on top of present day Merchant Street).
+Click on the date options below to show which buildings were in Merchant Street in different eras. The background map shows present day Merchant Street.
 
 {% include map-area.html areaid="merchant-street" %}
+[TODO: copyright attribution]
 
 ## Ordnance Survey map
 
 Above map was generated from the valuations data and associated Ordnance Survey maps.
 
 ![Ordnance Survey valuations map)]({{ site.baseurl }}/images/maps/TNA_IR_128_3_226_2_merchant_st_small.jpg)
+[TODO: copyright attribution]
 
 # History
 

@@ -1,0 +1,47 @@
+{
+"type": "FeatureCollection",
+"features": [
+{ "type": "Feature", "properties": { "Street": "Broadmead", "HouseNum": "44 to 49", "Category": "Shop" }, "geometry": { "type": "Point", "coordinates": [ -2.588643, 51.457609 ] } }
+,
+{ "type": "Feature", "properties": { "Street": "Merchant Street", "HouseNum": "40 to 42", "Category": "Shop" }, "geometry": { "type": "Point", "coordinates": [ -2.588641, 51.457503 ] } }
+,
+{ "type": "Feature", "properties": { "Street": "Merchant Street", "HouseNum": "36 to 38", "Category": "Shop" }, "geometry": { "type": "Point", "coordinates": [ -2.588602, 51.457437 ] } }
+,
+{ "type": "Feature", "properties": { "Street": "Merchant Street", "HouseNum": "34", "Category": "Shop" }, "geometry": { "type": "Point", "coordinates": [ -2.588527, 51.457379 ] } }
+,
+{ "type": "Feature", "properties": { "Street": "Merchant Street", "HouseNum": "", "Category": "Shop" }, "geometry": { "type": "Point", "coordinates": [ -2.588472, 51.457310 ] } }
+,
+{ "type": "Feature", "properties": { "Street": "Merchant Street", "HouseNum": "28", "Category": "Shop" }, "geometry": { "type": "Point", "coordinates": [ -2.588418, 51.457241 ] } }
+,
+{ "type": "Feature", "properties": { "Street": "Merchant Street", "HouseNum": "24 to 26", "Category": "Shop" }, "geometry": { "type": "Point", "coordinates": [ -2.588363, 51.457171 ] } }
+,
+{ "type": "Feature", "properties": { "Street": "Broad Weir", "HouseNum": "", "Category": "Shop" }, "geometry": { "type": "Point", "coordinates": [ -2.587504, 51.456845 ] } }
+,
+{ "type": "Feature", "properties": { "Street": "Broadmead", "HouseNum": "The Galleries", "Category": "Shop" }, "geometry": { "type": "Point", "coordinates": [ -2.589808, 51.456640 ] } }
+,
+{ "type": "Feature", "properties": { "Street": "Merchant Street", "HouseNum": "", "Category": "Shop" }, "geometry": { "type": "Point", "coordinates": [ -2.588843, 51.456319 ] } }
+,
+{ "type": "Feature", "properties": { "Street": "Merchant Street", "HouseNum": "19 to 21", "Category": "Shop" }, "geometry": { "type": "Point", "coordinates": [ -2.588949, 51.456994 ] } }
+,
+{ "type": "Feature", "properties": { "Street": "Philadelphia Street", "HouseNum": "1", "Category": "Shop" }, "geometry": { "type": "Point", "coordinates": [ -2.588196, 51.457127 ] } }
+,
+{ "type": "Feature", "properties": { "Street": "Broadmead", "HouseNum": "53", "Category": "Shop" }, "geometry": { "type": "Point", "coordinates": [ -2.589211, 51.457436 ] } }
+,
+{ "type": "Feature", "properties": { "Street": "Broadmead", "HouseNum": "", "Category": "Shop" }, "geometry": { "type": "Point", "coordinates": [ -2.589382, 51.457431 ] } }
+,
+{ "type": "Feature", "properties": { "Street": "Broadmead", "HouseNum": "57", "Category": "Shop" }, "geometry": { "type": "Point", "coordinates": [ -2.589480, 51.457394 ] } }
+,
+{ "type": "Feature", "properties": { "Street": "Broadmead", "HouseNum": "65", "Category": "Shop" }, "geometry": { "type": "Point", "coordinates": [ -2.589826, 51.457283 ] } }
+,
+{ "type": "Feature", "properties": { "Street": "Broadmead", "HouseNum": "71", "Category": "Shop" }, "geometry": { "type": "Point", "coordinates": [ -2.590051, 51.457287 ] } }
+,
+{ "type": "Feature", "properties": { "Street": "Broadmead", "HouseNum": "85", "Category": "Shop" }, "geometry": { "type": "Point", "coordinates": [ -2.590623, 51.457026 ] } }
+,
+{ "type": "Feature", "properties": { "Street": "Broadmead", "HouseNum": "", "Category": "Shop" }, "geometry": { "type": "Point", "coordinates": [ -2.590266, 51.457086 ] } }
+,
+{ "type": "Feature", "properties": { "Street": "Broadmead", "HouseNum": "93 to 95", "Category": "Shop" }, "geometry": { "type": "Point", "coordinates": [ -2.591101, 51.456942 ] } }
+,
+{ "type": "Feature", "properties": { "Street": "Broadmead", "HouseNum": "", "Category": "Shop" }, "geometry": { "type": "Point", "coordinates": [ -2.591018, 51.456898 ] } }
+
+]
+}
