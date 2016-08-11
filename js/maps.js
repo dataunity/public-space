@@ -3,7 +3,7 @@ function draw_area_map (elementId, areaId) {
     var latLong,
         zoomLevel = 17;
 
-    // TODO: Move area co-ordinates into CSV lookup file
+    // TODO: Move area co-ordinates into CSV lookup file (so new areas can be added easier)?
     if (areaId === "cabot") {
         latLong = [51.45921, -2.58229];
         zoomLevel = 17;
@@ -20,6 +20,7 @@ function draw_area_map (elementId, areaId) {
             scrollWheelZoom: false
         }).setView(latLong, zoomLevel);
 
+    // TODO: Get fresh access token (this one's from Leaflet demo)
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw', {
         maxZoom: 18,
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
@@ -37,29 +38,6 @@ function draw_area_map (elementId, areaId) {
             .openOn(mymap);
     }
     mymap.on('click', onMapClick);
-
-    // Note: domain for this scale is set when the valuations data is loaded
-    // var propertyTypeScale = d3.scaleOrdinal(d3.schemeCategory10);
-
-    // Styling for buildings
-
-    // OLD Circle markers (for colour coding type of property)
-    // var geojsonMarkerOptions = function (feature) {
-    //     var fillColor = propertyTypeScale(feature.properties.TypeOfProperty);
-    //     return {
-    //         radius: 8,
-    //         fillColor: fillColor,
-    //         color: "#000",
-    //         weight: 1,
-    //         opacity: 1,
-    //         fillOpacity: 0.8
-    //     };
-    // };
-    // var valuationBuildingPoints = new L.geoJson(null, {
-    //     pointToLayer: function (feature, latlng) {
-    //         return L.circleMarker(latlng, geojsonMarkerOptions(feature));
-    //     }
-    // }).addTo(mymap);
 
     // Building icons
     var PropertyTypeIcon = L.Icon.extend({
@@ -96,7 +74,7 @@ function draw_area_map (elementId, areaId) {
     }
 
     function isPubliclyAccessible (propertyCategory) {
-        // Whether the building is publicly accessible
+        // Whether the building is publicly accessible or not
         switch (propertyCategory) {
             case "Shop":
             case "Public house":
@@ -134,9 +112,8 @@ function draw_area_map (elementId, areaId) {
     var valuationBuildingPoints = new L.geoJson(null, {
         pointToLayer: function (feature, latlng) {
             return getBuildingIcon(feature.properties.PropertyCategory, latlng);
-            // return L.circleMarker(latlng, geojsonMarkerOptions(feature));
         }
-    });//.addTo(mymap);
+    });
     var valuationBuildingsPopupTemplate = '{HouseNum} {Street}<br>{TypeOfProperty}<br><small>Assessment Number: {AssessNum}</small>';
     valuationBuildingPoints.bindPopup(function(e){
         return L.Util.template(valuationBuildingsPopupTemplate, e.feature.properties)
@@ -147,7 +124,7 @@ function draw_area_map (elementId, areaId) {
         pointToLayer: function (feature, latlng) {
             return getBuildingIcon(feature.properties.Category, latlng);
         }
-    });//.addTo(mymap);
+    });
     var presentDayBuildingsPopupTemplate = '{HouseNum} {Street}<br>{Category}';
     presentDayBuildingPoints.bindPopup(function(e){
         return L.Util.template(presentDayBuildingsPopupTemplate, e.feature.properties)
@@ -182,15 +159,11 @@ function draw_area_map (elementId, areaId) {
     // 1910 Valuation Survey building outlines 
     var valuationBuildingOutlines = new L.geoJson(null, {
         style: function (feature) {
-            // var fillColor = propertyTypeScale(feature.properties.TypeOfProperty);
             return getBuildingFillStyle(feature.properties.PropertyCategory);
         }
     });
-    // valuationBuildingOutlines.addTo(mymap);
-    // var valuationBuildingOutlinesPopupTemplate = '{HouseNum} {Street}<br>{TypeOfProperty}<br><small>Assessment Number: {AssessNum}</small>';
     valuationBuildingOutlines.bindPopup(function(e){
         return L.Util.template(valuationBuildingsPopupTemplate, e.feature.properties);
-        // return L.Util.template(valuationBuildingOutlinesPopupTemplate, e.feature.properties)
     });
 
     // Present day building outlines 
@@ -199,8 +172,6 @@ function draw_area_map (elementId, areaId) {
             return getBuildingFillStyle(feature.properties.Category);
         }
     });
-    // presentDayBuildingOutlines.addTo(mymap);
-    // var presentDayBuildingOutlinesPopupTemplate = '{HouseNum} {Street}<br>{Category}<br>';
     presentDayBuildingOutlines.bindPopup(function(e){
         return L.Util.template(presentDayBuildingsPopupTemplate, e.feature.properties)
     });
@@ -217,7 +188,6 @@ function draw_area_map (elementId, areaId) {
         
     };
     L.control.layers(overlayMaps, null, {collapsed: false}).addTo(mymap);
-
     
     // Load data
     var districtValuations = {},
@@ -262,10 +232,10 @@ function draw_area_map (elementId, areaId) {
         return typeOfProperty;
     }
 
-    // Bristol East Central valuation records
+    // Load 1910 Valuation spreadsheet
     $.get("../csv/Bristol_Valuation_Records_1910.csv")
         .then(function (valuationsData) {
-            // Index the district valuations area (by district, street, assessment number)
+            // Index the 1910 Valuation data (by district, street, assessment number)
             var valuationRecords = d3.csvParse(valuationsData);
             districtValuations = d3.nest()
                 .key(function (d) { return d.District; })
@@ -273,6 +243,7 @@ function draw_area_map (elementId, areaId) {
                 .key(function (d) { return d["Source: No. of Assessment"]; })
                 .object(valuationRecords);
 
+            // Load the GeoJSON data
             $.when($.getJSON("../geojson/Valuations_1910_Building_Outline.geojson"),
                 $.getJSON("../geojson/Valuations_1910_Building_Centres.geojson"),
                 $.getJSON("../geojson/Buildings_Present_Day.geojson"),
@@ -281,23 +252,18 @@ function draw_area_map (elementId, areaId) {
                         valBuildingCentresGeoJson,
                         presentDayBuildingsGeoJson,
                         presentDayBuildingCentresGeoJson) {
-                    // console.log(valBuildingsGeoJson[0]);
-                    // console.log(valBuildingCentresGeoJson[0]);
 
                     // Extend the GeoJSON with Property Type from valuations data
                     var allValFeatures = [].concat(valBuildingsGeoJson[0].features).concat(valBuildingCentresGeoJson[0].features);
-                    // console.log(allValFeatures);
                     $.each(allValFeatures, function (ind, feature) {
                         var typeOfProperty = getTypeOfProperty(districtValuations, feature),
                             propertyCategory = propertyTypeToCategory(typeOfProperty);
                         
-                        // propertyCategory = propertyTypeToCategory(typeOfProperty);
                         feature.properties["TypeOfProperty"] = typeOfProperty;
                         feature.properties["PropertyCategory"] = propertyCategory;
                         distinctPropertyTypesLookup[typeOfProperty] = true;
                         distinctPropertyCategoriesLookup[propertyCategory] = true;
                     });
-                    // console.log(allValFeatures);
 
                     // Add 1910 valuation building data to map layers
                     valuationBuildingOutlines.addData(valBuildingsGeoJson[0]);
@@ -342,97 +308,7 @@ function draw_area_map (elementId, areaId) {
 
                     legend.addTo(mymap);
                 });
-
-            // Get building outline geojson
-            // return $.getJSON("../geojson/Valuations_1910_Building_Outline.geojson");
-
         });
-/*
-        .then(function (geojsonData) {
-            // Extend the GeoJSON with Property Type from valuations data
-            $.each(geojsonData.features, function (ind, feature) {
-                var typeOfProperty = getTypeOfProperty(districtValuations, feature),
-                    propertyCategory = propertyTypeToCategory(typeOfProperty);
-                
-                // propertyCategory = propertyTypeToCategory(typeOfProperty);
-                feature.properties["TypeOfProperty"] = typeOfProperty;
-                feature.properties["PropertyCategory"] = propertyCategory;
-                distinctPropertyTypesLookup[typeOfProperty] = true;
-                distinctPropertyCategoriesLookup[propertyCategory] = true;
-            });
-
-            // Add building outline data
-            valuationBuildingOutlines.addData(geojsonData);
-
-            // Set the colour scale for buildings
-            // var distinctPropertyCategories = [];
-            // for (var i in distinctPropertyCategoriesLookup) {
-            //     distinctPropertyCategories.push(i);
-            // }
-            // propertyTypeScale.domain(distinctPropertyCategories);
-
-            // Add map legend for property type colours
-            var legend = L.control({position: 'topright'});
-
-            legend.onAdd = function (map) {
-                var div = L.DomUtil.create('div', 'map-info map-legend'),
-                    tmpColour,
-                    tmpPropertyCategory,
-                    tmpPropertyCategories = Object.keys(propertyCategories);
-                    // numPropertyCategories = tmpPropertyCategories.length;
-
-                // Add a legend entry for each Property Type
-                // for (var i = 0; i < distinctPropertyTypes.length; i++) {
-                //     tmpColour = propertyTypeScale(distinctPropertyTypes[i]);
-                //     div.innerHTML +=
-                //         '<i style="background:' + tmpColour + '"></i> ' +
-                //         distinctPropertyTypes[i] + (typeof distinctPropertyTypes[i + 1] !== "undefined" ? '<br>' : '');
-                // }
-
-                // Add a legend entry for each Property Cateogory
-                div.innerHTML += "Type of building<br>";
-                for (var i = 0; i < tmpPropertyCategories.length; i++) {
-                    tmpPropertyCategory = tmpPropertyCategories[i];
-                    div.innerHTML +=
-                        '<img src="' + propertyCategoryIconPath(tmpPropertyCategory) + '"> ' +
-                        tmpPropertyCategories[i] + (typeof tmpPropertyCategories[i + 1] !== "undefined" ? '<br>' : '');
-                }
-
-                // Add entry for whether building is accessible to public
-                div.innerHTML += "<br><br>Public accessibility<br>";
-                div.innerHTML +=
-                    '<i style="background:' + publiclyAccessibleColour + '"></i> ' +
-                    'Publicly accessible<br>';
-                div.innerHTML +=
-                    '<i style="background:' + notPubliclyAccessibleColour + '"></i> ' +
-                    'Not publicly accessible<br>';
-                div.innerHTML +=
-                    '<i style="background:' + unknownPubliclyAccessibleColour + '"></i> ' +
-                    'Unknown accessibility<br>';
-
-                return div;
-            };
-
-            legend.addTo(mymap);
-
-            // Load the building points geojson
-            return $.getJSON("../geojson/Valuations_1910_Building_Centres.geojson");
-        })
-        .then(function (geojsonData) {
-            // Extend the GeoJSON with property type from valuations data
-            $.each(geojsonData.features, function (ind, feature) {
-                var typeOfProperty = getTypeOfProperty(districtValuations, feature),
-                    propertyCategory = propertyTypeToCategory(typeOfProperty);
-                
-                // propertyCategory = propertyTypeToCategory(typeOfProperty);
-                feature.properties["TypeOfProperty"] = typeOfProperty;
-                feature.properties["PropertyCategory"] = propertyCategory;
-                distinctPropertyTypesLookup[typeOfProperty] = true;
-                distinctPropertyCategoriesLookup[propertyCategory] = true;
-            });
-            valuationBuildingPoints.addData(geojsonData);
-        });
-*/
 
     return mymap;
 }
