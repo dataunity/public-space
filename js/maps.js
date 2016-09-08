@@ -9,6 +9,27 @@ PublicSpace.buildings = (function () {
             "Industrial or storage": "Industrial or storage",
             "Other": "Other"
         },
+        buildingTypeToCategory = function (buildingType) {
+            switch (buildingType) {
+                case "Shop":
+                case "House and shop":
+                case "Shop and offices":
+                case "House, shop and offices":
+                case "Showroom":
+                    return "Shop";
+                case "House":
+                case "Almshouses":
+                    return "House";
+                case "Public house":
+                    return "Public house";
+                case "Warehouse":
+                case "Saw mill":
+                    return "Industrial or storage";
+                default:
+                    return "Unknown";
+            }
+        },
+
         // Public accessibility colours
         publiclyAccessibleColour = "#2ca02c",
         notPubliclyAccessibleColour = "#1f77b4",
@@ -62,6 +83,7 @@ PublicSpace.buildings = (function () {
 
     return {
         categories: categories,
+        buildingTypeToCategory: buildingTypeToCategory,
         publicAccessibilityFillStyle: publicAccessibilityFillStyle,
         publicAccessibilityLegendText: publicAccessibilityLegendText
     };
@@ -69,7 +91,7 @@ PublicSpace.buildings = (function () {
 
 // Icons to display on maps
 PublicSpace.mapsIcons = (function () {
-    var propertyCategories = PublicSpace.buildings.categories,
+    var buildingCategories = PublicSpace.buildings.categories,
         PropertyTypeIcon = L.Icon.extend({
             options: {
                 iconSize:     [20, 18],
@@ -96,11 +118,11 @@ PublicSpace.mapsIcons = (function () {
         },
 
         // Icons
-        shopIcon = new PropertyTypeIcon({iconUrl: propertyCategoryIconPath(propertyCategories["Shop"])}),
-        houseIcon = new PropertyTypeIcon({iconUrl: propertyCategoryIconPath(propertyCategories["House"])}),
-        publicHouseIcon = new PropertyTypeIcon({iconUrl: propertyCategoryIconPath(propertyCategories["Public house"])}),
-        industrialIcon = new PropertyTypeIcon({iconUrl: propertyCategoryIconPath(propertyCategories["Industrial or storage"])}),
-        otherIcon = new PropertyTypeIcon({iconUrl: propertyCategoryIconPath(propertyCategories["Other"])}),
+        shopIcon = new PropertyTypeIcon({iconUrl: propertyCategoryIconPath(buildingCategories["Shop"])}),
+        houseIcon = new PropertyTypeIcon({iconUrl: propertyCategoryIconPath(buildingCategories["House"])}),
+        publicHouseIcon = new PropertyTypeIcon({iconUrl: propertyCategoryIconPath(buildingCategories["Public house"])}),
+        industrialIcon = new PropertyTypeIcon({iconUrl: propertyCategoryIconPath(buildingCategories["Industrial or storage"])}),
+        otherIcon = new PropertyTypeIcon({iconUrl: propertyCategoryIconPath(buildingCategories["Other"])}),
 
         getBuildingIcon = function (buildingCategory, latlng) {
             switch (buildingCategory) {
@@ -126,7 +148,9 @@ PublicSpace.mapsIcons = (function () {
 PublicSpace.maps = (function () {
 
     // Private properties
-    var propertyCategories = PublicSpace.buildings.categories,
+        // Dependencies
+    var buildingCategories = PublicSpace.buildings.categories,
+        getBuildingIcon = PublicSpace.mapsIcons.getBuildingIcon,
 
         // Popup text templates
         valuationBuildingsPopupTemplate = '{HouseNum} {Street}<br>{TypeOfProperty}<br><small>Assessment Number: {AssessNum}</small>',
@@ -180,77 +204,80 @@ PublicSpace.maps = (function () {
             }
             map.on('click', onMapClick);
         },
-        propertyTypeToCategory = function (propertyType) {
-            switch (propertyType) {
-                case "Shop":
-                case "House and shop":
-                case "Shop and offices":
-                case "House, shop and offices":
-                case "Showroom":
-                    return "Shop";
-                case "House":
-                case "Almshouses":
-                    return "House";
-                case "Public house":
-                    return "Public house";
-                case "Warehouse":
-                case "Saw mill":
-                    return "Industrial or storage";
-                default:
-                    return "Unknown";
+        createValuationBuildingPointsLayer = function () {
+            // 1910s Valuation building markers
+            return new L.geoJson(null, {
+                    pointToLayer: function (feature, latlng) {
+                        return getBuildingIcon(feature.properties.PropertyCategory, latlng);
+                    }
+                })
+                .bindPopup(function(e){
+                    return L.Util.template(valuationBuildingsPopupTemplate, e.feature.properties)
+                });
+        },
+        createValuationBuildingOutlinesLayer = function (fillStyleFunc) {
+            // 1910 Valuation Survey building outlines 
+            return new L.geoJson(null, {
+                    style: function (feature) {
+                        return fillStyleFunc(feature.properties.PropertyCategory);
+                    }
+                })
+                .bindPopup(function(e){
+                    return L.Util.template(valuationBuildingsPopupTemplate, e.feature.properties);
+                });
+        },
+        createPresentDayBuildingPointsLayer = function () {
+            // Present day building markers
+            return new L.geoJson(null, {
+                    pointToLayer: function (feature, latlng) {
+                        return getBuildingIcon(feature.properties.Category, latlng);
+                    }
+                })
+                .bindPopup(function(e){
+                    return L.Util.template(presentDayBuildingsPopupTemplate, e.feature.properties)
+                });
+        },
+        createPresentDayBuildingOutlinesLayer = function (fillStyleFunc) {
+            // Present day building outlines 
+            return new L.geoJson(null, {
+                    style: function (feature) {
+                        return fillStyleFunc(feature.properties.Category);
+                    }
+                })
+                .bindPopup(function(e){
+                    return L.Util.template(presentDayBuildingsPopupTemplate, e.feature.properties)
+                });
+        },
+        getBuildingType = function (districtValuations, feature) {
+            // Look up building type from valuations data for the current feature
+            var districtRecords = (districtValuations[feature.properties.District] || {}),
+                streetRecords = (districtRecords || {})[feature.properties.Street],
+                assessmentRecords = (streetRecords || {})[feature.properties.AssessNum],
+                unknownBuildingType = "Unknown",
+                buildingType = unknownBuildingType;
+
+            if (assessmentRecords && assessmentRecords.length > 0) {
+                buildingType = assessmentRecords[0]["Type of Property"];
+                buildingType = buildingType === "" ? unknownBuildingType : buildingType;
             }
+
+            return buildingType;
         },
         drawAreaMap = function (elementId, areaId) {
             // Dependencies
-            var getBuildingIcon = PublicSpace.mapsIcons.getBuildingIcon,
-                getBuildingFillStyle = PublicSpace.buildings.publicAccessibilityFillStyle;
+            var getBuildingFillStyle = PublicSpace.buildings.publicAccessibilityFillStyle,
+                buildingTypeToCategory = PublicSpace.buildings.buildingTypeToCategory;
             var mymap = createMap(elementId, areaId);
 
             addTileLayer(mymap);
             addCoordinatesPopup(mymap);
 
-            // 1910s Valuation building markers
-            var valuationBuildingPoints = new L.geoJson(null, {
-                pointToLayer: function (feature, latlng) {
-                    return getBuildingIcon(feature.properties.PropertyCategory, latlng);
-                }
-            });
-            
-            valuationBuildingPoints.bindPopup(function(e){
-                return L.Util.template(valuationBuildingsPopupTemplate, e.feature.properties)
-            });
+            // Data layers (actual data is assigned later, after data files loaded)
+            var valuationBuildingPoints = createValuationBuildingPointsLayer();
+            var valuationBuildingOutlines = createValuationBuildingOutlinesLayer(getBuildingFillStyle);
 
-            // Present day building markers
-            var presentDayBuildingPoints = new L.geoJson(null, {
-                pointToLayer: function (feature, latlng) {
-                    return getBuildingIcon(feature.properties.Category, latlng);
-                }
-            });
-            
-            presentDayBuildingPoints.bindPopup(function(e){
-                return L.Util.template(presentDayBuildingsPopupTemplate, e.feature.properties)
-            });
-
-            // 1910 Valuation Survey building outlines 
-            var valuationBuildingOutlines = new L.geoJson(null, {
-                style: function (feature) {
-                    return getBuildingFillStyle(feature.properties.PropertyCategory);
-                }
-            });
-            valuationBuildingOutlines.bindPopup(function(e){
-                return L.Util.template(valuationBuildingsPopupTemplate, e.feature.properties);
-            });
-
-            // Present day building outlines 
-            var presentDayBuildingOutlines = new L.geoJson(null, {
-                style: function (feature) {
-                    return getBuildingFillStyle(feature.properties.Category);
-                }
-            });
-            presentDayBuildingOutlines.bindPopup(function(e){
-                return L.Util.template(presentDayBuildingsPopupTemplate, e.feature.properties)
-            });
-
+            var presentDayBuildingPoints = createPresentDayBuildingPointsLayer();
+            var presentDayBuildingOutlines = createPresentDayBuildingOutlinesLayer(getBuildingFillStyle);
 
             // Layer groups
             var valuations1910Layer = L.layerGroup([valuationBuildingOutlines, valuationBuildingPoints]);
@@ -260,31 +287,13 @@ PublicSpace.maps = (function () {
             var overlayMaps = {
                 "Present day (2016)": presentDayLayer,
                 "1910": valuations1910Layer
-                
             };
             L.control.layers(overlayMaps, null, {collapsed: false}).addTo(mymap);
             
             // Load data
             var districtValuations = {},
-                distinctPropertyTypesLookup = {},
-                distinctPropertyCategoriesLookup = {},
-                unknownTypeOfProperty = "Unknown";
-
-            // How the property types should be mapped to broader categories
-            function getTypeOfProperty (districtValuations, feature) {
-                var districtRecords = (districtValuations[feature.properties.District] || {}),
-                    streetRecords = (districtRecords || {})[feature.properties.Street],
-                    assessmentRecords = (streetRecords || {})[feature.properties.AssessNum],
-                    typeOfProperty;
-
-                typeOfProperty = unknownTypeOfProperty;
-                if (assessmentRecords && assessmentRecords.length > 0) {
-                    typeOfProperty = assessmentRecords[0]["Type of Property"];
-                    typeOfProperty = typeOfProperty === "" ? unknownTypeOfProperty : typeOfProperty;
-                }
-
-                return typeOfProperty;
-            }
+                distinctBuildingTypesLookup = {},
+                distinctBuildingCategoriesLookup = {};
 
             // Load 1910 Valuation spreadsheet
             $.get("../csv/Bristol_Valuation_Records_1910.csv")
@@ -310,13 +319,13 @@ PublicSpace.maps = (function () {
                             // Extend the GeoJSON with Property Type from valuations data
                             var allValFeatures = [].concat(valBuildingsGeoJson[0].features).concat(valBuildingCentresGeoJson[0].features);
                             $.each(allValFeatures, function (ind, feature) {
-                                var typeOfProperty = getTypeOfProperty(districtValuations, feature),
-                                    propertyCategory = propertyTypeToCategory(typeOfProperty);
+                                var buildingType = getBuildingType(districtValuations, feature),
+                                    buildingCategory = buildingTypeToCategory(buildingType);
                                 
-                                feature.properties["TypeOfProperty"] = typeOfProperty;
-                                feature.properties["PropertyCategory"] = propertyCategory;
-                                distinctPropertyTypesLookup[typeOfProperty] = true;
-                                distinctPropertyCategoriesLookup[propertyCategory] = true;
+                                feature.properties["TypeOfProperty"] = buildingType;
+                                feature.properties["PropertyCategory"] = buildingCategory;
+                                distinctBuildingTypesLookup[buildingType] = true;
+                                distinctBuildingCategoriesLookup[buildingCategory] = true;
                             });
 
                             // Add 1910 valuation building data to map layers
@@ -335,7 +344,7 @@ PublicSpace.maps = (function () {
                                 var div = L.DomUtil.create('div', 'map-info map-legend'),
                                     tmpColour,
                                     tmpPropertyCategory,
-                                    tmpPropertyCategories = Object.keys(propertyCategories);
+                                    tmpPropertyCategories = Object.keys(buildingCategories);
 
                                 // Add a legend entry for each Property Cateogory
                                 div.innerHTML += "Type of building:<br>";
