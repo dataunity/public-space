@@ -8,10 +8,62 @@ PublicSpace.buildings = (function () {
             "Public house": "Public house",
             "Industrial or storage": "Industrial or storage",
             "Other": "Other"
+        },
+        // Public accessibility colours
+        publiclyAccessibleColour = "#2ca02c",
+        notPubliclyAccessibleColour = "#1f77b4",
+        unknownPubliclyAccessibleColour = "#aaaaaa",
+        isPubliclyAccessible = function (buildingCategory) {
+            // Whether the building is publicly accessible or not
+            switch (buildingCategory) {
+                case "Shop":
+                case "Public house":
+                    return true;
+                case "Other":
+                case "Unknown":
+                    return undefined;
+                default:
+                    return false;
+            }
+        },
+        publicAccessibilityColour = function (buildingCategory) {
+            // Gives a colour corresponding to the public accessibility of the building
+            var isAccessible = isPubliclyAccessible(buildingCategory);
+            if (typeof isAccessible === "undefined") {
+                return unknownPubliclyAccessibleColour;
+            } else {
+                return isAccessible ? publiclyAccessibleColour : notPubliclyAccessibleColour;
+            }
+        },
+        publicAccessibilityFillStyle = function (buildingCategory) {
+            var fillColor = publicAccessibilityColour(buildingCategory);
+            return {
+                radius: 8,
+                fillColor: fillColor,
+                color: "#000",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.3
+            };
+        },
+        publicAccessibilityLegendText = function () {
+            var txt = "<br><br>Public accessibility:<br>";
+            txt +=
+                '<i style="background:' + publiclyAccessibleColour + '"></i> ' +
+                'Publicly accessible<br>';
+            txt +=
+                '<i style="background:' + notPubliclyAccessibleColour + '"></i> ' +
+                'Not publicly accessible<br>';
+            txt +=
+                '<i style="background:' + unknownPubliclyAccessibleColour + '"></i> ' +
+                'Unknown accessibility<br>';
+            return txt;
         };
 
     return {
-        categories: categories
+        categories: categories,
+        publicAccessibilityFillStyle: publicAccessibilityFillStyle,
+        publicAccessibilityLegendText: publicAccessibilityLegendText
     };
 }());
 
@@ -74,37 +126,11 @@ PublicSpace.mapsIcons = (function () {
 PublicSpace.maps = (function () {
 
     // Private properties
-    var propertyCategories = PublicSpace.buildings.categories;
-        // propertyCategories = {
-        //     "Shop": "Shop",
-        //     "House": "House",
-        //     "Public house": "Public house",
-        //     "Industrial or storage": "Industrial or storage",
-        //     "Other": "Other"
-        // },
-        // PropertyTypeIcon = L.Icon.extend({
-        //     options: {
-        //         iconSize:     [20, 18],
-        //         iconAnchor:   [10, 9],
-        //         popupAnchor:  [-3, -9]
-        //     }
-        // }),
-        // propertyCategoryIcons = {
-        //     "Shop": "../images/icons/shop.png",
-        //     "House": "../images/icons/house.png",
-        //     "Public house": "../images/icons/public_house.png",
-        //     "Industrial or storage": "../images/icons/industrial_or_storage.png",
-        //     "Other": "../images/icons/other.png"
-        // },
+    var propertyCategories = PublicSpace.buildings.categories,
 
         // Popup text templates
         valuationBuildingsPopupTemplate = '{HouseNum} {Street}<br>{TypeOfProperty}<br><small>Assessment Number: {AssessNum}</small>',
         presentDayBuildingsPopupTemplate = '{HouseNum} {Street}<br>{Category}',
-
-        // Public accessibility colours
-        publiclyAccessibleColour = "#2ca02c",
-        notPubliclyAccessibleColour = "#1f77b4",
-        unknownPubliclyAccessibleColour = "#aaaaaa",
 
     // Private methods
         createMap = function (elementId, areaId) {
@@ -154,47 +180,6 @@ PublicSpace.maps = (function () {
             }
             map.on('click', onMapClick);
         },
-        // propertyCategoryIconPath = function (propertyCategory) {
-        //     // Path to icon for building categories
-        //     var pathToIcon = propertyCategoryIcons[propertyCategory];
-        //     if (typeof pathToIcon === "undefined") {
-        //         pathToIcon = "../images/icons/other.png";
-        //     }
-        //     return pathToIcon;
-        // },
-        isPubliclyAccessible = function (propertyCategory) {
-            // Whether the building is publicly accessible or not
-            switch (propertyCategory) {
-                case "Shop":
-                case "Public house":
-                    return true;
-                case "Other":
-                case "Unknown":
-                    return undefined;
-                default:
-                    return false;
-            }
-        },
-        propertyPublicAccessibilityColour = function (propertyCategory) {
-            // Gives a colour corresponding to the public accessibility of the building
-            var isAccessible = isPubliclyAccessible(propertyCategory);
-            if (typeof isAccessible === "undefined") {
-                return unknownPubliclyAccessibleColour;
-            } else {
-                return isAccessible ? publiclyAccessibleColour : notPubliclyAccessibleColour;
-            }
-        },
-        getBuildingFillStyle = function (buildingCategory) {
-            var fillColor = propertyPublicAccessibilityColour(buildingCategory);
-            return {
-                radius: 8,
-                fillColor: fillColor,
-                color: "#000",
-                weight: 1,
-                opacity: 1,
-                fillOpacity: 0.3
-            };
-        },
         propertyTypeToCategory = function (propertyType) {
             switch (propertyType) {
                 case "Shop":
@@ -216,36 +201,17 @@ PublicSpace.maps = (function () {
             }
         },
         drawAreaMap = function (elementId, areaId) {
+            // Dependencies
+            var getBuildingIcon = PublicSpace.mapsIcons.getBuildingIcon,
+                getBuildingFillStyle = PublicSpace.buildings.publicAccessibilityFillStyle;
             var mymap = createMap(elementId, areaId);
-                // shopIcon = new PropertyTypeIcon({iconUrl: propertyCategoryIconPath(propertyCategories["Shop"])}),
-                // houseIcon = new PropertyTypeIcon({iconUrl: propertyCategoryIconPath(propertyCategories["House"])}),
-                // publicHouseIcon = new PropertyTypeIcon({iconUrl: propertyCategoryIconPath(propertyCategories["Public house"])}),
-                // industrialIcon = new PropertyTypeIcon({iconUrl: propertyCategoryIconPath(propertyCategories["Industrial or storage"])}),
-                // otherIcon = new PropertyTypeIcon({iconUrl: propertyCategoryIconPath(propertyCategories["Other"])});
-            
+
             addTileLayer(mymap);
             addCoordinatesPopup(mymap);
-
-            // function getBuildingIcon2 (buildingCategory, latlng) {
-            //     switch (buildingCategory) {
-            //         case "Shop":
-            //             return L.marker(latlng, {icon: shopIcon});
-            //         case "House":
-            //             return L.marker(latlng, {icon: houseIcon});
-            //         case "Public house":
-            //             return L.marker(latlng, {icon: publicHouseIcon});
-            //         case "Industrial or storage":
-            //             return L.marker(latlng, {icon: industrialIcon});
-            //         default:
-            //             return L.marker(latlng, {icon: otherIcon});
-            //     }
-            // }
-            var getBuildingIcon = PublicSpace.mapsIcons.getBuildingIcon;
 
             // 1910s Valuation building markers
             var valuationBuildingPoints = new L.geoJson(null, {
                 pointToLayer: function (feature, latlng) {
-                    // return PublicSpace.maps.icons.getBuildingIcon(feature.properties.PropertyCategory, latlng);
                     return getBuildingIcon(feature.properties.PropertyCategory, latlng);
                 }
             });
@@ -381,16 +347,7 @@ PublicSpace.maps = (function () {
                                 }
 
                                 // Add entry for whether building is accessible to public
-                                div.innerHTML += "<br><br>Public accessibility:<br>";
-                                div.innerHTML +=
-                                    '<i style="background:' + publiclyAccessibleColour + '"></i> ' +
-                                    'Publicly accessible<br>';
-                                div.innerHTML +=
-                                    '<i style="background:' + notPubliclyAccessibleColour + '"></i> ' +
-                                    'Not publicly accessible<br>';
-                                div.innerHTML +=
-                                    '<i style="background:' + unknownPubliclyAccessibleColour + '"></i> ' +
-                                    'Unknown accessibility<br>';
+                                div.innerHTML += PublicSpace.buildings.publicAccessibilityLegendText();
 
                                 return div;
                             };
