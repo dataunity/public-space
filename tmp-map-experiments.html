@@ -1,0 +1,24 @@
+---
+layout: default
+---
+
+<div class="home">
+
+  <h1>Map experiments</h1>
+
+  <h2>Icons and public accessibility colours (transparent)</h2>
+  {% include map-area.html areaid="merchant-street" mapid=1 mapstyle="fillOpacity:0.3;fillMethod:publiclyaccessible;markers:icons" %}
+
+  <h2>&nbsp;</h2>
+  <h2>Public accessibility colours (transparent) only</h2>
+  {% include map-area.html areaid="merchant-street" mapid=2 mapstyle="fillOpacity:0.3;fillMethod:publiclyaccessible;markers:none" %}
+
+  <h2>&nbsp;</h2>
+  <h2>Icons and public accessibility colours (strong)</h2>
+  {% include map-area.html areaid="merchant-street" mapid=3 mapstyle="fillOpacity:1;fillMethod:publiclyaccessible;markers:icons" %}
+
+  <h2>&nbsp;</h2>
+  <h2>Public accessibility colours (strong) only</h2>
+  {% include map-area.html areaid="merchant-street" mapid=4 mapstyle="fillOpacity:1;fillMethod:publiclyaccessible;markers:none" %}
+
+</div>

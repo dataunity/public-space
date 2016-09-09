@@ -56,15 +56,18 @@ PublicSpace.buildings = (function () {
                 return isAccessible ? publiclyAccessibleColour : notPubliclyAccessibleColour;
             }
         },
-        publicAccessibilityFillStyle = function (buildingCategory) {
-            var fillColor = publicAccessibilityColour(buildingCategory);
+        publicAccessibilityFillStyle = function (buildingCategory, fillOpacity) {
+            console.log("fillOpacity", fillOpacity);
+            var fillColor = publicAccessibilityColour(buildingCategory),
+                fillOpacity = typeof fillOpacity === "undefined" ? 0.3 : fillOpacity;
+            
             return {
                 radius: 8,
                 fillColor: fillColor,
                 color: "#000",
                 weight: 1,
                 opacity: 1,
-                fillOpacity: 0.3
+                fillOpacity: fillOpacity
             };
         };
 
@@ -157,7 +160,7 @@ PublicSpace.mapLegends = (function () {
                 'Unknown accessibility<br>';
             return txt;
         },
-        categoriesLegendText = function () {
+        categoryIconsLegendText = function () {
             var txt = "",
                 tmpPropertyCategory,
                 tmpPropertyCategories = Object.keys(buildingCategories);
@@ -175,7 +178,7 @@ PublicSpace.mapLegends = (function () {
     // Public interface
     return {
         publicAccessibilityLegendText: publicAccessibilityLegendText,
-        categoriesLegendText: categoriesLegendText
+        categoryIconsLegendText: categoryIconsLegendText
     };
 }());
 
@@ -257,9 +260,22 @@ PublicSpace.maps = (function ($, L) {
         },
         createValuationBuildingOutlinesLayer = function (fillStyleFunc) {
             // 1910 Valuation Survey building outlines 
+            var fillOpacity = typeof fillStyleFunc.__fillOpacity === "undefined" ? 0.3 : fillStyleFunc.__fillOpacity;
             return new L.geoJson(null, {
                     style: function (feature) {
-                        return fillStyleFunc(feature.properties.PropertyCategory);
+                        return fillStyleFunc(feature.properties.PropertyCategory, fillOpacity);
+                    }
+                })
+                .bindPopup(function(e){
+                    return L.Util.template(valuationBuildingsPopupTemplate, e.feature.properties);
+                });
+        },
+        createBuildingOutlinesLayer = function (featurePropertyName, fillStyleFunc) {
+            // 1910 Valuation Survey building outlines 
+            var fillOpacity = typeof fillStyleFunc.__fillOpacity === "undefined" ? 0.3 : fillStyleFunc.__fillOpacity;
+            return new L.geoJson(null, {
+                    style: function (feature) {
+                        return fillStyleFunc(feature.properties[featurePropertyName], fillOpacity);
                     }
                 })
                 .bindPopup(function(e){
@@ -279,9 +295,10 @@ PublicSpace.maps = (function ($, L) {
         },
         createPresentDayBuildingOutlinesLayer = function (fillStyleFunc) {
             // Present day building outlines 
+            var fillOpacity = typeof fillStyleFunc.__fillOpacity === "undefined" ? 0.3 : fillStyleFunc.__fillOpacity;
             return new L.geoJson(null, {
                     style: function (feature) {
-                        return fillStyleFunc(feature.properties.Category);
+                        return fillStyleFunc(feature.properties.Category, fillOpacity);
                     }
                 })
                 .bindPopup(function(e){
@@ -349,11 +366,15 @@ PublicSpace.maps = (function ($, L) {
 
                             // Add 1910 valuation building data to map layers
                             valuationBuildingOutlines.addData(valBuildingsGeoJson[0]);
-                            valuationBuildingPoints.addData(valBuildingCentresGeoJson[0]);
-
+                            if (valuationBuildingPoints !== null) {
+                                valuationBuildingPoints.addData(valBuildingCentresGeoJson[0]);
+                            }
+                            
                             // Add present day building data to map layers
                             presentDayBuildingOutlines.addData(presentDayBuildingsGeoJson[0]);
-                            presentDayBuildingPoints.addData(presentDayBuildingCentresGeoJson[0]);
+                            if (presentDayBuildingPoints !== null) {
+                                presentDayBuildingPoints.addData(presentDayBuildingCentresGeoJson[0]);
+                            }
 
                             buildingTypes = Object.keys(distinctBuildingTypesLookup);
                             buildingCategories = Object.keys(distinctBuildingCategoriesLookup);
@@ -363,18 +384,71 @@ PublicSpace.maps = (function ($, L) {
 
             return deferred.promise();
         },
-        drawAreaMap = function (elementId, areaId) {
-            // Dependencies
-            var getBuildingFillStyle = PublicSpace.buildings.publicAccessibilityFillStyle;
+        tmpParseMapOptions = function (mapStyle) {
+            // Makes map drawing options from string
+            var mapOptions = {
+                "fillOpacity": 0.3,
+                "markers": "icons",
+                "fillMethod": "publiclyaccessible"
+            };
+
+            if (mapStyle) {
+                $.each(mapStyle.split(";"), function (ind, optionText) {
+                    var parts = optionText.split(":"),
+                        key = parts[0],
+                        val = parts[1];
+                    if (key === "fillOpacity") {
+                        mapOptions[key] = parseFloat(val);
+                    } else {
+                        mapOptions[key] = val;
+                    }
+                });
+            }
+            
+            return mapOptions;
+        }
+        drawAreaMap = function (elementId, areaId, tmpMapStyle) {
+            // Note: tmpMapStyle is temporary - just to experiment with styles
+            var mapOptions = tmpParseMapOptions(tmpMapStyle);
+            console.log(mapOptions);
 
             var mymap = createMap(elementId, areaId);
 
-            // Map layers (actual data is assigned later, after data files loaded)
-            var valuationBuildingPoints = createValuationBuildingIconsLayer();
-            var valuationBuildingOutlines = createValuationBuildingOutlinesLayer(getBuildingFillStyle);
+            var valuationBuildingPoints = null,
+                valuationBuildingOutlines = null,
+                presentDayBuildingPoints = null,
+                presentDayBuildingOutlines = null;
 
-            var presentDayBuildingPoints = createPresentDayBuildingIconsLayer();
-            var presentDayBuildingOutlines = createPresentDayBuildingOutlinesLayer(getBuildingFillStyle);
+            // Map layers (actual data is assigned later, after data files loaded)
+            switch (mapOptions["markers"]) {
+                case "icons":
+                    valuationBuildingPoints = createValuationBuildingIconsLayer();
+                    presentDayBuildingPoints = createPresentDayBuildingIconsLayer();
+                    break;
+                default:
+                    valuationBuildingPoints = createValuationBuildingIconsLayer();
+                    presentDayBuildingPoints = createPresentDayBuildingIconsLayer();
+                    break;
+            }
+
+            var getBuildingFillStyle;
+
+            switch (mapOptions["fillMethod"]) {
+                case "publiclyaccessible":
+                default:
+                    getBuildingFillStyle = PublicSpace.buildings.publicAccessibilityFillStyle;
+                    break;
+            }
+
+            if (typeof mapOptions["fillOpacity"] !== "undefined") {
+                getBuildingFillStyle.__fillOpacity = mapOptions["fillOpacity"];
+            }
+            
+            valuationBuildingOutlines = createBuildingOutlinesLayer("PropertyCategory", getBuildingFillStyle);
+            presentDayBuildingOutlines = createBuildingOutlinesLayer("Category", getBuildingFillStyle);
+            // valuationBuildingOutlines = createValuationBuildingOutlinesLayer(getBuildingFillStyle);
+            // presentDayBuildingOutlines = createPresentDayBuildingOutlinesLayer(getBuildingFillStyle);
+            
 
             // Map layer groups
             var valuations1910Layer = L.layerGroup([valuationBuildingOutlines, valuationBuildingPoints]);
@@ -389,18 +463,23 @@ PublicSpace.maps = (function ($, L) {
                 .addTo(mymap);
             
             // Set default layer to visible
-            presentDayLayer.addTo(mymap);
+            valuations1910Layer.addTo(mymap);
+            // presentDayLayer.addTo(mymap);
 
-            loadMapData(valuationBuildingPoints, valuationBuildingOutlines,
-                presentDayBuildingPoints, presentDayBuildingOutlines)
+            loadMapData(mapOptions["markers"] === "none" ? null : valuationBuildingPoints, 
+                valuationBuildingOutlines,
+                mapOptions["markers"] === "none" ? null : presentDayBuildingPoints, 
+                presentDayBuildingOutlines)
                 .done (function (buildingTypes, buildingCategories) {
                     // Add map legend for property type colours
                     var legend = L.control({position: 'topright'});
                     legend.onAdd = function (map) {
                             var div = L.DomUtil.create('div', 'map-info map-legend');
 
-                            // Add a legend entry for each Property Cateogory
-                            div.innerHTML += PublicSpace.mapLegends.categoriesLegendText();
+                            if (mapOptions["markers"] !== "none") {
+                                // Add a legend entry for each Property Category
+                                div.innerHTML += PublicSpace.mapLegends.categoryIconsLegendText();
+                            }
                             // Add entry for whether building is accessible to public
                             div.innerHTML += PublicSpace.mapLegends.publicAccessibilityLegendText();
 
