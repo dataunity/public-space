@@ -66,31 +66,20 @@ PublicSpace.buildings = (function () {
                 opacity: 1,
                 fillOpacity: 0.3
             };
-        },
-        publicAccessibilityLegendText = function () {
-            var txt = "<br><br>Public accessibility:<br>";
-            txt +=
-                '<i style="background:' + publiclyAccessibleColour + '"></i> ' +
-                'Publicly accessible<br>';
-            txt +=
-                '<i style="background:' + notPubliclyAccessibleColour + '"></i> ' +
-                'Not publicly accessible<br>';
-            txt +=
-                '<i style="background:' + unknownPubliclyAccessibleColour + '"></i> ' +
-                'Unknown accessibility<br>';
-            return txt;
         };
 
     return {
         categories: categories,
         buildingTypeToCategory: buildingTypeToCategory,
         publicAccessibilityFillStyle: publicAccessibilityFillStyle,
-        publicAccessibilityLegendText: publicAccessibilityLegendText
+        publiclyAccessibleColour: publiclyAccessibleColour,
+        notPubliclyAccessibleColour: notPubliclyAccessibleColour,
+        unknownPubliclyAccessibleColour: unknownPubliclyAccessibleColour
     };
 }());
 
 // Icons to display on maps
-PublicSpace.mapsIcons = (function () {
+PublicSpace.mapsIcons = (function (L) {
     var buildingCategories = PublicSpace.buildings.categories,
         PropertyTypeIcon = L.Icon.extend({
             options: {
@@ -143,13 +132,58 @@ PublicSpace.mapsIcons = (function () {
         getBuildingIcon: getBuildingIcon,
         propertyCategoryIconPath: propertyCategoryIconPath
     }
-}());
+}(L));
 
-PublicSpace.maps = (function () {
-
+PublicSpace.mapLegends = (function () {
     // Private properties
         // Dependencies
     var buildingCategories = PublicSpace.buildings.categories,
+        propertyCategoryIconPath = PublicSpace.mapsIcons.propertyCategoryIconPath,
+        publiclyAccessibleColour = PublicSpace.buildings.publiclyAccessibleColour,
+        notPubliclyAccessibleColour = PublicSpace.buildings.notPubliclyAccessibleColour,
+        unknownPubliclyAccessibleColour = PublicSpace.buildings.unknownPubliclyAccessibleColour
+
+    // Private methods
+        publicAccessibilityLegendText = function () {
+            var txt = "<br><br>Public accessibility:<br>";
+            txt +=
+                '<i style="background:' + publiclyAccessibleColour + '"></i> ' +
+                'Publicly accessible<br>';
+            txt +=
+                '<i style="background:' + notPubliclyAccessibleColour + '"></i> ' +
+                'Not publicly accessible<br>';
+            txt +=
+                '<i style="background:' + unknownPubliclyAccessibleColour + '"></i> ' +
+                'Unknown accessibility<br>';
+            return txt;
+        },
+        categoriesLegendText = function () {
+            var txt = "",
+                tmpPropertyCategory,
+                tmpPropertyCategories = Object.keys(buildingCategories);
+
+            txt += "Type of building:<br>";
+            for (var i = 0; i < tmpPropertyCategories.length; i++) {
+                tmpPropertyCategory = tmpPropertyCategories[i];
+                txt +=
+                    '<img src="' + propertyCategoryIconPath(tmpPropertyCategory) + '"> ' +
+                    tmpPropertyCategories[i] + (typeof tmpPropertyCategories[i + 1] !== "undefined" ? '<br>' : '');
+            }
+            return txt;
+        };
+
+    // Public interface
+    return {
+        publicAccessibilityLegendText: publicAccessibilityLegendText,
+        categoriesLegendText: categoriesLegendText
+    };
+}());
+
+PublicSpace.maps = (function ($, L) {
+
+    // Private properties
+        // Dependencies
+    var buildingTypeToCategory = PublicSpace.buildings.buildingTypeToCategory,
         getBuildingIcon = PublicSpace.mapsIcons.getBuildingIcon,
 
         // Popup text templates
@@ -157,32 +191,6 @@ PublicSpace.maps = (function () {
         presentDayBuildingsPopupTemplate = '{HouseNum} {Street}<br>{Category}',
 
     // Private methods
-        createMap = function (elementId, areaId) {
-            var latLong,
-                zoomLevel = 17;
-
-            // TODO: Move area co-ordinates into CSV lookup file (so new areas can be added easier)?
-            if (areaId === "cabot") {
-                latLong = [51.45921, -2.58229];
-                zoomLevel = 17;
-            } else if (areaId === "mary-le-port") {
-                latLong = [51.45482, -2.5909];
-                zoomLevel = 18;
-            } else if (areaId === "merchant-street") {
-                latLong = [51.45707, -2.58852];
-                zoomLevel = 18;
-            } else if (areaId === "broad-street") {
-                latLong = [51.45543, -2.59377];
-                zoomLevel = 18;
-            } else {
-                latLong = [51.45921, -2.58229];
-            }
-
-            return L.map(elementId, {
-                    scrollWheelZoom: false
-                })
-                .setView(latLong, zoomLevel);
-        },
         addTileLayer = function (map) {
             // TODO: Get fresh access token (this one's from Leaflet demo)
             L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw', {
@@ -204,7 +212,39 @@ PublicSpace.maps = (function () {
             }
             map.on('click', onMapClick);
         },
-        createValuationBuildingPointsLayer = function () {
+        createMap = function (elementId, areaId) {
+            var map,
+                latLong,
+                zoomLevel = 17;
+
+            // TODO: Move area co-ordinates into CSV lookup file (so new areas can be added easier)?
+            if (areaId === "cabot") {
+                latLong = [51.45921, -2.58229];
+                zoomLevel = 17;
+            } else if (areaId === "mary-le-port") {
+                latLong = [51.45482, -2.5909];
+                zoomLevel = 18;
+            } else if (areaId === "merchant-street") {
+                latLong = [51.45707, -2.58852];
+                zoomLevel = 18;
+            } else if (areaId === "broad-street") {
+                latLong = [51.45543, -2.59377];
+                zoomLevel = 18;
+            } else {
+                latLong = [51.45921, -2.58229];
+            }
+
+            map = L.map(elementId, {
+                    scrollWheelZoom: false
+                })
+                .setView(latLong, zoomLevel);
+
+            addTileLayer(map);
+            addCoordinatesPopup(map);
+
+            return map;
+        },
+        createValuationBuildingIconsLayer = function () {
             // 1910s Valuation building markers
             return new L.geoJson(null, {
                     pointToLayer: function (feature, latlng) {
@@ -226,7 +266,7 @@ PublicSpace.maps = (function () {
                     return L.Util.template(valuationBuildingsPopupTemplate, e.feature.properties);
                 });
         },
-        createPresentDayBuildingPointsLayer = function () {
+        createPresentDayBuildingIconsLayer = function () {
             // Present day building markers
             return new L.geoJson(null, {
                     pointToLayer: function (feature, latlng) {
@@ -263,33 +303,10 @@ PublicSpace.maps = (function () {
 
             return buildingType;
         },
-        drawAreaMap = function (elementId, areaId) {
-            // Dependencies
-            var getBuildingFillStyle = PublicSpace.buildings.publicAccessibilityFillStyle,
-                buildingTypeToCategory = PublicSpace.buildings.buildingTypeToCategory;
-            var mymap = createMap(elementId, areaId);
+        loadMapData = function (valuationBuildingPoints, valuationBuildingOutlines,
+            presentDayBuildingPoints, presentDayBuildingOutlines) {
+            var deferred = $.Deferred();
 
-            addTileLayer(mymap);
-            addCoordinatesPopup(mymap);
-
-            // Data layers (actual data is assigned later, after data files loaded)
-            var valuationBuildingPoints = createValuationBuildingPointsLayer();
-            var valuationBuildingOutlines = createValuationBuildingOutlinesLayer(getBuildingFillStyle);
-
-            var presentDayBuildingPoints = createPresentDayBuildingPointsLayer();
-            var presentDayBuildingOutlines = createPresentDayBuildingOutlinesLayer(getBuildingFillStyle);
-
-            // Layer groups
-            var valuations1910Layer = L.layerGroup([valuationBuildingOutlines, valuationBuildingPoints]);
-            var presentDayLayer = L.layerGroup([presentDayBuildingOutlines, presentDayBuildingPoints]);
-            presentDayLayer.addTo(mymap);
-
-            var overlayMaps = {
-                "Present day (2016)": presentDayLayer,
-                "1910": valuations1910Layer
-            };
-            L.control.layers(overlayMaps, null, {collapsed: false}).addTo(mymap);
-            
             // Load data
             var districtValuations = {},
                 distinctBuildingTypesLookup = {},
@@ -316,8 +333,10 @@ PublicSpace.maps = (function () {
                                 presentDayBuildingsGeoJson,
                                 presentDayBuildingCentresGeoJson) {
 
-                            // Extend the GeoJSON with Property Type from valuations data
-                            var allValFeatures = [].concat(valBuildingsGeoJson[0].features).concat(valBuildingCentresGeoJson[0].features);
+                            // Extend the GeoJSON with building type from valuations data
+                            var buildingTypes = [],
+                                buildingCategories = [],
+                                allValFeatures = [].concat(valBuildingsGeoJson[0].features).concat(valBuildingCentresGeoJson[0].features);
                             $.each(allValFeatures, function (ind, feature) {
                                 var buildingType = getBuildingType(districtValuations, feature),
                                     buildingCategory = buildingTypeToCategory(buildingType);
@@ -336,33 +355,58 @@ PublicSpace.maps = (function () {
                             presentDayBuildingOutlines.addData(presentDayBuildingsGeoJson[0]);
                             presentDayBuildingPoints.addData(presentDayBuildingCentresGeoJson[0]);
 
-                            // Add map legend for property type colours
-                            var propertyCategoryIconPath = PublicSpace.mapsIcons.propertyCategoryIconPath;
-                            var legend = L.control({position: 'topright'});
-
-                            legend.onAdd = function (map) {
-                                var div = L.DomUtil.create('div', 'map-info map-legend'),
-                                    tmpColour,
-                                    tmpPropertyCategory,
-                                    tmpPropertyCategories = Object.keys(buildingCategories);
-
-                                // Add a legend entry for each Property Cateogory
-                                div.innerHTML += "Type of building:<br>";
-                                for (var i = 0; i < tmpPropertyCategories.length; i++) {
-                                    tmpPropertyCategory = tmpPropertyCategories[i];
-                                    div.innerHTML +=
-                                        '<img src="' + propertyCategoryIconPath(tmpPropertyCategory) + '"> ' +
-                                        tmpPropertyCategories[i] + (typeof tmpPropertyCategories[i + 1] !== "undefined" ? '<br>' : '');
-                                }
-
-                                // Add entry for whether building is accessible to public
-                                div.innerHTML += PublicSpace.buildings.publicAccessibilityLegendText();
-
-                                return div;
-                            };
-
-                            legend.addTo(mymap);
+                            buildingTypes = Object.keys(distinctBuildingTypesLookup);
+                            buildingCategories = Object.keys(distinctBuildingCategoriesLookup);
+                            deferred.resolve(buildingTypes, buildingCategories);
                         });
+                });
+
+            return deferred.promise();
+        },
+        drawAreaMap = function (elementId, areaId) {
+            // Dependencies
+            var getBuildingFillStyle = PublicSpace.buildings.publicAccessibilityFillStyle;
+
+            var mymap = createMap(elementId, areaId);
+
+            // Map layers (actual data is assigned later, after data files loaded)
+            var valuationBuildingPoints = createValuationBuildingIconsLayer();
+            var valuationBuildingOutlines = createValuationBuildingOutlinesLayer(getBuildingFillStyle);
+
+            var presentDayBuildingPoints = createPresentDayBuildingIconsLayer();
+            var presentDayBuildingOutlines = createPresentDayBuildingOutlinesLayer(getBuildingFillStyle);
+
+            // Map layer groups
+            var valuations1910Layer = L.layerGroup([valuationBuildingOutlines, valuationBuildingPoints]);
+            var presentDayLayer = L.layerGroup([presentDayBuildingOutlines, presentDayBuildingPoints]);
+            L.control.layers(
+                    {
+                        "Present day (2016)": presentDayLayer,
+                        "1910": valuations1910Layer
+                    }, 
+                    null, 
+                    {collapsed: false})
+                .addTo(mymap);
+            
+            // Set default layer to visible
+            presentDayLayer.addTo(mymap);
+
+            loadMapData(valuationBuildingPoints, valuationBuildingOutlines,
+                presentDayBuildingPoints, presentDayBuildingOutlines)
+                .done (function (buildingTypes, buildingCategories) {
+                    // Add map legend for property type colours
+                    var legend = L.control({position: 'topright'});
+                    legend.onAdd = function (map) {
+                            var div = L.DomUtil.create('div', 'map-info map-legend');
+
+                            // Add a legend entry for each Property Cateogory
+                            div.innerHTML += PublicSpace.mapLegends.categoriesLegendText();
+                            // Add entry for whether building is accessible to public
+                            div.innerHTML += PublicSpace.mapLegends.publicAccessibilityLegendText();
+
+                            return div;
+                        };
+                    legend.addTo(mymap);
                 });
 
             return mymap;
@@ -374,7 +418,7 @@ PublicSpace.maps = (function () {
     return {
         drawAreaMap: drawAreaMap
     };
-}());
+}(jQuery, L));
 
 function draw_main_map (elementId) {
     var mymap = L.map(elementId, {
