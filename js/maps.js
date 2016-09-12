@@ -57,8 +57,35 @@ PublicSpace.buildings = (function () {
             }
         },
         publicAccessibilityFillStyle = function (buildingCategory, fillOpacity) {
-            console.log("fillOpacity", fillOpacity);
             var fillColor = publicAccessibilityColour(buildingCategory),
+                fillOpacity = typeof fillOpacity === "undefined" ? 0.3 : fillOpacity;
+            
+            return {
+                radius: 8,
+                fillColor: fillColor,
+                color: "#000",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: fillOpacity
+            };
+        },
+        buildingCategoryScale = d3.scaleOrdinal(d3.schemeCategory10),
+        buildingCategoryFillStyle = function (buildingCategory, fillOpacity) {
+            var buildingCategory = buildingCategory === "Unknown" ? "Other" : buildingCategory,
+                fillColor = buildingCategoryScale(buildingCategory),
+                fillOpacity = typeof fillOpacity === "undefined" ? 0.3 : fillOpacity;
+            
+            return {
+                radius: 8,
+                fillColor: fillColor,
+                color: "#000",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: fillOpacity
+            };
+        },
+        colourScaleFillStyle = function (name, fillOpacity, buildingFillColourScale) {
+            var fillColor = buildingFillColourScale(name),
                 fillOpacity = typeof fillOpacity === "undefined" ? 0.3 : fillOpacity;
             
             return {
@@ -71,13 +98,21 @@ PublicSpace.buildings = (function () {
             };
         };
 
+        // Tmp - might not be used depending on colour fill
+        // Initialise category scale (so colours remain constant)
+        $.each(Object.keys(categories).sort(), function (ind, val) {
+            var tmpColour = buildingCategoryScale(val);
+        });
+
     return {
         categories: categories,
         buildingTypeToCategory: buildingTypeToCategory,
         publicAccessibilityFillStyle: publicAccessibilityFillStyle,
         publiclyAccessibleColour: publiclyAccessibleColour,
         notPubliclyAccessibleColour: notPubliclyAccessibleColour,
-        unknownPubliclyAccessibleColour: unknownPubliclyAccessibleColour
+        unknownPubliclyAccessibleColour: unknownPubliclyAccessibleColour,
+        buildingCategoryFillStyle: buildingCategoryFillStyle,
+        colourScaleFillStyle: colourScaleFillStyle
     };
 }());
 
@@ -148,7 +183,7 @@ PublicSpace.mapLegends = (function () {
 
     // Private methods
         publicAccessibilityLegendText = function () {
-            var txt = "<br><br>Public accessibility:<br>";
+            var txt = "<h4>Public accessibility:</h4>";
             txt +=
                 '<i style="background:' + publiclyAccessibleColour + '"></i> ' +
                 'Publicly accessible<br>';
@@ -165,7 +200,7 @@ PublicSpace.mapLegends = (function () {
                 tmpPropertyCategory,
                 tmpPropertyCategories = Object.keys(buildingCategories);
 
-            txt += "Type of building:<br>";
+            txt += "<h4>Type of building:</h4>";
             for (var i = 0; i < tmpPropertyCategories.length; i++) {
                 tmpPropertyCategory = tmpPropertyCategories[i];
                 txt +=
@@ -173,12 +208,42 @@ PublicSpace.mapLegends = (function () {
                     tmpPropertyCategories[i] + (typeof tmpPropertyCategories[i + 1] !== "undefined" ? '<br>' : '');
             }
             return txt;
+        },
+        categoryColoursLegendText = function () {
+            var colourStyle = PublicSpace.buildings.buildingCategoryFillStyle,
+                txt = "",
+                tmpPropertyCategory,
+                tmpPropertyCategories = Object.keys(buildingCategories);
+
+            txt += "<h4>Building category:</h4>";
+            for (var i = 0; i < tmpPropertyCategories.length; i++) {
+                tmpPropertyCategory = tmpPropertyCategories[i];
+                txt +=
+                    '<i style="background:' + colourStyle(tmpPropertyCategory).fillColor + '"></i> ' +
+                    tmpPropertyCategories[i] + (typeof tmpPropertyCategories[i + 1] !== "undefined" ? '<br>' : '');
+            }
+            return txt;
+        },
+        colourScaleLegendText = function (items, colourScale) {
+            var txt = "",
+                tmpItem;
+
+            txt += "<h4>Building type:</h4>";
+            for (var i = 0; i < items.length; i++) {
+                tmpItem = items[i];
+                txt +=
+                    '<i style="background:' + colourScale(tmpItem) + '"></i> ' +
+                    items[i] + (typeof items[i + 1] !== "undefined" ? '<br>' : '');
+            }
+            return txt;
         };
 
     // Public interface
     return {
         publicAccessibilityLegendText: publicAccessibilityLegendText,
-        categoryIconsLegendText: categoryIconsLegendText
+        categoryIconsLegendText: categoryIconsLegendText,
+        categoryColoursLegendText: categoryColoursLegendText,
+        colourScaleLegendText: colourScaleLegendText
     };
 }());
 
@@ -258,28 +323,58 @@ PublicSpace.maps = (function ($, L) {
                     return L.Util.template(valuationBuildingsPopupTemplate, e.feature.properties)
                 });
         },
-        createValuationBuildingOutlinesLayer = function (fillStyleFunc) {
-            // 1910 Valuation Survey building outlines 
+        geojsonMarkerOptions = {
+            radius: 8,
+            fillColor: "#ff7800",
+            color: "#000",
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.8
+        },
+        createCircleMarkersLayer = function (featurePropertyName, fillStyleFunc, popupTextTemplate, buildingFillColourScale) {
             var fillOpacity = typeof fillStyleFunc.__fillOpacity === "undefined" ? 0.3 : fillStyleFunc.__fillOpacity;
             return new L.geoJson(null, {
-                    style: function (feature) {
-                        return fillStyleFunc(feature.properties.PropertyCategory, fillOpacity);
+                    pointToLayer: function (feature, latlng) {
+                        // console.log("feature", feature, feature.properties[featurePropertyName], fillStyleFunc(feature.properties[featurePropertyName], fillOpacity, buildingFillColourScale));
+                        var fillColor = fillStyleFunc(feature.properties[featurePropertyName], fillOpacity, buildingFillColourScale).fillColor;
+                        return L.circleMarker(latlng, {
+                            radius: 8,
+                            fillColor: fillColor,
+                            color: "#000",
+                            weight: 1,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        });
+                        // return L.circleMarker(latlng, geojsonMarkerOptions);
                     }
                 })
                 .bindPopup(function(e){
-                    return L.Util.template(valuationBuildingsPopupTemplate, e.feature.properties);
+                    return L.Util.template(popupTextTemplate, e.feature.properties)
                 });
         },
-        createBuildingOutlinesLayer = function (featurePropertyName, fillStyleFunc) {
+        // createValuationBuildingOutlinesLayer = function (fillStyleFunc) {
+        //     // 1910 Valuation Survey building outlines 
+        //     var fillOpacity = typeof fillStyleFunc.__fillOpacity === "undefined" ? 0.3 : fillStyleFunc.__fillOpacity;
+        //     return new L.geoJson(null, {
+        //             style: function (feature) {
+        //                 return fillStyleFunc(feature.properties.PropertyCategory, fillOpacity);
+        //             }
+        //         })
+        //         .bindPopup(function(e){
+        //             return L.Util.template(valuationBuildingsPopupTemplate, e.feature.properties);
+        //         });
+        // },
+        createBuildingOutlinesLayer = function (featurePropertyName, fillStyleFunc, popUpTextTemplate, buildingFillColourScale) {
             // 1910 Valuation Survey building outlines 
             var fillOpacity = typeof fillStyleFunc.__fillOpacity === "undefined" ? 0.3 : fillStyleFunc.__fillOpacity;
+
             return new L.geoJson(null, {
                     style: function (feature) {
-                        return fillStyleFunc(feature.properties[featurePropertyName], fillOpacity);
+                        return fillStyleFunc(feature.properties[featurePropertyName], fillOpacity, buildingFillColourScale);
                     }
                 })
                 .bindPopup(function(e){
-                    return L.Util.template(valuationBuildingsPopupTemplate, e.feature.properties);
+                    return L.Util.template(popUpTextTemplate, e.feature.properties);
                 });
         },
         createPresentDayBuildingIconsLayer = function () {
@@ -293,18 +388,18 @@ PublicSpace.maps = (function ($, L) {
                     return L.Util.template(presentDayBuildingsPopupTemplate, e.feature.properties)
                 });
         },
-        createPresentDayBuildingOutlinesLayer = function (fillStyleFunc) {
-            // Present day building outlines 
-            var fillOpacity = typeof fillStyleFunc.__fillOpacity === "undefined" ? 0.3 : fillStyleFunc.__fillOpacity;
-            return new L.geoJson(null, {
-                    style: function (feature) {
-                        return fillStyleFunc(feature.properties.Category, fillOpacity);
-                    }
-                })
-                .bindPopup(function(e){
-                    return L.Util.template(presentDayBuildingsPopupTemplate, e.feature.properties)
-                });
-        },
+        // createPresentDayBuildingOutlinesLayer = function (fillStyleFunc) {
+        //     // Present day building outlines 
+        //     var fillOpacity = typeof fillStyleFunc.__fillOpacity === "undefined" ? 0.3 : fillStyleFunc.__fillOpacity;
+        //     return new L.geoJson(null, {
+        //             style: function (feature) {
+        //                 return fillStyleFunc(feature.properties.Category, fillOpacity);
+        //             }
+        //         })
+        //         .bindPopup(function(e){
+        //             return L.Util.template(presentDayBuildingsPopupTemplate, e.feature.properties)
+        //         });
+        // },
         getBuildingType = function (districtValuations, feature) {
             // Look up building type from valuations data for the current feature
             var districtRecords = (districtValuations[feature.properties.District] || {}),
@@ -322,6 +417,7 @@ PublicSpace.maps = (function ($, L) {
         },
         loadMapData = function (valuationBuildingPoints, valuationBuildingOutlines,
             presentDayBuildingPoints, presentDayBuildingOutlines) {
+            // Load data and apply it to map layers
             var deferred = $.Deferred();
 
             // Load data
@@ -365,13 +461,17 @@ PublicSpace.maps = (function ($, L) {
                             });
 
                             // Add 1910 valuation building data to map layers
-                            valuationBuildingOutlines.addData(valBuildingsGeoJson[0]);
+                            if (valuationBuildingOutlines !== null) {
+                                valuationBuildingOutlines.addData(valBuildingsGeoJson[0]);
+                            }
                             if (valuationBuildingPoints !== null) {
                                 valuationBuildingPoints.addData(valBuildingCentresGeoJson[0]);
                             }
                             
                             // Add present day building data to map layers
-                            presentDayBuildingOutlines.addData(presentDayBuildingsGeoJson[0]);
+                            if (presentDayBuildingOutlines !== null) {
+                                presentDayBuildingOutlines.addData(presentDayBuildingsGeoJson[0]);
+                            }
                             if (presentDayBuildingPoints !== null) {
                                 presentDayBuildingPoints.addData(presentDayBuildingCentresGeoJson[0]);
                             }
@@ -389,16 +489,19 @@ PublicSpace.maps = (function ($, L) {
             var mapOptions = {
                 "fillOpacity": 0.3,
                 "markers": "icons",
-                "fillMethod": "publiclyaccessible"
+                "fillMethod": "publiclyaccessible",
+                "showBuildings": true
             };
 
             if (mapStyle) {
                 $.each(mapStyle.split(";"), function (ind, optionText) {
                     var parts = optionText.split(":"),
-                        key = parts[0],
-                        val = parts[1];
+                        key = parts[0].trim(),
+                        val = parts[1].trim();
                     if (key === "fillOpacity") {
                         mapOptions[key] = parseFloat(val);
+                    } else if (key === "showBuildings") {
+                        mapOptions[key] = val === "false" ? false : true;
                     } else {
                         mapOptions[key] = val;
                     }
@@ -410,7 +513,6 @@ PublicSpace.maps = (function ($, L) {
         drawAreaMap = function (elementId, areaId, tmpMapStyle) {
             // Note: tmpMapStyle is temporary - just to experiment with styles
             var mapOptions = tmpParseMapOptions(tmpMapStyle);
-            console.log(mapOptions);
 
             var mymap = createMap(elementId, areaId);
 
@@ -419,36 +521,71 @@ PublicSpace.maps = (function ($, L) {
                 presentDayBuildingPoints = null,
                 presentDayBuildingOutlines = null;
 
-            // Map layers (actual data is assigned later, after data files loaded)
-            switch (mapOptions["markers"]) {
-                case "icons":
-                    valuationBuildingPoints = createValuationBuildingIconsLayer();
-                    presentDayBuildingPoints = createPresentDayBuildingIconsLayer();
-                    break;
-                default:
-                    valuationBuildingPoints = createValuationBuildingIconsLayer();
-                    presentDayBuildingPoints = createPresentDayBuildingIconsLayer();
-                    break;
-            }
-
+            // Set the fill style for buildings
             var getBuildingFillStyle;
+            // Colour scale for building type
+            var buildingTypesColourScale = d3.scaleOrdinal(d3.schemeCategory10);
+            var buildingFillColourScale = buildingTypesColourScale;
 
-            switch (mapOptions["fillMethod"]) {
+            switch (mapOptions.fillMethod) {
+                case "buildingCategory":
+                    getBuildingFillStyle = PublicSpace.buildings.buildingCategoryFillStyle;
+                    break;
+                case "buildingType":
+                    getBuildingFillStyle = PublicSpace.buildings.colourScaleFillStyle;
+                    break;
                 case "publiclyaccessible":
                 default:
                     getBuildingFillStyle = PublicSpace.buildings.publicAccessibilityFillStyle;
                     break;
             }
 
-            if (typeof mapOptions["fillOpacity"] !== "undefined") {
+            if (typeof mapOptions.fillOpacity !== "undefined") {
                 getBuildingFillStyle.__fillOpacity = mapOptions["fillOpacity"];
             }
+
+            // Map layers (actual data is assigned later, after data files loaded)
+            switch (mapOptions["markers"]) {
+                case "icons":
+                    valuationBuildingPoints = createValuationBuildingIconsLayer();
+                    presentDayBuildingPoints = createPresentDayBuildingIconsLayer();
+                    break;
+                case "circles":
+                    valuationBuildingPoints = createCircleMarkersLayer("TypeOfProperty", getBuildingFillStyle,
+                        valuationBuildingsPopupTemplate, buildingFillColourScale);
+                    presentDayBuildingPoints = createCircleMarkersLayer("Category", getBuildingFillStyle,
+                        presentDayBuildingsPopupTemplate, buildingFillColourScale);
+                    break;
+                default:
+                    valuationBuildingPoints = createValuationBuildingIconsLayer();
+                    presentDayBuildingPoints = createPresentDayBuildingIconsLayer();
+                    break;
+            }
             
-            valuationBuildingOutlines = createBuildingOutlinesLayer("PropertyCategory", getBuildingFillStyle);
-            presentDayBuildingOutlines = createBuildingOutlinesLayer("Category", getBuildingFillStyle);
+            // Create the buildings map layer
+            switch (mapOptions.fillMethod) {
+                case "buildingCategory":
+                    valuationBuildingOutlines = createBuildingOutlinesLayer("PropertyCategory", getBuildingFillStyle,
+                        valuationBuildingsPopupTemplate);
+                    presentDayBuildingOutlines = createBuildingOutlinesLayer("Category", getBuildingFillStyle, 
+                        presentDayBuildingsPopupTemplate);
+                    break;
+                case "buildingType":
+                    valuationBuildingOutlines = createBuildingOutlinesLayer("TypeOfProperty", getBuildingFillStyle,
+                        valuationBuildingsPopupTemplate, buildingFillColourScale);
+                    presentDayBuildingOutlines = createBuildingOutlinesLayer("Category", getBuildingFillStyle, 
+                        presentDayBuildingsPopupTemplate, buildingFillColourScale);
+                    break;
+                case "publiclyaccessible":
+                default:
+                    valuationBuildingOutlines = createBuildingOutlinesLayer("PropertyCategory", getBuildingFillStyle,
+                        valuationBuildingsPopupTemplate);
+                    presentDayBuildingOutlines = createBuildingOutlinesLayer("Category", getBuildingFillStyle,
+                        presentDayBuildingsPopupTemplate);
+                    break;
+            }
             // valuationBuildingOutlines = createValuationBuildingOutlinesLayer(getBuildingFillStyle);
             // presentDayBuildingOutlines = createPresentDayBuildingOutlinesLayer(getBuildingFillStyle);
-            
 
             // Map layer groups
             var valuations1910Layer = L.layerGroup([valuationBuildingOutlines, valuationBuildingPoints]);
@@ -466,10 +603,11 @@ PublicSpace.maps = (function ($, L) {
             valuations1910Layer.addTo(mymap);
             // presentDayLayer.addTo(mymap);
 
+            // Load data and apply it to map layers
             loadMapData(mapOptions["markers"] === "none" ? null : valuationBuildingPoints, 
-                valuationBuildingOutlines,
+                mapOptions.showBuildings === false ? null : valuationBuildingOutlines,
                 mapOptions["markers"] === "none" ? null : presentDayBuildingPoints, 
-                presentDayBuildingOutlines)
+                mapOptions.showBuildings === false ? null : presentDayBuildingOutlines)
                 .done (function (buildingTypes, buildingCategories) {
                     // Add map legend for property type colours
                     var legend = L.control({position: 'topright'});
@@ -481,7 +619,20 @@ PublicSpace.maps = (function ($, L) {
                                 div.innerHTML += PublicSpace.mapLegends.categoryIconsLegendText();
                             }
                             // Add entry for whether building is accessible to public
-                            div.innerHTML += PublicSpace.mapLegends.publicAccessibilityLegendText();
+                            switch (mapOptions.fillMethod) {
+                                case "none":
+                                    break;
+                                case "buildingCategory":
+                                    div.innerHTML += PublicSpace.mapLegends.categoryColoursLegendText();
+                                    break;
+                                case "buildingType":
+                                    div.innerHTML += PublicSpace.mapLegends.colourScaleLegendText(buildingTypes,
+                                        buildingTypesColourScale);
+                                    break;
+                                default:
+                                    div.innerHTML += PublicSpace.mapLegends.publicAccessibilityLegendText();
+                                    break;
+                            }
 
                             return div;
                         };

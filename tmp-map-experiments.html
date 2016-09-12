@@ -6,19 +6,41 @@ layout: default
 
   <h1>Map experiments</h1>
 
-  <h2>Icons and public accessibility colours (transparent)</h2>
-  {% include map-area.html areaid="merchant-street" mapid=1 mapstyle="fillOpacity:0.3;fillMethod:publiclyaccessible;markers:icons" %}
+  <h1>Fill colours</h1>
+
+  <h2>Broad building categories</h2>
+  {% include map-area.html areaid="merchant-street" mapid="Categories" mapstyle="fillOpacity:1;fillMethod:buildingCategory;markers:none" %}
 
   <h2>&nbsp;</h2>
-  <h2>Public accessibility colours (transparent) only</h2>
+  <h2>Detailed building categories</h2>
+  {% include map-area.html areaid="merchant-street" mapid="type" mapstyle="fillOpacity:1;fillMethod:buildingType;markers:none" %}
+
+  <h2>&nbsp;</h2>
+  <h2>Public accessibility colours</h2>
+  {% include map-area.html areaid="merchant-street" mapid="publicaccess" mapstyle="fillOpacity:1;fillMethod:publiclyaccessible;markers:none" %}
+  <h3>Public accessibility colours (transparent)</h3>
   {% include map-area.html areaid="merchant-street" mapid=2 mapstyle="fillOpacity:0.3;fillMethod:publiclyaccessible;markers:none" %}
+
+  <h1>Icon styles</h1>
+
+  <h2>Icons for building markers</h2>
+  {% include map-area.html areaid="merchant-street" mapid="icons" mapstyle="fillOpacity:0.3;fillMethod:none;markers:icons;showBuildings:false" %}
+
+  <h2>&nbsp;</h2>
+  <h2>Circles for building markers</h2>
+  {% include map-area.html areaid="merchant-street" mapid="circles" mapstyle="fillOpacity:0.3;fillMethod:buildingType;markers:circles;showBuildings:false" %}
+
+  <h1>Blended examples - mixing up buildings and markers</h1>
+
+  <h2>Icons and public accessibility colours (transparent)</h2>
+  {% include map-area.html areaid="merchant-street" mapid=1 mapstyle="fillOpacity:0.3;fillMethod:publiclyaccessible;markers:icons" %}
 
   <h2>&nbsp;</h2>
   <h2>Icons and public accessibility colours (strong)</h2>
   {% include map-area.html areaid="merchant-street" mapid=3 mapstyle="fillOpacity:1;fillMethod:publiclyaccessible;markers:icons" %}
 
-  <h2>&nbsp;</h2>
-  <h2>Public accessibility colours (strong) only</h2>
-  {% include map-area.html areaid="merchant-street" mapid=4 mapstyle="fillOpacity:1;fillMethod:publiclyaccessible;markers:none" %}
+  
+
+
 
 </div>
