@@ -3,10 +3,10 @@
   <title></title>
   <layer-tree-group expanded="1" checked="Qt::PartiallyChecked" name="">
     <customproperties/>
-    <layer-tree-layer expanded="1" checked="Qt::Checked" id="Valuations_1910_Building_Outline20160907140303168" name="Valuations_1910_Building_Outline">
+    <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="Valuations_1910_Building_Outline20160907140303168" name="Valuations_1910_Building_Outline">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="Buildings_Present_Day20160906171823878" name="Buildings_Present_Day">
+    <layer-tree-layer expanded="1" checked="Qt::Checked" id="Buildings_Present_Day20160906171823878" name="Buildings_Present_Day">
       <customproperties/>
     </layer-tree-layer>
     <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="TNA__IR_128_3_226_2__IMG_5575__modified20160907113446127" name="TNA, IR 128_3_226-2 (IMG_5575)_modified">
@@ -26,10 +26,10 @@
   <mapcanvas>
     <units>meters</units>
     <extent>
-      <xmin>358799.21212825243128464</xmin>
-      <ymin>173102.32191239084932022</ymin>
-      <xmax>358878.26003768917871639</xmax>
-      <ymax>173155.92521578606101684</ymax>
+      <xmin>358810.74701632477808744</xmin>
+      <ymin>173042.01819607117795385</ymin>
+      <xmax>358889.79492576152551919</xmax>
+      <ymax>173095.62149946638965048</ymax>
     </extent>
     <rotation>0</rotation>
     <projections>1</projections>
@@ -66,14 +66,14 @@
     </custom-order>
   </layer-tree-canvas>
   <legend updateDrawingOrder="true">
-    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="Valuations_1910_Building_Outline" showFeatureCount="0">
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="Valuations_1910_Building_Outline" showFeatureCount="0">
       <filegroup open="true" hidden="false">
-        <legendlayerfile isInOverview="0" layerid="Valuations_1910_Building_Outline20160907140303168" visible="1"/>
+        <legendlayerfile isInOverview="0" layerid="Valuations_1910_Building_Outline20160907140303168" visible="0"/>
       </filegroup>
     </legendlayer>
-    <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="Buildings_Present_Day" showFeatureCount="0">
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="Buildings_Present_Day" showFeatureCount="0">
       <filegroup open="true" hidden="false">
-        <legendlayerfile isInOverview="0" layerid="Buildings_Present_Day20160906171823878" visible="0"/>
+        <legendlayerfile isInOverview="0" layerid="Buildings_Present_Day20160906171823878" visible="1"/>
       </filegroup>
     </legendlayer>
     <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="TNA, IR 128_3_226-2 (IMG_5575)_modified" showFeatureCount="0">
@@ -134,6 +134,12 @@
           <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="Category">
+          <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="Ownership">
+          <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="Occupier">
           <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
         </edittype>
       </edittypes>
@@ -200,6 +206,12 @@
           <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="Category">
+          <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="Ownership">
+          <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="Occupier">
           <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
         </edittype>
       </edittypes>

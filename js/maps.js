@@ -224,11 +224,11 @@ PublicSpace.mapLegends = (function () {
             }
             return txt;
         },
-        colourScaleLegendText = function (items, colourScale) {
+        colourScaleLegendText = function (title, items, colourScale) {
             var txt = "",
                 tmpItem;
 
-            txt += "<h4>Building type:</h4>";
+            txt += "<h4>" + title + ":</h4>";
             for (var i = 0; i < items.length; i++) {
                 tmpItem = items[i];
                 txt +=
@@ -400,8 +400,8 @@ PublicSpace.maps = (function ($, L) {
         //             return L.Util.template(presentDayBuildingsPopupTemplate, e.feature.properties)
         //         });
         // },
-        getValuationsRecordValue = function (districtValuations, feature, valColumn) {
-            // Look up building type from valuations data for the current feature
+        getValuationsRecordValue = function (districtValuations, feature, valuationsColumn) {
+            // Look up a value from a column in the valuations data for the specified feature
             var districtRecords = (districtValuations[feature.properties.District] || {}),
                 streetRecords = (districtRecords || {})[feature.properties.Street],
                 assessmentRecords = (streetRecords || {})[feature.properties.AssessNum],
@@ -409,27 +409,27 @@ PublicSpace.maps = (function ($, L) {
                 val = unknownValue;
 
             if (assessmentRecords && assessmentRecords.length > 0) {
-                val = assessmentRecords[0][valColumn];
+                val = assessmentRecords[0][valuationsColumn];
                 val = val === "" ? unknownValue : val;
             }
 
             return val;
         },
-        getBuildingType = function (districtValuations, feature) {
-            // Look up building type from valuations data for the current feature
-            var districtRecords = (districtValuations[feature.properties.District] || {}),
-                streetRecords = (districtRecords || {})[feature.properties.Street],
-                assessmentRecords = (streetRecords || {})[feature.properties.AssessNum],
-                unknownBuildingType = "Unknown",
-                buildingType = unknownBuildingType;
+        // getBuildingType = function (districtValuations, feature) {
+        //     // Look up building type from valuations data for the current feature
+        //     var districtRecords = (districtValuations[feature.properties.District] || {}),
+        //         streetRecords = (districtRecords || {})[feature.properties.Street],
+        //         assessmentRecords = (streetRecords || {})[feature.properties.AssessNum],
+        //         unknownBuildingType = "Unknown",
+        //         buildingType = unknownBuildingType;
 
-            if (assessmentRecords && assessmentRecords.length > 0) {
-                buildingType = assessmentRecords[0]["Type of Property"];
-                buildingType = buildingType === "" ? unknownBuildingType : buildingType;
-            }
+        //     if (assessmentRecords && assessmentRecords.length > 0) {
+        //         buildingType = assessmentRecords[0]["Type of Property"];
+        //         buildingType = buildingType === "" ? unknownBuildingType : buildingType;
+        //     }
 
-            return buildingType;
-        },
+        //     return buildingType;
+        // },
         loadMapData = function (valuationBuildingPoints, valuationBuildingOutlines,
             presentDayBuildingPoints, presentDayBuildingOutlines) {
             // Load data and apply it to map layers
@@ -469,7 +469,8 @@ PublicSpace.maps = (function ($, L) {
                                 allFeatures = [],
                                 allValFeatures = [].concat(valBuildingsGeoJson[0].features).concat(valBuildingCentresGeoJson[0].features);
                             $.each(allValFeatures, function (ind, feature) {
-                                var buildingType = getBuildingType(districtValuations, feature),
+                                var buildingType = getValuationsRecordValue(districtValuations, feature, "Type of Property"),
+                                    // buildingType = getBuildingType(districtValuations, feature),
                                     buildingCategory = buildingTypeToCategory(buildingType),
                                     ownership = getValuationsRecordValue(districtValuations, feature, "Ownership");
                                 
@@ -669,11 +670,13 @@ PublicSpace.maps = (function ($, L) {
                                     div.innerHTML += PublicSpace.mapLegends.categoryColoursLegendText();
                                     break;
                                 case "buildingType":
-                                    div.innerHTML += PublicSpace.mapLegends.colourScaleLegendText(buildingTypes,
+                                    div.innerHTML += PublicSpace.mapLegends.colourScaleLegendText("Building type",
+                                        buildingTypes,
                                         buildingTypesColourScale);
                                     break;
                                 case "ownership":
-                                    div.innerHTML += PublicSpace.mapLegends.colourScaleLegendText(ownershipValues,
+                                    div.innerHTML += PublicSpace.mapLegends.colourScaleLegendText("Building ownership",
+                                        ownershipValues,
                                         buildingTypesColourScale);
                                     break;
                                 default:
