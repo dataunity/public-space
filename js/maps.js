@@ -256,7 +256,7 @@ PublicSpace.maps = (function ($, L) {
 
         // Popup text templates
         valuationBuildingsPopupTemplate = '{HouseNum} {Street}<br>{TypeOfProperty}<br><small>Assessment Number: {AssessNum}</small>',
-        presentDayBuildingsPopupTemplate = '{HouseNum} {Street}<br>{Category}',
+        presentDayBuildingsPopupTemplate = '{HouseNum} {Street}<br>Building use: {Category}<br>Ownership: {Ownership}<br>Occupier: {Occupier}',
 
     // Private methods
         addTileLayer = function (map) {
