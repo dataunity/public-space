@@ -400,6 +400,21 @@ PublicSpace.maps = (function ($, L) {
         //             return L.Util.template(presentDayBuildingsPopupTemplate, e.feature.properties)
         //         });
         // },
+        getValuationsRecordValue = function (districtValuations, feature, valColumn) {
+            // Look up building type from valuations data for the current feature
+            var districtRecords = (districtValuations[feature.properties.District] || {}),
+                streetRecords = (districtRecords || {})[feature.properties.Street],
+                assessmentRecords = (streetRecords || {})[feature.properties.AssessNum],
+                unknownValue = "Unknown",
+                val = unknownValue;
+
+            if (assessmentRecords && assessmentRecords.length > 0) {
+                val = assessmentRecords[0][valColumn];
+                val = val === "" ? unknownValue : val;
+            }
+
+            return val;
+        },
         getBuildingType = function (districtValuations, feature) {
             // Look up building type from valuations data for the current feature
             var districtRecords = (districtValuations[feature.properties.District] || {}),
@@ -423,7 +438,8 @@ PublicSpace.maps = (function ($, L) {
             // Load data
             var districtValuations = {},
                 distinctBuildingTypesLookup = {},
-                distinctBuildingCategoriesLookup = {};
+                distinctBuildingCategoriesLookup = {},
+                distinctOwnershipLookup = {};
 
             // Load 1910 Valuation spreadsheet
             $.get("../csv/Bristol_Valuation_Records_1910.csv")
@@ -449,15 +465,32 @@ PublicSpace.maps = (function ($, L) {
                             // Extend the GeoJSON with building type from valuations data
                             var buildingTypes = [],
                                 buildingCategories = [],
+                                ownershipValues = [],
+                                allFeatures = [],
                                 allValFeatures = [].concat(valBuildingsGeoJson[0].features).concat(valBuildingCentresGeoJson[0].features);
                             $.each(allValFeatures, function (ind, feature) {
                                 var buildingType = getBuildingType(districtValuations, feature),
-                                    buildingCategory = buildingTypeToCategory(buildingType);
+                                    buildingCategory = buildingTypeToCategory(buildingType),
+                                    ownership = getValuationsRecordValue(districtValuations, feature, "Ownership");
                                 
                                 feature.properties["TypeOfProperty"] = buildingType;
                                 feature.properties["PropertyCategory"] = buildingCategory;
+                                feature.properties["Ownership"] = ownership;
+
+                                // Store the distinct values
                                 distinctBuildingTypesLookup[buildingType] = true;
                                 distinctBuildingCategoriesLookup[buildingCategory] = true;
+                            });
+
+                            allFeatures = [].concat(valBuildingsGeoJson[0].features)
+                                .concat(valBuildingCentresGeoJson[0].features)
+                                .concat(valBuildingsGeoJson[0].features)
+                                .concat(valBuildingCentresGeoJson[0].features);
+                            $.each(allValFeatures, function (ind, feature) {
+                                var ownership = feature.properties["Ownership"];
+
+                                // Store the distinct values
+                                distinctOwnershipLookup[ownership] = true;
                             });
 
                             // Add 1910 valuation building data to map layers
@@ -478,7 +511,8 @@ PublicSpace.maps = (function ($, L) {
 
                             buildingTypes = Object.keys(distinctBuildingTypesLookup);
                             buildingCategories = Object.keys(distinctBuildingCategoriesLookup);
-                            deferred.resolve(buildingTypes, buildingCategories);
+                            ownershipValues = Object.keys(distinctOwnershipLookup);
+                            deferred.resolve(buildingTypes, buildingCategories, ownershipValues);
                         });
                 });
 
@@ -534,6 +568,9 @@ PublicSpace.maps = (function ($, L) {
                 case "buildingType":
                     getBuildingFillStyle = PublicSpace.buildings.colourScaleFillStyle;
                     break;
+                case "ownership":
+                    getBuildingFillStyle = PublicSpace.buildings.colourScaleFillStyle;
+                    break;
                 case "publiclyaccessible":
                 default:
                     getBuildingFillStyle = PublicSpace.buildings.publicAccessibilityFillStyle;
@@ -576,6 +613,12 @@ PublicSpace.maps = (function ($, L) {
                     presentDayBuildingOutlines = createBuildingOutlinesLayer("Category", getBuildingFillStyle, 
                         presentDayBuildingsPopupTemplate, buildingFillColourScale);
                     break;
+                case "ownership":
+                    valuationBuildingOutlines = createBuildingOutlinesLayer("Ownership", getBuildingFillStyle,
+                        valuationBuildingsPopupTemplate, buildingFillColourScale);
+                    presentDayBuildingOutlines = createBuildingOutlinesLayer("Ownership", getBuildingFillStyle, 
+                        presentDayBuildingsPopupTemplate, buildingFillColourScale);
+                    break;
                 case "publiclyaccessible":
                 default:
                     valuationBuildingOutlines = createBuildingOutlinesLayer("PropertyCategory", getBuildingFillStyle,
@@ -608,7 +651,7 @@ PublicSpace.maps = (function ($, L) {
                 mapOptions.showBuildings === false ? null : valuationBuildingOutlines,
                 mapOptions["markers"] === "none" ? null : presentDayBuildingPoints, 
                 mapOptions.showBuildings === false ? null : presentDayBuildingOutlines)
-                .done (function (buildingTypes, buildingCategories) {
+                .done (function (buildingTypes, buildingCategories, ownershipValues) {
                     // Add map legend for property type colours
                     var legend = L.control({position: 'topright'});
                     legend.onAdd = function (map) {
@@ -627,6 +670,10 @@ PublicSpace.maps = (function ($, L) {
                                     break;
                                 case "buildingType":
                                     div.innerHTML += PublicSpace.mapLegends.colourScaleLegendText(buildingTypes,
+                                        buildingTypesColourScale);
+                                    break;
+                                case "ownership":
+                                    div.innerHTML += PublicSpace.mapLegends.colourScaleLegendText(ownershipValues,
                                         buildingTypesColourScale);
                                     break;
                                 default:
