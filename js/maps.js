@@ -631,11 +631,23 @@ PublicSpace.maps = (function ($, L) {
             // valuationBuildingOutlines = createValuationBuildingOutlinesLayer(getBuildingFillStyle);
             // presentDayBuildingOutlines = createPresentDayBuildingOutlinesLayer(getBuildingFillStyle);
 
+
+            // 1910 Valuation map image
+            // Castle Park map
+            var imageUrl = '../images/maps/TNA_IR_128_3_231.png',
+                southWest = L.latLng(51.4528832, -2.5951183),
+                northEast = L.latLng(51.4558068, -2.5875938),
+                bounds = L.latLngBounds(southWest, northEast),
+                os1910Attribution = "TODO: Attribution";
+            var castleParkOSMap = L.imageOverlay(imageUrl, bounds, {attribution: os1910Attribution});
+            var os1910Layer = L.layerGroup([castleParkOSMap]);
+
             // Map layer groups
             var valuations1910Layer = L.layerGroup([valuationBuildingOutlines, valuationBuildingPoints]);
             var presentDayLayer = L.layerGroup([presentDayBuildingOutlines, presentDayBuildingPoints]);
             L.control.layers(
                     {
+                        "1910 Ordnance Survey": os1910Layer,
                         "Present day (2016)": presentDayLayer,
                         "1910": valuations1910Layer
                     }, 
@@ -646,6 +658,9 @@ PublicSpace.maps = (function ($, L) {
             // Set default layer to visible
             valuations1910Layer.addTo(mymap);
             // presentDayLayer.addTo(mymap);
+
+            
+
 
             // Load data and apply it to map layers
             loadMapData(mapOptions["markers"] === "none" ? null : valuationBuildingPoints, 
