@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Mary le Port Street
-permalink: /areas-mary-le-port-street/
+permalink: /areas-mary-le-port-street
 ---
 
 <a title="By Adrian Pingstone (Photographed by Adrian Pingstone) [Public domain], via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File%3ACastle.park.bristol.arp.jpg"><img width="512" alt="Castle.park.bristol.arp" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Castle.park.bristol.arp.jpg/512px-Castle.park.bristol.arp.jpg"/></a>

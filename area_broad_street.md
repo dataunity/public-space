@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Broad Street
-permalink: /areas-broad-street/
+permalink: /areas-broad-street
 ---
 
 

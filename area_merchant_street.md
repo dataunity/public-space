@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Merchant Street
-permalink: /areas-merchant-street/
+permalink: /areas-merchant-street
 ---
 
 [Need a photo here...]
@@ -19,6 +19,8 @@ Above map was generated from the valuations data and associated Ordnance Survey 
 
 ![Ordnance Survey valuations map)]({{ site.baseurl }}/images/maps/TNA_IR_128_3_226_2_merchant_st_small.jpg)
 [TODO: copyright attribution]
+
+<a title="Lukeas09 at the English language Wikipedia [GFDL (http://www.gnu.org/copyleft/fdl.html) or CC-BY-SA-3.0 (http://creativecommons.org/licenses/by-sa/3.0/)], via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File%3ABristolHarbourFestival-Planetarium.JPG"><img width="512" alt="BristolHarbourFestival-Planetarium" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/BristolHarbourFestival-Planetarium.JPG/512px-BristolHarbourFestival-Planetarium.JPG"/></a>
 
 # History
 

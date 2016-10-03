@@ -127,11 +127,11 @@ PublicSpace.mapsIcons = (function (L) {
             }
         }),
         propertyCategoryIcons = {
-            "Shop": "../images/icons/shop.png",
-            "House": "../images/icons/house.png",
-            "Public house": "../images/icons/public_house.png",
-            "Industrial or storage": "../images/icons/industrial_or_storage.png",
-            "Other": "../images/icons/other.png"
+            "Shop": "./images/icons/shop.png",
+            "House": "./images/icons/house.png",
+            "Public house": "./images/icons/public_house.png",
+            "Industrial or storage": "./images/icons/industrial_or_storage.png",
+            "Other": "./images/icons/other.png"
         },
 
         // Icon image paths
@@ -139,7 +139,7 @@ PublicSpace.mapsIcons = (function (L) {
             // Path to icon for building categories
             var pathToIcon = propertyCategoryIcons[propertyCategory];
             if (typeof pathToIcon === "undefined") {
-                pathToIcon = "../images/icons/other.png";
+                pathToIcon = "./images/icons/other.png";
             }
             return pathToIcon;
         },
@@ -299,7 +299,11 @@ PublicSpace.maps = (function ($, L) {
                 latLong = [51.45543, -2.59377];
                 zoomLevel = 18;
             } else {
-                latLong = [51.45921, -2.58229];
+                // Central Bristol
+                latLong = [51.45651, -2.59139];
+                zoomLevel = 16;
+                // latLong = [51.457565, -2.590507];
+                // zoomLevel = 16;
             }
 
             map = L.map(elementId, {
@@ -415,21 +419,6 @@ PublicSpace.maps = (function ($, L) {
 
             return val;
         },
-        // getBuildingType = function (districtValuations, feature) {
-        //     // Look up building type from valuations data for the current feature
-        //     var districtRecords = (districtValuations[feature.properties.District] || {}),
-        //         streetRecords = (districtRecords || {})[feature.properties.Street],
-        //         assessmentRecords = (streetRecords || {})[feature.properties.AssessNum],
-        //         unknownBuildingType = "Unknown",
-        //         buildingType = unknownBuildingType;
-
-        //     if (assessmentRecords && assessmentRecords.length > 0) {
-        //         buildingType = assessmentRecords[0]["Type of Property"];
-        //         buildingType = buildingType === "" ? unknownBuildingType : buildingType;
-        //     }
-
-        //     return buildingType;
-        // },
         loadMapData = function (valuationBuildingPoints, valuationBuildingOutlines,
             presentDayBuildingPoints, presentDayBuildingOutlines) {
             // Load data and apply it to map layers
@@ -442,7 +431,7 @@ PublicSpace.maps = (function ($, L) {
                 distinctOwnershipLookup = {};
 
             // Load 1910 Valuation spreadsheet
-            $.get("../csv/Bristol_Valuation_Records_1910.csv")
+            $.get("./csv/Bristol_Valuation_Records_1910.csv")
                 .then(function (valuationsData) {
                     // Index the 1910 Valuation data (by district, street, assessment number)
                     var valuationRecords = d3.csvParse(valuationsData);
@@ -453,10 +442,10 @@ PublicSpace.maps = (function ($, L) {
                         .object(valuationRecords);
 
                     // Load the GeoJSON data
-                    $.when($.getJSON("../geojson/Valuations_1910_Building_Outline.geojson"),
-                        $.getJSON("../geojson/Valuations_1910_Building_Centres.geojson"),
-                        $.getJSON("../geojson/Buildings_Present_Day.geojson"),
-                        $.getJSON("../geojson/Buildings_Present_Day_Centres.geojson"))
+                    $.when($.getJSON("./geojson/Valuations_1910_Building_Outline.geojson"),
+                        $.getJSON("./geojson/Valuations_1910_Building_Centres.geojson"),
+                        $.getJSON("./geojson/Buildings_Present_Day.geojson"),
+                        $.getJSON("./geojson/Buildings_Present_Day_Centres.geojson"))
                         .done(function (valBuildingsGeoJson, 
                                 valBuildingCentresGeoJson,
                                 presentDayBuildingsGeoJson,
@@ -634,7 +623,7 @@ PublicSpace.maps = (function ($, L) {
 
             // 1910 Valuation map image
             // Castle Park map
-            var imageUrl = '../images/maps/TNA_IR_128_3_231.png',
+            var imageUrl = './images/maps/TNA_IR_128_3_231.png',
                 southWest = L.latLng(51.4528832, -2.5951183),
                 northEast = L.latLng(51.4558068, -2.5875938),
                 bounds = L.latLngBounds(southWest, northEast),
