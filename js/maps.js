@@ -255,20 +255,20 @@ PublicSpace.maps = (function ($, L) {
         getBuildingIcon = PublicSpace.mapsIcons.getBuildingIcon,
 
         // Popup text templates
-        valuationBuildingsPopupTemplate = '{HouseNum} {Street}<br>{TypeOfProperty}<br><small>Assessment Number: {AssessNum}</small>',
+        valuationBuildingsPopupTemplate = '{HouseNum} {Street}<br>Building use: {TypeOfProperty}<br><small>Assessment Number: {AssessNum}</small>',
         presentDayBuildingsPopupTemplate = '{HouseNum} {Street}<br>Building use: {Category}<br>Ownership: {Ownership}<br>Occupier: {Occupier}',
-        leechBuildingsPopupTemplate = '{PlotRef} {StreetName}<br>Building use: {Category}<br>Ownership: {Ownership}',
+        leechBuildingsPopupTemplate = '{PlotRef} {StreetName}<br>Building use: {TypeOfProperty}<br>Ownership: {Ownership}',
 
     // Private methods
-        addTileLayer = function (map) {
+        createTileLayer = function () {
             // TODO: Get fresh access token (this one's from Leaflet demo)
-            L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw', {
+            return L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw', {
                 maxZoom: 18,
                 attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
                     '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
                     'Imagery © <a href="http://mapbox.com">Mapbox</a>',
                 id: 'mapbox.streets'
-            }).addTo(map);
+            });
         },
         addCoordinatesPopup = function (map) {
             // Co-ordinates popup
@@ -312,7 +312,6 @@ PublicSpace.maps = (function ($, L) {
                 })
                 .setView(latLong, zoomLevel);
 
-            addTileLayer(map);
             addCoordinatesPopup(map);
 
             return map;
@@ -381,7 +380,7 @@ PublicSpace.maps = (function ($, L) {
                     return L.Util.template(presentDayBuildingsPopupTemplate, e.feature.properties)
                 });
         },
-        getValuationsRecordValue = function (districtValuations, feature, valuationsColumn) {
+        getDoomsday1910RecordValue = function (districtValuations, feature, valuationsColumn) {
             // Look up a value from a column in the valuations data for the specified geojson feature
             var districtRecords = (districtValuations[feature.properties.District] || {}),
                 streetRecords = (districtRecords || {})[feature.properties.Street],
@@ -425,8 +424,6 @@ PublicSpace.maps = (function ($, L) {
                 .key(function (d) { return d["Plot ref"]; })
                 .object(leechRecords);
         },
-        // loadMapData = function (valuationBuildingPoints, valuationBuildingOutlines,
-        //     presentDayBuildingPoints, presentDayBuildingOutlines) {
         loadMapData = function (valuationBuildingPoints, valuationBuildingLayers,
             presentDayBuildingPoints, presentDayBuildingLayers, leechBuildingLayers) {
             // Load data and apply it to map layers
@@ -438,8 +435,7 @@ PublicSpace.maps = (function ($, L) {
                 distinctBuildingCategoriesLookup = {},
                 distinctOwnershipLookup = {};
 
-            // Load 1910 Valuation spreadsheet
-            // $.get("./csv/Bristol_Valuation_Records_1910.csv")
+            // Load spreadsheet data files
             $.when($.get("./csv/Bristol_Valuation_Records_1910.csv"),
                 $.get("./csv/Leech_topography_BRS.csv"))
                 .done(function (doomsday1910Response, leechResponse) {
@@ -452,7 +448,7 @@ PublicSpace.maps = (function ($, L) {
                         doomsday1910Records = d3.csvParse(doomsday1910Data),
                         leechRecords = d3.csvParse(leechData);
 
-                    // Index the spreadsheet data (by district, street, assessment number)
+                    // Index the spreadsheet data (by district, street, ref number)
                     districtValuations = indexValuationsData(doomsday1910Records);
                     indexedLeechRecords = indexLeechData(leechRecords);
 
@@ -481,10 +477,10 @@ PublicSpace.maps = (function ($, L) {
                                 allFeatures = [],
                                 allValFeatures = [].concat(valBuildingsGeoJson.features).concat(valBuildingCentresGeoJson.features);
                             $.each(allValFeatures, function (ind, feature) {
-                                var buildingType = getValuationsRecordValue(districtValuations, feature, "Type of Property"),
+                                var buildingType = getDoomsday1910RecordValue(districtValuations, feature, "Type of Property"),
                                     // buildingType = getBuildingType(districtValuations, feature),
                                     buildingCategory = buildingTypeToCategory(buildingType),
-                                    ownership = getValuationsRecordValue(districtValuations, feature, "Ownership");
+                                    ownership = getDoomsday1910RecordValue(districtValuations, feature, "Ownership");
                                 
                                 // Set some properties for the pop up template
                                 feature.properties["TypeOfProperty"] = buildingType;
@@ -499,25 +495,22 @@ PublicSpace.maps = (function ($, L) {
                             // Extend the 18th Century building GeoJSON with Leech spreadsheet
                             $.each(leechBuildingsGeoJson.features, function (ind, feature) {
                                 var buildingType = getLeechRecordValue(indexedLeechRecords, feature, "Occupier Occupation (18th C)"),
-                                    // buildingType = getBuildingType(districtValuations, feature),
-                                    // buildingCategory = buildingTypeToCategory(buildingType),
                                     ownership = getLeechRecordValue(indexedLeechRecords, feature, "Ownership (18th C)");
                                 
                                 // Set some properties for the pop up template
-                                feature.properties["Category"] = buildingType;
-                                // feature.properties["PropertyCategory"] = buildingCategory;
+                                feature.properties["TypeOfProperty"] = buildingType;
                                 feature.properties["Ownership"] = ownership;
 
                                 // Store the distinct values
                                 distinctBuildingTypesLookup[buildingType] = true;
-                                // distinctBuildingCategoriesLookup[buildingCategory] = true;
                             });
 
 
                             allFeatures = [].concat(valBuildingsGeoJson.features)
                                 .concat(valBuildingCentresGeoJson.features)
-                                .concat(valBuildingsGeoJson.features)
-                                .concat(valBuildingCentresGeoJson.features);
+                                .concat(presentDayBuildingsGeoJson.features)
+                                .concat(presentDayBuildingCentresGeoJson.features)
+                                .concat(leechBuildingsGeoJson.features);
                             $.each(allValFeatures, function (ind, feature) {
                                 var ownership = feature.properties["Ownership"];
 
@@ -531,9 +524,6 @@ PublicSpace.maps = (function ($, L) {
                                     layer.addData(valBuildingsGeoJson);
                                 });
                             }
-                            // if (valuationBuildingOutlines !== null) {
-                            //     valuationBuildingOutlines.addData(valBuildingsGeoJson[0]);
-                            // }
                             if (valuationBuildingPoints !== null) {
                                 valuationBuildingPoints.addData(valBuildingCentresGeoJson);
                             }
@@ -544,9 +534,6 @@ PublicSpace.maps = (function ($, L) {
                                     layer.addData(presentDayBuildingsGeoJson);
                                 });
                             }
-                            // if (presentDayBuildingOutlines !== null) {
-                            //     presentDayBuildingOutlines.addData(presentDayBuildingsGeoJson[0]);
-                            // }
                             if (presentDayBuildingPoints !== null) {
                                 presentDayBuildingPoints.addData(presentDayBuildingCentresGeoJson);
                             }
@@ -600,7 +587,8 @@ PublicSpace.maps = (function ($, L) {
             // Note: tmpMapStyle is temporary - just to experiment with styles
             var mapOptions = tmpParseMapOptions(tmpMapStyle);
 
-            var mymap = createMap(elementId, areaId);
+            var mymap = createMap(elementId, areaId),
+                tileLayer = createTileLayer();
 
             var valuationBuildingPoints = null,
                 valuationBuildingOutlines = null,
@@ -715,13 +703,22 @@ PublicSpace.maps = (function ($, L) {
             var os1910Layer = L.layerGroup([castleParkOSMap]);
 
             // Map layer groups
+            // TODO: Trim out unused icons/circles code
             var valuations1910Layer = L.layerGroup([valuationBuildingOutlines, valuationBuildingPoints]);
             var presentDayLayer = L.layerGroup([presentDayBuildingOutlines, presentDayBuildingPoints]);
             L.control.layers(
                     {
-                        "1910 Ordnance Survey": os1910Layer,
-                        "Present day (2016)": presentDayLayer,
-                        "1910": valuations1910Layer,
+                        "Present day": tileLayer,
+                        "1910 Doomsday (Ordnance Survey)": os1910Layer
+                    }, 
+                    null, 
+                    { collapsed: false, position: 'topleft'})
+                .addTo(mymap);
+
+            L.control.layers(
+                    {
+                        // "Present day (2016)": presentDayLayer,
+                        // "1910": valuations1910Layer,
                         "18th Century Buildings Type": leechBuildingsTypeLayer,
                         "1910 Buildings Type": valuationBuildingsTypeLayer,
                         "2016 Buildings Type": presentDayBuildingsTypeLayer,
@@ -732,10 +729,29 @@ PublicSpace.maps = (function ($, L) {
                     null, 
                     { collapsed: false, position: 'topleft'})
                 .addTo(mymap);
+
+            // TODO: trying to add header to html element:
+            // var testLayer = L.control.layers(
+            //         {
+            //             "Present day (2016)": presentDayLayer,
+            //             "1910": valuations1910Layer,
+            //             "18th Century Buildings Type": leechBuildingsTypeLayer,
+            //             "1910 Buildings Type": valuationBuildingsTypeLayer,
+            //             "2016 Buildings Type": presentDayBuildingsTypeLayer,
+            //             "18th Century Ownership": leechBuildingsOwnershipLayer,
+            //             "1910 Ownership": valuationBuildingsOwnershipLayer,
+            //             "2016 Ownership": presentDayBuildingsOwnershipLayer
+            //         }, 
+            //         null, 
+            //         { collapsed: false, position: 'topleft'});
+            // var container = testLayer.getContainer();
+            // testLayer.addTo(mymap);
+            // console.log("container", container);
+            
             
             // Set default layer to visible
-            valuations1910Layer.addTo(mymap);
-            // presentDayLayer.addTo(mymap);
+            tileLayer.addTo(mymap);
+            valuationBuildingsTypeLayer.addTo(mymap);
 
             var presentDayBuildingLayers = [presentDayBuildingOutlines,
                     presentDayBuildingsTypeLayer,
