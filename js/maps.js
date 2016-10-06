@@ -260,6 +260,7 @@ PublicSpace.maps = (function ($, L) {
     var valuationBuildingsPopupTemplate = '{HouseNum} {Street}<br>Building use: {BuildingUse}<br>Ownership: {Ownership}<br><small>Assessment Number: {AssessNum}</small>',
         presentDayBuildingsPopupTemplate = '{HouseNum} {Street}<br>Building use: {BuildingUse}<br>Ownership: {Ownership}<br>Occupier: {Occupier}',
         leechBuildingsPopupTemplate = '{PlotRef} {StreetName}<br>Building use: {BuildingUse}<br>Ownership: {Ownership}',
+        ashmead1828BuildingsPopupTemplate = '<strong>{Name}</strong><br>Category: {Category}<br>Ashmead Ref: {RefNum}',
 
     // Private methods
         createTileLayer = function () {
@@ -588,7 +589,12 @@ PublicSpace.maps = (function ($, L) {
             }
             
             return mapOptions;
-        }
+        },
+        onOverlayChange = function (evnt) {
+            // Fires when map layer is changed
+            console.log("event");
+            //console.log(evnt);
+        },
         drawAreaMap = function (elementId, areaId, tmpMapStyle) {
             // Note: tmpMapStyle is temporary - just to experiment with styles
             var mapOptions = tmpParseMapOptions(tmpMapStyle);
@@ -682,8 +688,9 @@ PublicSpace.maps = (function ($, L) {
             // presentDayBuildingOutlines = createPresentDayBuildingOutlinesLayer(getBuildingFillStyle);
 
             // Create the buildings layers (showing outlines of buildings on map)
-            var buildingTypesColourScale = d3.scaleOrdinal(d3.schemeCategory10),
-                buildingOwnershipColourScale = d3.scaleOrdinal(d3.schemeCategory10);
+            var buildingTypesColourScale = d3.scaleOrdinal(d3.schemeCategory20),
+                buildingOwnershipColourScale = d3.scaleOrdinal(d3.schemeCategory20),
+                ashmead1828OwnershipColourScale = d3.scaleOrdinal(d3.schemeCategory10);
             var valuationBuildingsTypeLayer = createBuildingOutlinesLayer("BuildingUse", 
                     PublicSpace.buildings.colourScaleFillStyle,
                     valuationBuildingsPopupTemplate, buildingTypesColourScale),
@@ -701,7 +708,10 @@ PublicSpace.maps = (function ($, L) {
                     presentDayBuildingsPopupTemplate, buildingOwnershipColourScale),
                 leechBuildingsOwnershipLayer = createBuildingOutlinesLayer("Ownership", 
                     PublicSpace.buildings.colourScaleFillStyle, 
-                    leechBuildingsPopupTemplate, buildingOwnershipColourScale);
+                    leechBuildingsPopupTemplate, buildingOwnershipColourScale),
+                ashmead1828BuildingsOwnershipLayer = createBuildingOutlinesLayer("Category", 
+                    PublicSpace.buildings.colourScaleFillStyle, 
+                    ashmead1828BuildingsPopupTemplate, ashmead1828OwnershipColourScale);
 
             // 1910 Valuation map image
             // Castle Park map
@@ -735,11 +745,15 @@ PublicSpace.maps = (function ($, L) {
                         "Building use: 2016": presentDayBuildingsTypeLayer,
                         "Building ownership: 18th Century": leechBuildingsOwnershipLayer,
                         "Building ownership: 1910": valuationBuildingsOwnershipLayer,
-                        "Building ownership: 2016": presentDayBuildingsOwnershipLayer
+                        "Building ownership: 2016": presentDayBuildingsOwnershipLayer,
+                        "1828 public buildings (Ashmead)": ashmead1828BuildingsOwnershipLayer
                     }, 
                     null, 
                     { collapsed: false, position: 'topleft'})
                 .addTo(mymap);
+
+            // Layer events
+            mymap.on('baselayerchange', onOverlayChange);
 
             // TODO: trying to add header to html element:
             // var testLayer = L.control.layers(
@@ -773,7 +787,7 @@ PublicSpace.maps = (function ($, L) {
                 leechBuildingLayers = [leechBuildingsTypeLayer,
                     leechBuildingsOwnershipLayer];
 
-            // Load data and apply it to map layers
+            // Load spreadsheet and geojson data and apply it to map layers
             // loadMapData(mapOptions["markers"] === "none" ? null : valuationBuildingPoints, 
             //     mapOptions.showBuildings === false ? null : valuations1910BuildingLayers,
             //     mapOptions["markers"] === "none" ? null : presentDayBuildingPoints, 
@@ -825,6 +839,14 @@ PublicSpace.maps = (function ($, L) {
                             return div;
                         };
                     legend.addTo(mymap);
+                });
+
+            // Load the data for Ashmead layer
+            $.getJSON("./geojson/Ashmead_1828_Buildings.geojson")
+                .done(function (ashmeadBuildingsGeoJsonResponse) {
+                    // var ashmeadBuildingsGeoJson = ashmeadBuildingsGeoJsonResponse[0];
+                    // console.log();
+                    ashmead1828BuildingsOwnershipLayer.addData(ashmeadBuildingsGeoJsonResponse);
                 });
 
             return mymap;
