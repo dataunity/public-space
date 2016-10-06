@@ -1,49 +1,93 @@
-Street name,Plot ref,Proprietor name (18th C),Occupier name (18th C),Occupier Occupation (18th C),Ownership (18th C),Notes
-Broad Street,1,Parish of St Ewen's,"Pine, William (1775)",Printer and Bookseller,Parish,"Former parsonage of St Ewen's, purchased by Corporation for Council House 1795"
-Broad Street,2,"Sheppard, J. S. (1795)","Sheppard, J. S.?",Milliner,Private,"Formerly St Ewen's church house, sold to private owner when church demolished (date?), purchased by Corporation 1795 for Council House"
-Broad Street,4,Trinity Hospital Trustees?,"Hart, Ann, widow (1748)",,Unclear: charity?,"RO, 00753."
-Broad Street,5,,"Dobbs, Richard (1740)",Peruke maker,Private,
-Broad Street,6,Parish of All Saints,"Stevens, John (1714)",Haberdasher,Parish,Sold to corporation in 1888.
-Broad Street,7,Merchant Tailors guild,"Parsons, Isaac",Currier,Charity,Sold to Corporation in 1893.
-Broad Street,12,,,,Private?,
-Broad Street,13,,,,Private?,
-Broad Street,14,,,,Private,Sold to Bank of England in 1844.
-Broad Street,15,"Nangle, Nathaniel (1759)",,,Private,Sold to Bank of England in 1844.
-Broad Street,16,,"Geething, William (1730)",Grocer,Private,
-Broad Street,17,"Lane, Richard (1730)",Occupied as four tenements,,Private,Sold to Corporation in 1801.
-Broad Street,21,Parish of St John,,,Parish,
-Broad Street,23,"Hipsley, John, gent. (1737)","Shearing, Joshua (1737)",Upholsterer,Private,Ground rent paid to Corporation. United with 24 as single property in 1813.
-Broad Street,24,"Hipsley, John, gent. (1737)","Combes, Hester, widow (1737)",Wine merchant,Private,Ground rent paid to Corporation. United with 23 as single property in 1813.
-Broad Street,26,Corporation?,"Sheppard, Godfrey William (1741)",Haberdasher of hats,Corporation?,
-Broad Street,27,Corporation?,"Cowles, William and Sarah Horsington (1740)",Victualler and pastry cook,Corporation?,
-Broad Street,28,Corporation?,"White, Joseph (1740)",Cabinet maker,Corporation?,
-Broad Street,29,"Dorvell, John Baker of Over",,,Private,Ground rent paid to Corporation.
-Broad Street,31,Corporation,,,Corporation,
-Broad Street,33,Parish of St John,"Williams, Thomas (1755)",Victualler,Parish,
-Broad Street,34,,,,Private,
-Broad Street,35,"Gough, Giles (1699)","Baskerville, Robert?",,Private,
-Broad Street,36,,,,Private,
-Broad Street,37,,,,Private,
-Broad Street,38,"Waters, William (1696)",,,Private,
-Broad Street,39,"Freeman, Thomas Edwards (1777)",,,Private,Ruinous in 1777; to be demolished and a new street of houses to be called St John's Street to be built.
-Broad Street,40,"Freeman, Thomas Edwards (1777)",,,Private,Ruinous in 1777; to be demolished and a new street of houses to be called St John's Street to be built.
-Broad Street,41,Merchant Tailors guild,"Osbourne, John, gent. (1802)",,Charity,
-Broad Street,42,Merchant Tailors guild,"Partridge, Daniel (1802)",Tinman,Charity,
-Broad Street,43,Merchant Tailors guild,"Cherry, John (1802)",Auctioneer,Charity,Formerly 'the Lamb'.
-Broad Street,44,Corporation,"Mathews, Lewis (1740)",Victualler,Corporation,The Ship
-Broad Street,49,,,,Private,With 50
-Broad Street,50,,,,Private,With 49
-Broad Street,51,Corporation,"Packer, Samuel? (1700)",Cooper,Corporation,Bartholomew lands.
-Broad Street,52,,,,Private,
-Broad Street,53,Dean and Chapter,"Cook, John (1725)",Distiller,Cathedral,
-Broad Street,54,Corporation,,,Corporation,Formerly New Market
-Broad Street,55,Corporation,,,Corporation,Formerly New Market
-Broad Street,56,"Bowyer, James? (1740)",,,Private,White Lion
-Broad Street,57,"Bowyer, James? (1740)",,,Private,White Lion
-Broad Street,58,,,,Private,White Hart; demolished 1860s.
-Broad Street,59,Feoffees of Christchurch,"Cox and Harford, Messrs (1758)",Silk mercers,Parish,
-Broad Street,61,Feoffees of Christchurch,"Cox and Harford, Messrs (1758)",Silk mercers,Parish,
-Broad Street,63,Feoffees of Christchurch,"Goldwye, William (1769)",Oculist or surgeon,Parish,
-Broad Street,Christchurch,,,,Parish,"Two shops built against the west front of Christchurch, demolished 1785 when church rebuilt and expanded."
-Maryleport Street,1,"Toye, Henry (1791)",,,Private,See 14/15 High Street. Ground rent paid to Corporation.
-,2,,,,,
+Street name,Plot ref,Proprietor name (18th C),Occupier name (18th C),Occupier Occupation (18th C),Ownership (18th C),Notes,Building use (18th C)
+Broad Street,1,Parish of St Ewen's,"Pine, William (1775)",Printer and Bookseller,Parish,"Former parsonage of St Ewen's, purchased by Corporation for Council House 1795",Printer
+Broad Street,2,"Sheppard, J. S. (1795)","Sheppard, J. S.?",Milliner,Private,"Formerly St Ewen's church house, sold to private owner when church demolished (date?), purchased by Corporation 1795 for Council House",Shop
+Broad Street,4,Trinity Hospital Trustees?,"Hart, Ann, widow (1748)",,Unclear: charity?,"RO, 00753.",
+Broad Street,5,,"Dobbs, Richard (1740)",Peruke maker,Private,,Workshop
+Broad Street,6,Parish of All Saints,"Stevens, John (1714)",Haberdasher,Parish,Sold to corporation in 1888.,Shop
+Broad Street,7,Merchant Tailors guild,"Parsons, Isaac",Currier,Charity,Sold to Corporation in 1893.,Ask Alex
+Broad Street,12,,,,Private?,,
+Broad Street,13,,,,Private?,,
+Broad Street,14,,,,Private,Sold to Bank of England in 1844.,
+Broad Street,15,"Nangle, Nathaniel (1759)",,,Private,Sold to Bank of England in 1844.,
+Broad Street,16,,"Geething, William (1730)",Grocer,Private,,Shop
+Broad Street,17,"Lane, Richard (1730)",Occupied as four tenements,,Private,Sold to Corporation in 1801.,House
+Broad Street,21,Parish of St John,,,Parish,,
+Broad Street,23,"Hipsley, John, gent. (1737)","Shearing, Joshua (1737)",Upholsterer,Private,Ground rent paid to Corporation. United with 24 as single property in 1813.,Shop
+Broad Street,24,"Hipsley, John, gent. (1737)","Combes, Hester, widow (1737)",Wine merchant,Private,Ground rent paid to Corporation. United with 23 as single property in 1813.,Shop
+Broad Street,26,Corporation?,"Sheppard, Godfrey William (1741)",Haberdasher of hats,Corporation?,,Shop
+Broad Street,27,Corporation?,"Cowles, William and Sarah Horsington (1740)",Victualler and pastry cook,Corporation?,,Ask Alex
+Broad Street,28,Corporation?,"White, Joseph (1740)",Cabinet maker,Corporation?,,Workshop
+Broad Street,29,"Dorvell, John Baker of Over",,,Private,Ground rent paid to Corporation.,
+Broad Street,31,Corporation,,,Corporation,,
+Broad Street,33,Parish of St John,"Williams, Thomas (1755)",Victualler,Parish,,Ask Alex
+Broad Street,34,,,,Private,,
+Broad Street,35,"Gough, Giles (1699)","Baskerville, Robert?",,Private,,
+Broad Street,36,,,,Private,,
+Broad Street,37,,,,Private,,
+Broad Street,38,"Waters, William (1696)",,,Private,,
+Broad Street,39,"Freeman, Thomas Edwards (1777)",,,Private,Ruinous in 1777; to be demolished and a new street of houses to be called St John's Street to be built.,
+Broad Street,40,"Freeman, Thomas Edwards (1777)",,,Private,Ruinous in 1777; to be demolished and a new street of houses to be called St John's Street to be built.,
+Broad Street,41,Merchant Tailors guild,"Osbourne, John, gent. (1802)",,Charity,,
+Broad Street,42,Merchant Tailors guild,"Partridge, Daniel (1802)",Tinman,Charity,,Ask Alex
+Broad Street,43,Merchant Tailors guild,"Cherry, John (1802)",Auctioneer,Charity,Formerly 'the Lamb'.,Auction house
+Broad Street,44,Corporation,"Mathews, Lewis (1740)",Victualler,Corporation,The Ship,Ask Alex
+Broad Street,49,,,,Private,With 50,
+Broad Street,50,,,,Private,With 49,
+Broad Street,51,Corporation,"Packer, Samuel? (1700)",Cooper,Corporation,Bartholomew lands.,Ask Alex
+Broad Street,52,,,,Private,,
+Broad Street,53,Dean and Chapter,"Cook, John (1725)",Distiller,Cathedral,,Ask Alex
+Broad Street,54,Corporation,,,Corporation,Formerly New Market,
+Broad Street,55,Corporation,,,Corporation,Formerly New Market,
+Broad Street,56,"Bowyer, James? (1740)",,,Private,White Lion,
+Broad Street,57,"Bowyer, James? (1740)",,,Private,White Lion,
+Broad Street,58,,,,Private,White Hart; demolished 1860s.,
+Broad Street,59,Feoffees of Christchurch,"Cox and Harford, Messrs (1758)",Silk mercers,Parish,,Ask Alex
+Broad Street,61,Feoffees of Christchurch,"Cox and Harford, Messrs (1758)",Silk mercers,Parish,,Ask Alex
+Broad Street,63,Feoffees of Christchurch,"Goldwye, William (1769)",Oculist or surgeon,Parish,,Health
+Broad Street,Christchurch,,,,Parish,"Two shops built against the west front of Christchurch, demolished 1785 when church rebuilt and expanded.",
+Maryleport Street,1,"Toye, Henry (1791)",,,Private,See 14/15 High Street. Ground rent paid to Corporation.,
+Maryleport Street,2,Corporation,"Foord, Thomas (1740)",Cordwainer,Corporation,Dr Owen's Charity,Ask Alex
+Maryleport Street,3,Private?,,,Private?,,
+Maryleport Street,4,"Grubbe, Phoebe (1746)","Luffe, Susanna (1746)",,Private,Sold to Corporation in 1950.,
+Maryleport Street,5,"Grubbe, Phoebe (1746)","Luffe, Susanna (1746)",,Private,Sold to Corporation in 1950.,
+Maryleport Street,6a,,Smith Thomas (1725),Apothecary,Private,"Formerly one tenement, divided into two",Health
+Maryleport Street,6b,,"Wells, William (1725)",Ironmonger,Private,"Formerly one tenement, divided into two",Shop
+Maryleport Street,7,,"Cottle, John",Victualler,Private,"The Crown, behind tenements 6a and 6b.",Ask Alex
+Maryleport Street,8,,"Hart, William (1725)",Chandler,Private,,Shop
+Maryleport Street,9,,,,Private?,,
+Maryleport Street,10,,,,Private,,
+Maryleport Street,11,,,,Private,,
+Maryleport Street,13,,,,Private,Combined with 14 by 1911.,
+Maryleport Street,14,,,,Private,Combined with 14 by 1911.,
+Maryleport Street,15,Corporation,"Aylward, Thomas (1730)",Ironmonger,Corporation,"Trinity Hospital; demolished 1730 for the building of the Corn Market, later Cheese Market.",Shop
+Maryleport Street,16,Corporation,,,Corporation,"The Swan. Trinity Hospital; demolished 1730 for the building of the Corn Market, later Cheese Market.",
+Maryleport Street,17,"Cox, William (1699)","Hill, Nathaniel (1699)",Skinner,Private,,Ask Alex
+Maryleport Street,18,"Coc, Thomas? (1727)","Cox, Thomas (1727)",,Private,The King's Head.,
+Maryleport Street,19,Parish of St Peter,"Harris, Nathaniel",Apothecary,Parish,,Health
+Maryleport Street,20,,"Harris, Joseph",Soapboiler,Private,,Ask Alex
+Maryleport Street,21,Dean and Chapter,"Scandrett, John (1708)",,Cathedral,,
+Maryleport Street,22,"Howse, Samuel (1708)","Cole, John (1708)",Soapboiler,Private,The Olive Tree.,Ask Alex
+Maryleport Street,23,,"Friend, John (1708)",,Private,Formerly a stable.,
+Maryleport Street,24,Corporation,"Spencer, William (1733)",,Corporation,"Trinity Hospital. 24 and 25 divided into three tenements, east and west parts held from 1733 by William Spencer, middle part held from 1737 by Elizabeth Edwards, widow.",
+Maryleport Street,25,Corporation,"Edwards, Elizabeth, widow (1737)",,Corporation,"Trinity Hospital. 24 and 25 divided into three tenements, east and west parts held from 1733 by William Spencer, middle part held from 1737 by Elizabeth Edwards, widow.",
+Maryleport Street,26,"Jarrett, John (1786)",,,Private,The Swan. A public house since at least 15th century.,
+Maryleport Street,27,"Jarrett, John (1786)",,,Private,The Swan. A public house since at least 15th century.,
+Maryleport Street,28,"Peach, Samuel (1782)","Warner, Henry (1782)",Basket maker,Private,,Workshop
+Maryleport Street,29,"Edwards, John (1782)","Tozer, Leonard and Company (1782)",Tobacconists,Private,,Shop
+Maryleport Street,30,"Tanner, John (1782)",,Peruke maker,Private,,Workshop
+Maryleport Street,31,Parish of St Maryleport,"Haynes, John (1725)",,Parish,,
+Maryleport Street,32,"Jones, Edward (1766)",,Glazier,Private,,Workshop
+Maryleport Street,33,,,,Private,,
+Maryleport Street,34,,,,Private,,
+Maryleport Street,35,,,,Private,,
+Maryleport Street,36,Dean and Chapter,,,Cathedral,,
+Maryleport Street,37,,,,Private,,
+Maryleport Street,38,,,,,"See Watts and Rahtz, Mary-le-Port, Bristol: excavations, 1962-3, p. 34.",
+Maryleport Street,40,,,,,"See Watts and Rahtz, Mary-le-Port, Bristol: excavations, 1962-3, p. 34.",
+Maryleport Street,41,,,,,"See Watts and Rahtz, Mary-le-Port, Bristol: excavations, 1962-3, p. 34.",
+Maryleport Street,42,,,,,"See Watts and Rahtz, Mary-le-Port, Bristol: excavations, 1962-3, p. 34.",
+Maryleport Street,43,Dean and Chapter,,,Cathedral,,
+Maryleport Street,44,,,,Private,,
+Maryleport Street,45,,,,Private,,
+Maryleport Street,46,,,,Private,,
+Maryleport Street,47,,,,Private,,
