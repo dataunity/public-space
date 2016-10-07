@@ -15,10 +15,10 @@
     <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="Buildings_Present_Day20160906171823878" name="Buildings_Present_Day">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="TNA__IR_128_3_226_2__IMG_5575__modified20160907113446127" name="TNA, IR 128_3_226-2 (IMG_5575)_modified">
+    <layer-tree-layer expanded="1" checked="Qt::Checked" id="TNA__IR_128_3_226_2__IMG_5575__modified20160907113446127" name="TNA, IR 128_3_226-2 (IMG_5575)_modified">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="TNA__IR_128_3_231_part_1_1__IMG_5576__modified20160906180511301" name="TNA, IR 128_3_231_part 1-1 (IMG_5576)_modified">
+    <layer-tree-layer expanded="1" checked="Qt::Checked" id="TNA__IR_128_3_231_part_1_1__IMG_5576__modified20160906180511301" name="TNA, IR 128_3_231_part 1-1 (IMG_5576)_modified">
       <customproperties/>
     </layer-tree-layer>
     <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="OrderBoundaryNew20160907140723641" name="OrderBoundaryNew">
@@ -107,14 +107,14 @@
         <legendlayerfile isInOverview="0" layerid="Buildings_Present_Day20160906171823878" visible="0"/>
       </filegroup>
     </legendlayer>
-    <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="TNA, IR 128_3_226-2 (IMG_5575)_modified" showFeatureCount="0">
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="TNA, IR 128_3_226-2 (IMG_5575)_modified" showFeatureCount="0">
       <filegroup open="true" hidden="false">
-        <legendlayerfile isInOverview="0" layerid="TNA__IR_128_3_226_2__IMG_5575__modified20160907113446127" visible="0"/>
+        <legendlayerfile isInOverview="0" layerid="TNA__IR_128_3_226_2__IMG_5575__modified20160907113446127" visible="1"/>
       </filegroup>
     </legendlayer>
-    <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="TNA, IR 128_3_231_part 1-1 (IMG_5576)_modified" showFeatureCount="0">
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="TNA, IR 128_3_231_part 1-1 (IMG_5576)_modified" showFeatureCount="0">
       <filegroup open="true" hidden="false">
-        <legendlayerfile isInOverview="0" layerid="TNA__IR_128_3_231_part_1_1__IMG_5576__modified20160906180511301" visible="0"/>
+        <legendlayerfile isInOverview="0" layerid="TNA__IR_128_3_231_part_1_1__IMG_5576__modified20160906180511301" visible="1"/>
       </filegroup>
     </legendlayer>
     <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="OrderBoundaryNew" showFeatureCount="0">

@@ -729,7 +729,15 @@ PublicSpace.maps = (function ($, L) {
                 bounds = L.latLngBounds(southWest, northEast),
                 os1910Attribution = "TODO: Attribution";
             var castleParkOSMap = L.imageOverlay(imageUrl, bounds, {attribution: os1910Attribution});
-            var os1910Layer = L.layerGroup([castleParkOSMap]);
+            
+
+            imageUrl = './images/maps/TNA_IR_128_3_226.png';
+            southWest = L.latLng(51.45537649140026, -2.5951950172650142);
+            northEast = L.latLng(51.45832123003571, -2.587687822822927);
+            bounds = L.latLngBounds(southWest, northEast);
+            var broadStreetOSMap = L.imageOverlay(imageUrl, bounds, {attribution: os1910Attribution});
+
+            var os1910Layer = L.layerGroup([broadStreetOSMap, castleParkOSMap]);
 
             // Map layer groups
             var layerPrefixBuildingUse = "Building use: ",
