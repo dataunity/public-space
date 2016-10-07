@@ -230,7 +230,7 @@ PublicSpace.mapLegends = (function () {
             var txt = "",
                 tmpItem;
 
-            txt += "<h4>" + title + ":</h4>";
+            txt += "<strong>" + title + ":</strong></br></br>";
             for (var i = 0; i < items.length; i++) {
                 tmpItem = items[i];
                 txt +=
@@ -698,7 +698,7 @@ PublicSpace.maps = (function ($, L) {
             // Create the buildings layers (showing outlines of buildings on map)
             var buildingTypesColourScale = d3.scaleOrdinal(d3.schemeCategory20),
                 buildingOwnershipColourScale = d3.scaleOrdinal(d3.schemeCategory20),
-                ashmead1828OwnershipColourScale = d3.scaleOrdinal(d3.schemeCategory10);
+                ashmead1828CategoriesColourScale = d3.scaleOrdinal(d3.schemeCategory10);
             var valuationBuildingsTypeLayer = createBuildingOutlinesLayer("BuildingUse", 
                     PublicSpace.buildings.colourScaleFillStyle,
                     valuationBuildingsPopupTemplate, buildingTypesColourScale),
@@ -719,7 +719,7 @@ PublicSpace.maps = (function ($, L) {
                     leechBuildingsPopupTemplate, buildingOwnershipColourScale),
                 ashmead1828BuildingsOwnershipLayer = createBuildingOutlinesLayer("Category", 
                     PublicSpace.buildings.colourScaleFillStyle, 
-                    ashmead1828BuildingsPopupTemplate, ashmead1828OwnershipColourScale);
+                    ashmead1828BuildingsPopupTemplate, ashmead1828CategoriesColourScale);
 
             // 1910 Valuation map image
             // Castle Park map
@@ -853,6 +853,11 @@ PublicSpace.maps = (function ($, L) {
                                     legendDiv.innerHTML = PublicSpace.mapLegends.colourScaleLegendText("Building ownership",
                                         ownershipValues,
                                         buildingOwnershipColourScale);
+                                } else {
+                                    // Assume Ashmead layer selected
+                                    legendDiv.innerHTML = PublicSpace.mapLegends.colourScaleLegendText("Building categories",
+                                        ashmead1828Categories,
+                                        ashmead1828CategoriesColourScale);
                                 }
                             }
 
