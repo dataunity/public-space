@@ -259,7 +259,7 @@ PublicSpace.maps = (function ($, L) {
         // Popup text templates
     var valuationBuildingsPopupTemplate = '{HouseNum} {Street}<br>Building use: {BuildingUse}<br>Ownership: {Ownership}<br><small>Assessment Number: {AssessNum}</small>',
         presentDayBuildingsPopupTemplate = '{HouseNum} {Street}<br>Building use: {BuildingUse}<br>Ownership: {Ownership}<br>Occupier: {Occupier}',
-        leechBuildingsPopupTemplate = '{PlotRef} {StreetName}<br>Building use: {BuildingUse}<br>Ownership: {Ownership}',
+        leechBuildingsPopupTemplate = '{Ref} {StreetName}<br>Building use: {BuildingUse}<br>Ownership: {Ownership}',
         ashmead1828BuildingsPopupTemplate = '<strong>{Name}</strong><br>Category: {Category}<br>Ashmead Ref: {RefNum}',
 
     // Private methods
@@ -399,7 +399,7 @@ PublicSpace.maps = (function ($, L) {
         getLeechRecordValue = function (indexedRecords, feature, spreadsheetColumn) {
             // Look up a value from a column in the Leech records for the specified geojson feature
             var streetRecords = (indexedRecords[feature.properties.StreetName] || {}),
-                assessmentRecords = (streetRecords || {})[feature.properties.PlotRef],
+                assessmentRecords = (streetRecords || {})[feature.properties.Ref],
                 unknownValue = "Unknown",
                 val = unknownValue;
 
