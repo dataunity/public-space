@@ -306,8 +306,6 @@ PublicSpace.maps = (function ($, L) {
                 // Central Bristol
                 latLong = [51.45611, -2.5909];
                 zoomLevel = 16.5;
-                // latLong = [51.457565, -2.590507];
-                // zoomLevel = 16;
             }
 
             map = L.map(elementId, {
@@ -428,15 +426,13 @@ PublicSpace.maps = (function ($, L) {
                 .object(leechRecords);
         },
         loadMapData = function (valuationBuildingPoints, valuationBuildingLayers,
-            presentDayBuildingPoints, presentDayBuildingLayers, leechBuildingLayers) {
+            presentDayBuildingPoints, presentDayBuildingLayers, 
+            leechBuildingLayers, ashmead1828BuildingsOwnershipLayer) {
             // Load data and apply it to map layers
             var deferred = $.Deferred();
 
             // Load data
-            var districtValuations = {},
-                distinctBuildingTypesLookup = {},
-                //distinctBuildingCategoriesLookup = {},
-                distinctOwnershipLookup = {};
+            var districtValuations = {};
 
             // Load spreadsheet data files
             $.when($.get("./csv/Bristol_Valuation_Records_1910.csv"),
@@ -460,26 +456,36 @@ PublicSpace.maps = (function ($, L) {
                         $.getJSON("./geojson/Valuations_1910_Building_Centres.geojson"),
                         $.getJSON("./geojson/Buildings_Present_Day.geojson"),
                         $.getJSON("./geojson/Buildings_Present_Day_Centres.geojson"),
-                        $.getJSON("./geojson/Leech_Topography.geojson"))
+                        $.getJSON("./geojson/Leech_Topography.geojson"),
+                        $.getJSON("./geojson/Ashmead_1828_Buildings.geojson"))
                         .done(function (valBuildingsGeoJsonResponse, 
                                 valBuildingCentresGeoJsonResponse,
                                 presentDayBuildingsGeoJsonResponse,
                                 presentDayBuildingCentresGeoJsonResponse,
-                                leechBuildingsGeoJsonResponse) {
+                                leechBuildingsGeoJsonResponse,
+                                ashmeadBuildingsGeoJsonResponse) {
 
                             var valBuildingsGeoJson = valBuildingsGeoJsonResponse[0], 
                                 valBuildingCentresGeoJson = valBuildingCentresGeoJsonResponse[0],
                                 presentDayBuildingsGeoJson = presentDayBuildingsGeoJsonResponse[0],
                                 presentDayBuildingCentresGeoJson = presentDayBuildingCentresGeoJsonResponse[0],
-                                leechBuildingsGeoJson = leechBuildingsGeoJsonResponse[0];
+                                leechBuildingsGeoJson = leechBuildingsGeoJsonResponse[0],
+                                ashmeadBuildingsGeoJson = ashmeadBuildingsGeoJsonResponse[0];
 
-                            // Extend the 1910 GeoJSON with building type from 1910 Doomsday data
-                            var buildingTypes = [],
+                            
+                            var distinctBuildingTypesLookup = {},
+                                //distinctBuildingCategoriesLookup = {},
+                                distinctOwnershipLookup = {},
+                                distinctAshmead1828CategoriesLookup = {},
+                                buildingTypes = [],
                                 //buildingCategories = [],
                                 ownershipValues = [],
+                                ashmead1828Categories = [],
                                 allFeatures = [],
                                 allValFeatures = [].concat(valBuildingsGeoJson.features).concat(valBuildingCentresGeoJson.features),
                                 allPresentDayFeatures = [].concat(presentDayBuildingsGeoJson.features).concat(presentDayBuildingCentresGeoJson.features);
+                            
+                            // Extend the 1910 GeoJSON with building type from 1910 Doomsday data
                             $.each(allValFeatures, function (ind, feature) {
                                 var buildingUse = getDoomsday1910RecordValue(districtValuations, feature, "Type of Property"),
                                     ownership = getDoomsday1910RecordValue(districtValuations, feature, "Ownership");
@@ -488,9 +494,6 @@ PublicSpace.maps = (function ($, L) {
                                 feature.properties["TypeOfProperty"] = buildingUse;
                                 feature.properties["BuildingUse"] = buildingUse;
                                 feature.properties["Ownership"] = ownership;
-
-                                // Store the distinct values
-                                // distinctBuildingTypesLookup[buildingUse] = true;
                             });
 
                             // Extend the 18th Century building GeoJSON with Leech spreadsheet
@@ -501,9 +504,6 @@ PublicSpace.maps = (function ($, L) {
                                 // Match up feature property names with other layers
                                 feature.properties["BuildingUse"] = buildingUse;
                                 feature.properties["Ownership"] = ownership;
-
-                                // Store the distinct values
-                                // distinctBuildingTypesLookup[buildingUse] = true;
                             });
 
                             $.each(allPresentDayFeatures, function (ind, feature) {
@@ -511,6 +511,7 @@ PublicSpace.maps = (function ($, L) {
                                 feature.properties["BuildingUse"] = feature.properties["Category"];
                             });
 
+                            // Get unique names of building use/ownership
                             allFeatures = [].concat(valBuildingsGeoJson.features)
                                 .concat(valBuildingCentresGeoJson.features)
                                 .concat(presentDayBuildingsGeoJson.features)
@@ -523,6 +524,14 @@ PublicSpace.maps = (function ($, L) {
                                 // Store the distinct values
                                 distinctBuildingTypesLookup[buildingUse] = true;
                                 distinctOwnershipLookup[ownership] = true;
+                            });
+
+                            // Get unique names of Ashmead 1828 categories
+                            $.each(ashmeadBuildingsGeoJson.features, function (ind, feature) {
+                                var category = feature.properties["Category"];
+
+                                // Store the distinct values
+                                distinctAshmead1828CategoriesLookup[category] = true;
                             });
 
                             // Add 1910 valuation building data to map layers
@@ -552,10 +561,14 @@ PublicSpace.maps = (function ($, L) {
                                 });
                             }
 
+                            // Add 1828 Ashmead data
+                            ashmead1828BuildingsOwnershipLayer.addData(ashmeadBuildingsGeoJson);                            
+
                             buildingTypes = Object.keys(distinctBuildingTypesLookup);
                             //buildingCategories = Object.keys(distinctBuildingCategoriesLookup);
                             ownershipValues = Object.keys(distinctOwnershipLookup);
-                            deferred.resolve(buildingTypes, ownershipValues);
+                            ashmead1828Categories = Object.keys(distinctAshmead1828CategoriesLookup);
+                            deferred.resolve(buildingTypes, ownershipValues, ashmead1828Categories);
                         });
                 })
                 .fail(function () {
@@ -589,11 +602,6 @@ PublicSpace.maps = (function ($, L) {
             }
             
             return mapOptions;
-        },
-        onOverlayChange = function (evnt) {
-            // Fires when map layer is changed
-            console.log("event");
-            //console.log(evnt);
         },
         drawAreaMap = function (elementId, areaId, tmpMapStyle) {
             // Note: tmpMapStyle is temporary - just to experiment with styles
@@ -724,9 +732,8 @@ PublicSpace.maps = (function ($, L) {
             var os1910Layer = L.layerGroup([castleParkOSMap]);
 
             // Map layer groups
-            // TODO: Trim out unused icons/circles code
-            // var valuations1910Layer = L.layerGroup([valuationBuildingOutlines, valuationBuildingPoints]);
-            // var presentDayLayer = L.layerGroup([presentDayBuildingOutlines, presentDayBuildingPoints]);
+            var layerPrefixBuildingUse = "Building use: ",
+                layerPrefixBuildingOwnership = "Building ownership: ";
             L.control.layers(
                     {
                         "Present day": tileLayer,
@@ -752,8 +759,7 @@ PublicSpace.maps = (function ($, L) {
                     { collapsed: false, position: 'topleft'})
                 .addTo(mymap);
 
-            // Layer events
-            mymap.on('baselayerchange', onOverlayChange);
+            
 
             // TODO: trying to add header to html element:
             // var testLayer = L.control.layers(
@@ -775,6 +781,7 @@ PublicSpace.maps = (function ($, L) {
             
             
             // Set default layer to visible
+            var defaultOverlayLayerName = layerPrefixBuildingUse + "1910";
             tileLayer.addTo(mymap);
             valuationBuildingsTypeLayer.addTo(mymap);
 
@@ -797,8 +804,9 @@ PublicSpace.maps = (function ($, L) {
                 mapOptions.showBuildings === false ? null : valuations1910BuildingLayers,
                 null, 
                 mapOptions.showBuildings === false ? null : presentDayBuildingLayers,
-                mapOptions.showBuildings === false ? null : leechBuildingLayers)
-                .done (function (buildingTypes, ownershipValues) {
+                mapOptions.showBuildings === false ? null : leechBuildingLayers,
+                ashmead1828BuildingsOwnershipLayer)
+                .done (function (buildingTypes, ownershipValues, ashmead1828Categories) {
                     // Add map legend for property type colours
                     var legend = L.control({position: 'topright'});
                     legend.onAdd = function (map) {
@@ -829,12 +837,36 @@ PublicSpace.maps = (function ($, L) {
                             //         div.innerHTML += PublicSpace.mapLegends.publicAccessibilityLegendText();
                             //         break;
                             // }
-                            div.innerHTML += PublicSpace.mapLegends.colourScaleLegendText("Building type",
-                                buildingTypes,
-                                buildingTypesColourScale);
-                            div.innerHTML += PublicSpace.mapLegends.colourScaleLegendText("Building ownership",
-                                ownershipValues,
-                                buildingOwnershipColourScale);
+                            // div.innerHTML += PublicSpace.mapLegends.colourScaleLegendText("Building type",
+                            //     buildingTypes,
+                            //     buildingTypesColourScale);
+                            // div.innerHTML += PublicSpace.mapLegends.colourScaleLegendText("Building ownership",
+                            //     ownershipValues,
+                            //     buildingOwnershipColourScale);
+
+                            function setLegendText(legendDiv, layerName) {
+                                if (layerName.substring(0, layerPrefixBuildingUse.length) === layerPrefixBuildingUse) {
+                                    legendDiv.innerHTML = PublicSpace.mapLegends.colourScaleLegendText("Building type",
+                                        buildingTypes,
+                                        buildingTypesColourScale);
+                                } else if (layerName.substring(0, layerPrefixBuildingOwnership.length) === layerPrefixBuildingOwnership) {
+                                    legendDiv.innerHTML = PublicSpace.mapLegends.colourScaleLegendText("Building ownership",
+                                        ownershipValues,
+                                        buildingOwnershipColourScale);
+                                }
+                            }
+
+                            function onLayerChange(evnt) {
+                                // Change the legend based on the active layer name
+                                var layerName = evnt.name;
+                                setLegendText(div, layerName);
+                            }
+
+                            // Draw the initial legend
+                            setLegendText(div, defaultOverlayLayerName);
+
+                            // Layer events - change legend text
+                            mymap.on('baselayerchange', onLayerChange);
 
                             return div;
                         };
@@ -842,12 +874,12 @@ PublicSpace.maps = (function ($, L) {
                 });
 
             // Load the data for Ashmead layer
-            $.getJSON("./geojson/Ashmead_1828_Buildings.geojson")
-                .done(function (ashmeadBuildingsGeoJsonResponse) {
-                    // var ashmeadBuildingsGeoJson = ashmeadBuildingsGeoJsonResponse[0];
-                    // console.log();
-                    ashmead1828BuildingsOwnershipLayer.addData(ashmeadBuildingsGeoJsonResponse);
-                });
+            // $.getJSON("./geojson/Ashmead_1828_Buildings.geojson")
+            //     .done(function (ashmeadBuildingsGeoJsonResponse) {
+            //         // var ashmeadBuildingsGeoJson = ashmeadBuildingsGeoJsonResponse[0];
+            //         // console.log();
+            //         ashmead1828BuildingsOwnershipLayer.addData(ashmeadBuildingsGeoJsonResponse);
+            //     });
 
             return mymap;
         };
