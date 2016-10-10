@@ -6,13 +6,13 @@
     <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="Ordnance_Survey_1880_Epoch1_Buildings20161007150022966" name="Ordnance_Survey_1880_Epoch1_Buildings">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" checked="Qt::Checked" id="Leech_Topography20161004112850058" name="Leech_Topography">
+    <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="Leech_Topography20161004112850058" name="Leech_Topography">
       <customproperties/>
     </layer-tree-layer>
     <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="Valuations_1910_Building_Outline20160907140303168" name="Valuations_1910_Building_Outline">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="Buildings_Present_Day20160906171823878" name="Buildings_Present_Day">
+    <layer-tree-layer expanded="1" checked="Qt::Checked" id="Buildings_Present_Day20160906171823878" name="Buildings_Present_Day">
       <customproperties/>
     </layer-tree-layer>
     <layer-tree-layer expanded="1" checked="Qt::Checked" id="TNA__IR_128_3_226_2__IMG_5575__modified20160907113446127" name="TNA, IR 128_3_226-2 (IMG_5575)_modified">
@@ -38,10 +38,10 @@
   <mapcanvas>
     <units>meters</units>
     <extent>
-      <xmin>358824.63610904978122562</xmin>
-      <ymin>172960.9724289899750147</ymin>
-      <xmax>359140.82774680422153324</xmax>
-      <ymax>173175.3856425708218012</ymax>
+      <xmin>358839.37050743272993714</xmin>
+      <ymin>173051.44325747364200652</ymin>
+      <xmax>358906.00700308347586542</xmax>
+      <ymax>173099.63443902443395928</ymax>
     </extent>
     <rotation>0</rotation>
     <projections>1</projections>
@@ -92,9 +92,9 @@
         <legendlayerfile isInOverview="0" layerid="Ordnance_Survey_1880_Epoch1_Buildings20161007150022966" visible="0"/>
       </filegroup>
     </legendlayer>
-    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="Leech_Topography" showFeatureCount="0">
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="Leech_Topography" showFeatureCount="0">
       <filegroup open="true" hidden="false">
-        <legendlayerfile isInOverview="0" layerid="Leech_Topography20161004112850058" visible="1"/>
+        <legendlayerfile isInOverview="0" layerid="Leech_Topography20161004112850058" visible="0"/>
       </filegroup>
     </legendlayer>
     <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="Valuations_1910_Building_Outline" showFeatureCount="0">
@@ -102,9 +102,9 @@
         <legendlayerfile isInOverview="0" layerid="Valuations_1910_Building_Outline20160907140303168" visible="0"/>
       </filegroup>
     </legendlayer>
-    <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="Buildings_Present_Day" showFeatureCount="0">
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="Buildings_Present_Day" showFeatureCount="0">
       <filegroup open="true" hidden="false">
-        <legendlayerfile isInOverview="0" layerid="Buildings_Present_Day20160906171823878" visible="0"/>
+        <legendlayerfile isInOverview="0" layerid="Buildings_Present_Day20160906171823878" visible="1"/>
       </filegroup>
     </legendlayer>
     <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="TNA, IR 128_3_226-2 (IMG_5575)_modified" showFeatureCount="0">
@@ -608,10 +608,10 @@
         <multilineenabled fieldname="" on=""/>
         <selectedonly on=""/>
       </labelattributes>
-      <editform></editform>
+      <editform>.</editform>
       <editforminit/>
       <featformsuppress>0</featformsuppress>
-      <annotationform></annotationform>
+      <annotationform>.</annotationform>
       <editorlayout>generatedlayout</editorlayout>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>

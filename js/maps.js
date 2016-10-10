@@ -383,8 +383,9 @@ PublicSpace.maps = (function ($, L) {
         },
         getDoomsday1910RecordValue = function (districtValuations, feature, valuationsColumn) {
             // Look up a value from a column in the valuations data for the specified geojson feature
-            var districtRecords = (districtValuations[feature.properties.District] || {}),
-                streetRecords = (districtRecords || {})[feature.properties.Street],
+            // var districtRecords = (districtValuations[feature.properties.District] || {}),
+            //     streetRecords = (districtRecords || {})[feature.properties.Street],
+            var streetRecords = (districtValuations[feature.properties.Street] || {}),
                 assessmentRecords = (streetRecords || {})[feature.properties.AssessNum],
                 unknownValue = "Unknown",
                 val = unknownValue;
@@ -413,7 +414,7 @@ PublicSpace.maps = (function ($, L) {
         indexValuationsData = function (doomsday1910Records) {
             // Creates an nested index version of list of records
             return d3.nest()
-                .key(function (d) { return d.District; })
+                // .key(function (d) { return d.District; })
                 .key(function (d) { return d.Street; })
                 .key(function (d) { return d["Source: No. of Assessment"]; })
                 .object(doomsday1910Records);
@@ -449,6 +450,7 @@ PublicSpace.maps = (function ($, L) {
 
                     // Index the spreadsheet data (by district, street, ref number)
                     districtValuations = indexValuationsData(doomsday1910Records);
+                    console.log(districtValuations);
                     indexedLeechRecords = indexLeechData(leechRecords);
 
                     // Load the GeoJSON data
@@ -489,6 +491,8 @@ PublicSpace.maps = (function ($, L) {
                             $.each(allValFeatures, function (ind, feature) {
                                 var buildingUse = getDoomsday1910RecordValue(districtValuations, feature, "Type of Property"),
                                     ownership = getDoomsday1910RecordValue(districtValuations, feature, "Ownership");
+                                // console.log("buildingUse", buildingUse);
+                                // console.log(feature.properties);
                                 
                                 // Match up feature property names with other layers
                                 feature.properties["TypeOfProperty"] = buildingUse;
@@ -741,7 +745,8 @@ PublicSpace.maps = (function ($, L) {
 
             // Map layer groups
             var layerPrefixBuildingUse = "Building use: ",
-                layerPrefixBuildingOwnership = "Building ownership: ";
+                layerPrefixBuildingOwnership = "Building ownership: ",
+                layerPrefixAshmead = "1828 public buildings";
             L.control.layers(
                     {
                         "Present day": tileLayer,
@@ -854,18 +859,20 @@ PublicSpace.maps = (function ($, L) {
 
                             function setLegendText(legendDiv, layerName) {
                                 if (layerName.substring(0, layerPrefixBuildingUse.length) === layerPrefixBuildingUse) {
-                                    legendDiv.innerHTML = PublicSpace.mapLegends.colourScaleLegendText("Building type",
+                                    legendDiv.innerHTML = PublicSpace.mapLegends.colourScaleLegendText("Building use",
                                         buildingTypes,
                                         buildingTypesColourScale);
                                 } else if (layerName.substring(0, layerPrefixBuildingOwnership.length) === layerPrefixBuildingOwnership) {
                                     legendDiv.innerHTML = PublicSpace.mapLegends.colourScaleLegendText("Building ownership",
                                         ownershipValues,
                                         buildingOwnershipColourScale);
-                                } else {
+                                } else if (layerName.substring(0, layerPrefixBuildingOwnership.length) === layerPrefixAshmead) {
                                     // Assume Ashmead layer selected
                                     legendDiv.innerHTML = PublicSpace.mapLegends.colourScaleLegendText("Building categories",
                                         ashmead1828Categories,
                                         ashmead1828CategoriesColourScale);
+                                } else {
+                                    // Background layer change - leave legend the same
                                 }
                             }
 
