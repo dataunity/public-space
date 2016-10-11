@@ -381,19 +381,31 @@ PublicSpace.maps = (function ($, L) {
                     return L.Util.template(presentDayBuildingsPopupTemplate, e.feature.properties)
                 });
         },
+        renameUnknownValue = function (val) {
+            // Makes all the variations of unknown values (e.g. empty string and 'Unknown') look the same
+            var unknownValue = "Unknown";
+            // console.log("val before", val);
+            if (typeof val === "undefined" || val === "") {
+                val = unknownValue;
+            }
+            if (typeof val === "undefined") {
+                console.log("HERE");
+            }
+            // console.log("val after", val);
+            return val;
+        },
         getDoomsday1910RecordValue = function (districtValuations, feature, valuationsColumn) {
             // Look up a value from a column in the valuations data for the specified geojson feature
             // var districtRecords = (districtValuations[feature.properties.District] || {}),
             //     streetRecords = (districtRecords || {})[feature.properties.Street],
             var streetRecords = (districtValuations[feature.properties.Street] || {}),
                 assessmentRecords = (streetRecords || {})[feature.properties.AssessNum],
-                unknownValue = "Unknown",
-                val = unknownValue;
+                val;
 
             if (assessmentRecords && assessmentRecords.length > 0) {
                 val = assessmentRecords[0][valuationsColumn];
-                val = val === "" ? unknownValue : val;
             }
+            val = renameUnknownValue(val);
 
             return val;
         },
@@ -401,13 +413,12 @@ PublicSpace.maps = (function ($, L) {
             // Look up a value from a column in the Leech records for the specified geojson feature
             var streetRecords = (indexedRecords[feature.properties.StreetName] || {}),
                 assessmentRecords = (streetRecords || {})[feature.properties.Ref],
-                unknownValue = "Unknown",
-                val = unknownValue;
+                val;
 
             if (assessmentRecords && assessmentRecords.length > 0) {
                 val = assessmentRecords[0][spreadsheetColumn];
-                val = val === "" ? unknownValue : val;
             }
+            val = renameUnknownValue(val);
 
             return val;
         },
@@ -512,7 +523,12 @@ PublicSpace.maps = (function ($, L) {
 
                             $.each(allPresentDayFeatures, function (ind, feature) {
                                 // Match up feature property names with other layers
-                                feature.properties["BuildingUse"] = feature.properties["Category"];
+                                var buildingUse = feature.properties["Category"],
+                                    ownership = feature.properties["Ownership"];
+                                buildingUse = renameUnknownValue(buildingUse);
+                                ownership = renameUnknownValue(ownership);
+                                feature.properties["BuildingUse"] = buildingUse;
+                                feature.properties["Ownership"] = ownership;
                             });
 
                             // Get unique names of building use/ownership
@@ -866,7 +882,7 @@ PublicSpace.maps = (function ($, L) {
                                     legendDiv.innerHTML = PublicSpace.mapLegends.colourScaleLegendText("Building ownership",
                                         ownershipValues,
                                         buildingOwnershipColourScale);
-                                } else if (layerName.substring(0, layerPrefixBuildingOwnership.length) === layerPrefixAshmead) {
+                                } else if (layerName.substring(0, layerPrefixAshmead.length) === layerPrefixAshmead) {
                                     // Assume Ashmead layer selected
                                     legendDiv.innerHTML = PublicSpace.mapLegends.colourScaleLegendText("Building categories",
                                         ashmead1828Categories,
