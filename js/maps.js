@@ -275,14 +275,16 @@ PublicSpace.maps = (function ($, L) {
         },
         addCoordinatesPopup = function (map) {
             // Co-ordinates popup
-            var popup = L.popup();
-            function onMapClick(e) {
-                popup
-                    .setLatLng(e.latlng)
-                    .setContent("You clicked the map at " + e.latlng.toString())
-                    .openOn(map);
-            }
-            map.on('click', onMapClick);
+            
+            // Omit - but useful for debugging
+            // var popup = L.popup();
+            // function onMapClick(e) {
+            //     popup
+            //         .setLatLng(e.latlng)
+            //         .setContent("You clicked the map at " + e.latlng.toString())
+            //         .openOn(map);
+            // }
+            // map.on('click', onMapClick);
         },
         createMap = function (elementId, areaId) {
             var map,
@@ -340,7 +342,6 @@ PublicSpace.maps = (function ($, L) {
             var fillOpacity = typeof fillStyleFunc.__fillOpacity === "undefined" ? 0.3 : fillStyleFunc.__fillOpacity;
             return new L.geoJson(null, {
                     pointToLayer: function (feature, latlng) {
-                        // console.log("feature", feature, feature.properties[featurePropertyName], fillStyleFunc(feature.properties[featurePropertyName], fillOpacity, buildingFillColourScale));
                         var fillColor = fillStyleFunc(feature.properties[featurePropertyName], fillOpacity, buildingFillColourScale).fillColor;
                         return L.circleMarker(latlng, {
                             radius: 8,
@@ -350,7 +351,6 @@ PublicSpace.maps = (function ($, L) {
                             opacity: 1,
                             fillOpacity: 0.8
                         });
-                        // return L.circleMarker(latlng, geojsonMarkerOptions);
                     }
                 })
                 .bindPopup(function(e){
@@ -384,21 +384,16 @@ PublicSpace.maps = (function ($, L) {
         renameUnknownValue = function (val) {
             // Makes all the variations of unknown values (e.g. empty string and 'Unknown') look the same
             var unknownValue = "Unknown";
-            // console.log("val before", val);
             if (typeof val === "undefined" || val === "") {
                 val = unknownValue;
             }
-            if (typeof val === "undefined") {
-                console.log("HERE");
-            }
-            // console.log("val after", val);
             return val;
         },
         getDoomsday1910RecordValue = function (districtValuations, feature, valuationsColumn) {
             // Look up a value from a column in the valuations data for the specified geojson feature
-            // var districtRecords = (districtValuations[feature.properties.District] || {}),
-            //     streetRecords = (districtRecords || {})[feature.properties.Street],
-            var streetRecords = (districtValuations[feature.properties.Street] || {}),
+            var districtRecords = (districtValuations[feature.properties.District] || {}),
+                streetRecords = (districtRecords || {})[feature.properties.Street],
+            // var streetRecords = (districtValuations[feature.properties.Street] || {}),
                 assessmentRecords = (streetRecords || {})[feature.properties.AssessNum],
                 val;
 
@@ -425,7 +420,7 @@ PublicSpace.maps = (function ($, L) {
         indexValuationsData = function (doomsday1910Records) {
             // Creates an nested index version of list of records
             return d3.nest()
-                // .key(function (d) { return d.District; })
+                .key(function (d) { return d.District; })
                 .key(function (d) { return d.Street; })
                 .key(function (d) { return d["Source: No. of Assessment"]; })
                 .object(doomsday1910Records);
@@ -461,27 +456,26 @@ PublicSpace.maps = (function ($, L) {
 
                     // Index the spreadsheet data (by district, street, ref number)
                     districtValuations = indexValuationsData(doomsday1910Records);
-                    console.log(districtValuations);
                     indexedLeechRecords = indexLeechData(leechRecords);
 
                     // Load the GeoJSON data
                     $.when($.getJSON("./geojson/Valuations_1910_Building_Outline.geojson"),
-                        $.getJSON("./geojson/Valuations_1910_Building_Centres.geojson"),
+                        // $.getJSON("./geojson/Valuations_1910_Building_Centres.geojson"),
                         $.getJSON("./geojson/Buildings_Present_Day.geojson"),
-                        $.getJSON("./geojson/Buildings_Present_Day_Centres.geojson"),
+                        // $.getJSON("./geojson/Buildings_Present_Day_Centres.geojson"),
                         $.getJSON("./geojson/Leech_Topography.geojson"),
                         $.getJSON("./geojson/Ashmead_1828_Buildings.geojson"))
                         .done(function (valBuildingsGeoJsonResponse, 
-                                valBuildingCentresGeoJsonResponse,
+                                // valBuildingCentresGeoJsonResponse,
                                 presentDayBuildingsGeoJsonResponse,
-                                presentDayBuildingCentresGeoJsonResponse,
+                                // presentDayBuildingCentresGeoJsonResponse,
                                 leechBuildingsGeoJsonResponse,
                                 ashmeadBuildingsGeoJsonResponse) {
 
                             var valBuildingsGeoJson = valBuildingsGeoJsonResponse[0], 
-                                valBuildingCentresGeoJson = valBuildingCentresGeoJsonResponse[0],
+                                // valBuildingCentresGeoJson = valBuildingCentresGeoJsonResponse[0],
                                 presentDayBuildingsGeoJson = presentDayBuildingsGeoJsonResponse[0],
-                                presentDayBuildingCentresGeoJson = presentDayBuildingCentresGeoJsonResponse[0],
+                                // presentDayBuildingCentresGeoJson = presentDayBuildingCentresGeoJsonResponse[0],
                                 leechBuildingsGeoJson = leechBuildingsGeoJsonResponse[0],
                                 ashmeadBuildingsGeoJson = ashmeadBuildingsGeoJsonResponse[0];
 
@@ -495,15 +489,13 @@ PublicSpace.maps = (function ($, L) {
                                 ownershipValues = [],
                                 ashmead1828Categories = [],
                                 allFeatures = [],
-                                allValFeatures = [].concat(valBuildingsGeoJson.features).concat(valBuildingCentresGeoJson.features),
-                                allPresentDayFeatures = [].concat(presentDayBuildingsGeoJson.features).concat(presentDayBuildingCentresGeoJson.features);
+                                allValFeatures = [].concat(valBuildingsGeoJson.features); //.concat(valBuildingCentresGeoJson.features),
+                                allPresentDayFeatures = [].concat(presentDayBuildingsGeoJson.features); //.concat(presentDayBuildingCentresGeoJson.features);
                             
                             // Extend the 1910 GeoJSON with building type from 1910 Doomsday data
                             $.each(allValFeatures, function (ind, feature) {
                                 var buildingUse = getDoomsday1910RecordValue(districtValuations, feature, "Type of Property"),
                                     ownership = getDoomsday1910RecordValue(districtValuations, feature, "Ownership");
-                                // console.log("buildingUse", buildingUse);
-                                // console.log(feature.properties);
                                 
                                 // Match up feature property names with other layers
                                 feature.properties["TypeOfProperty"] = buildingUse;
@@ -533,9 +525,9 @@ PublicSpace.maps = (function ($, L) {
 
                             // Get unique names of building use/ownership
                             allFeatures = [].concat(valBuildingsGeoJson.features)
-                                .concat(valBuildingCentresGeoJson.features)
+                                // .concat(valBuildingCentresGeoJson.features)
                                 .concat(presentDayBuildingsGeoJson.features)
-                                .concat(presentDayBuildingCentresGeoJson.features)
+                                // .concat(presentDayBuildingCentresGeoJson.features)
                                 .concat(leechBuildingsGeoJson.features);
                             $.each(allFeatures, function (ind, feature) {
                                 var buildingUse = feature.properties["BuildingUse"],
@@ -908,14 +900,6 @@ PublicSpace.maps = (function ($, L) {
                         };
                     legend.addTo(mymap);
                 });
-
-            // Load the data for Ashmead layer
-            // $.getJSON("./geojson/Ashmead_1828_Buildings.geojson")
-            //     .done(function (ashmeadBuildingsGeoJsonResponse) {
-            //         // var ashmeadBuildingsGeoJson = ashmeadBuildingsGeoJsonResponse[0];
-            //         // console.log();
-            //         ashmead1828BuildingsOwnershipLayer.addData(ashmeadBuildingsGeoJsonResponse);
-            //     });
 
             return mymap;
         };

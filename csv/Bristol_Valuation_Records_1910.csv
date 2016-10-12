@@ -100,12 +100,12 @@ Source: No. of Assessment,Source: No. of Poor Rate,Source: Christian Names and S
 47,95,"Cash, James & Co.; Rees, W. C.","Stone King & Co., 13 Queen St, Bath",Offices 2nd Floor,,Broad St Chambers,Bristol East Central,,Broad Street,Offices,Bristol Records Office,37271/6,Private
 48,96,"Anstey, Henry. C.","Peck & Co. executors of W. B. Peck, deceased, by Burgess & Sloan, Marsh St",Counting house,,Broad St Chambers,Bristol East Central,,Broad Street,Banking,Bristol Records Office,37271/6,Private
 48,97,"Peck, W. B. & Co.; Peck, Elizabeth; Blackmore, James. C.","Peck & Co. executors of W. B. Peck, deceased, by Burgess & Sloan, Marsh St",Public House,,Broad St Chambers,Bristol East Central,,Broad Street,Public house,Bristol Records Office,37271/6,Private
+54,111,"Grand Hotel Co. Ld; Jenkins, F. A. (Secretary)",Grand Hotel Co. Ld,The Grand Hotel,,Broad St,Bristol East Central,,Broad Street,Hotel,Bristol Records Office,37271/6,Private
 54,106,,Grand Hotel Co.,Cellar & Office,,NeWilliamarket Avenue,Bristol East Central,,Broad Street,Offices,Bristol Records Office,37271/6,Private
 54,107,"Ellis, William; Cowell, Rob. L.",Grand Hotel Co.,Office,,NeWilliamarket Avenue,Bristol East Central,,Broad Street,Offices,Bristol Records Office,37271/6,Private
 54,108,"Grand Hotel Co. Ld; Curtis, John (Licensee)",Grand Hotel Co.,Public House,54,Broad St,Bristol East Central,,Broad Street,Public house,Bristol Records Office,37271/6,Private
 54,109,"Grand Hotel Co. Ld; Jenkins, F. A. (Secretary); Raymond, Mrs",Grand Hotel Co.,Counting House,55,Broad St,Bristol East Central,,Broad Street,Banking,Bristol Records Office,37271/6,Private
 54,110,"Grand Hotel Co. Ld; Jenkins, F. A. (Secretary)",Grand Hotel Co.,Offices,56,Broad St,Bristol East Central,,Broad Street,Offices,Bristol Records Office,37271/6,Private
-54,111,"Grand Hotel Co. Ld; Jenkins, F. A. (Secretary)",Grand Hotel Co. Ld,The Grand Hotel,,Broad St,Bristol East Central,,Broad Street,Hotel,Bristol Records Office,37271/6,Private
 54,112,"Yosh??? Type Writer Co.; Redington, Arthur E.",Grand Hotel Co. Ld,Office,57,Broad St,Bristol East Central,,Broad Street,Offices,Bristol Records Office,37271/6,Private
 54,113,"Board, John P.",Grand Hotel Co. Ld,Office,58,Broad St,Bristol East Central,,Broad Street,Offices,Bristol Records Office,37271/6,Private
 55,114,"Benson, Richard Ld; Cooper B. L. (Director); Day, Henry. C. A.","Christ Church Trustees, by M. Eastbury, Lion Chambers, Broad St","House, Shop & Offices",59,Broad St,Bristol East Central,,Broad Street,"Domestic residence, shop and offices",Bristol Records Office,37271/6,Parish
@@ -121,20 +121,28 @@ Source: No. of Assessment,Source: No. of Poor Rate,Source: Christian Names and S
 1734,,,,Christ Church,,Broad St,Bristol East Central,,Broad Street,Church,Bristol Records Office,37271/6,Parish
 1735,,,,St Mary-le-port,,St Mary-le-port St,Bristol East Central,,Mary le Port Street,Church,Bristol Records Office,37271/6,Parish
 1677,,Osbourne Ward Vassal Co,"Merchant Tailors Charity, care of Curtis Ho, 44 Com St, Bristol",Offices,41,Broad St,Bristol East Central,,Broad Street,Church,Bristol Records Office,37271/6,Charity
-1,1,The governors of the Bank of England,Governors of the Bank of England,Shop,,Broad St,Bristol West Central,,Broad Street,Shop,Bristol Records Office,37271/8,Bank of England
-2,2,??,Governors of the Bank of England,Bank & Premises,,Broad St,Bristol West Central,,Broad Street,Banking,Bristol Records Office,37271/8,Bank of England
+1,1,,North Bristol & Mercantile ? Co Ltd,Shop,9,Broad St,Bristol West Central,,Broad Street,Shop,Bristol Records Office,37271/8,Private
+1,1,,North Bristol & Mercantile ? Co Ltd,Shop,11,Broad St,Bristol West Central,,Broad Street,Shop,Bristol Records Office,37271/8,Private
+2,2,The governors of the Bank of England / Strettell? Francis / Simott? James / Simott James Stanley / Birtill? ? ? B ?,Governors of the Bank of England,Bank & Premises,,Broad St,Bristol West Central,,Broad Street,Banking,Bristol Records Office,37271/8,Bank of England
 3,3,Bristol Corporation Education Commitee,Bristol Corporation,Offices,,The Guildhall,Bristol West Central,,Broad Street,Offices,Bristol Records Office,37271/8,Bristol Council
 4,4,Bristol Corporation Education Commitee,Bristol Corporation,Offices,,The Guildhall,Bristol West Central,,Broad Street,Offices,Bristol Records Office,37271/8,Bristol Council
-5,5,??,Bristol Corporation,Offices,,Broad St,Bristol West Central,,Broad Street,Offices,Bristol Records Office,37271/8,Bristol Council
-6,6,??,Bristol Corporation,Cellars,,Broad St,Bristol West Central,,Broad Street,,Bristol Records Office,37271/8,Bristol Council
-7,7,??,?? Tindall Charity,Cellars,,Broad St,Bristol West Central,,Broad Street,,Bristol Records Office,37271/8,Charity
-8,8,??,?? Tindall Charity,Shop,,Broad St,Bristol West Central,,Broad Street,Shop,Bristol Records Office,37271/8,Charity
-9,9,Wood A. D. G.,?? Tindall Charity,Counting House,,Broad St,Bristol West Central,,Broad Street,Banking,Bristol Records Office,37271/8,Charity
-10,10,Wood A. D. G.,?? Tindall Charity,Counting House,,Broad St,Bristol West Central,,Broad Street,Banking,Bristol Records Office,37271/8,Charity
-11,11,Cooke George J / Littleton Walter / Brazier ?? / Leaver Charles J / Bristol West of England & South Wales Friendly Assurance Society,Trustees Margaret Tyndall Charity per Clarke ?? 28 Broad St,,,,,,,,,,
-12,12,,,,,,,,,,,,
-13,13,,,,,,,,,,,,
-14,14,,,,,,,,,,,,
-15,15,,,,,,,,,,,,
-16,16,,,,,,,,,,,,
-17,17,,,,,,,,,,,,
+5,5,The Gresham Fire Assuce Co Ltd,Bristol Corporation,Offices,,Broad St,Bristol West Central,,Broad Street,Offices,Bristol Records Office,37271/8,Bristol Council
+6,6,Mackenzie Alex,Bristol Corporation,Cellars,,Broad St,Bristol West Central,,Broad Street,,Bristol Records Office,37271/8,Bristol Council
+7,7,Mackenzie Alex,Margaret Tindall Charity,Cellars,,Broad St,Bristol West Central,,Broad Street,,Bristol Records Office,37271/8,Charity
+8,8,Trull? & Co Dyer Geo. Hy.,Margaret Tindall Charity,Shop,,Broad St,Bristol West Central,,Broad Street,Shop,Bristol Records Office,37271/8,Charity
+9,9,Wood A. D. G.,Margaret Tindall Charity,Counting House,,Broad St,Bristol West Central,,Broad Street,Banking,Bristol Records Office,37271/8,Charity
+10,10,Wood A. D. G.,Margaret Tindall Charity,Counting House,,Broad St,Bristol West Central,,Broad Street,Banking,Bristol Records Office,37271/8,Charity
+11,11,Cooke George J / Littleton Walter / Brazier ?? / Leaver Charles J / Bristol West of England & South Wales Friendly Assurance Society,Trustees Margaret Tyndall Charity per Clarke ?? 28 Broad St,Offices,22,Broad St,Bristol West Central,,Broad Street,Offices,Bristol Records Office,37271/8,Charity
+11,11,Cooke George J / Littleton Walter / Brazier ?? / Leaver Charles J / Bristol West of England & South Wales Friendly Assurance Society,Trustees Margaret Tyndall Charity per Clarke ?? 28 Broad St,Offices,23,Broad St,Bristol West Central,,Broad Street,Offices,Bristol Records Office,37271/8,Charity
+12,12,Brazier ? / Leaver Charles J. / Bristol West of England & South Wales Friendly Assurance Society / Steybyrne? Sec.,Grove John 24 Broad St,House Shop & Premises,23,Broad St,Bristol West Central,,Broad Street,Domestic residence and shop,Bristol Records Office,37271/8,Private
+13,13,Grove John / Spofforth Fairfax,Grove John 24 Broad St,"House, Shop & offices",24,Broad St,Bristol West Central,,Broad Street,"Domestic residence, shop and offices",Bristol Records Office,37271/8,Private
+15,15,Stenner? Wm. J.,,Offices,24,Broad St,Bristol West Central,,Broad Street,Offices,Bristol Records Office,37271/8,Private
+18,18,,Smith Thos. 24 Duchess Rd Clifton lessee Corpn Owner,Shop,26,Broad St,Bristol West Central,,Broad Street,Shop,Bristol Records Office,37271/8,Bristol Council
+19,19,,Smith Thos. 24 Duchess Rd Clifton lessee Corpn Owner,2 Rooms 2nd Floor,26,Broad St,Bristol West Central,,Broad Street,,Bristol Records Office,37271/8,Bristol Council
+20,20,Stephens Herbert M,Smith Thos. 24 Duchess Rd Clifton lessee Corpn Owner,1 Room 3rd Floor,26,Broad St,Bristol West Central,,Broad Street,,Bristol Records Office,37271/8,Bristol Council
+21,21,Gifford Arthur ? / Gillford Robert G.,Smith Thos. 24 Duchess Rd Clifton lessee Corpn Owner,Offices 1st Floor,26,Broad St,Bristol West Central,,Broad Street,Offices,Bristol Records Office,37271/8,Bristol Council
+22,22,Walsh Co Ltd,Corporation,Warehouse,27,Broad St,Bristol West Central,,Broad Street,Warehouse,Bristol Records Office,37271/8,Bristol Council
+23,23,Clarke John Hy. / Clarke Wm Felton,Clarke J. H. Lessee Corporation owner,Office,28,Broad St,Bristol West Central,,Broad Street,Offices,Bristol Records Office,37271/8,Bristol Council
+24,24,,G W Edwards ?,Warehouse,29,Broad St,Bristol West Central,,Broad Street,Warehouse,Bristol Records Office,37271/8,Private
+25,25,Hirst Henry C. M. / Hill Geo. ? / Hill James B / Hill Hy. / Boutflower Chas / Harding Chas. C / Richardson Frank,"H. G. Edwards, 16 The Avenue, Clifton Trustees",Offices,30,Broad St,Bristol West Central,,Broad Street,Offices,Bristol Records Office,37271/8,Private
+26,26,"Bristol Trades Council, Gurle? John (sec)",Corporation,Ho. & shop,31,Broad St,Bristol West Central,,Broad Street,Domestic residence and shop,Bristol Records Office,37271/8,Bristol Council
