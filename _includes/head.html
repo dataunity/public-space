@@ -20,8 +20,10 @@
   <script src="https://d3js.org/d3.v4.min.js"></script>
 
   <!-- Leaflet -->
-  <link rel="stylesheet" href="https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.css" />
-  <script src="https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="{{ "/js/leaflet/leaflet.css" | prepend: site.baseurl }}">
+  <script src="{{ "/js/leaflet/leaflet.js" | prepend: site.baseurl }}"></script>
+  <!--<link rel="stylesheet" href="https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.css" />
+  <script src="https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.js"></script>-->
 
   <!-- Maps -->
   <link rel="stylesheet" href="{{ "/css/maps.css" | prepend: site.baseurl }}">
