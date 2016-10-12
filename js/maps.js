@@ -580,7 +580,7 @@ PublicSpace.maps = (function ($, L) {
                             //buildingCategories = Object.keys(distinctBuildingCategoriesLookup);
                             ownershipValues = Object.keys(distinctOwnershipLookup);
                             ashmead1828Categories = Object.keys(distinctAshmead1828CategoriesLookup);
-                            deferred.resolve(buildingTypes, ownershipValues, ashmead1828Categories);
+                            deferred.resolve(doomsday1910Records, leechRecords, buildingTypes, ownershipValues, ashmead1828Categories);
                         });
                 })
                 .fail(function () {
@@ -615,11 +615,11 @@ PublicSpace.maps = (function ($, L) {
             
             return mapOptions;
         },
-        drawAreaMap = function (elementId, areaId, tmpMapStyle) {
+        drawAreaMap = function (mapElementId, spreadsheetElementId, areaId, tmpMapStyle) {
             // Note: tmpMapStyle is temporary - just to experiment with styles
             var mapOptions = tmpParseMapOptions(tmpMapStyle);
 
-            var mymap = createMap(elementId, areaId),
+            var mymap = createMap(mapElementId, areaId),
                 tileLayer = createTileLayer();
 
             var valuationBuildingOutlines = null,
@@ -754,7 +754,9 @@ PublicSpace.maps = (function ($, L) {
             // Map layer groups
             var layerPrefixBuildingUse = "Building use: ",
                 layerPrefixBuildingOwnership = "Building ownership: ",
-                layerPrefixAshmead = "1828 public buildings";
+                layerPrefixAshmead = "1828 public buildings",
+                layerPostfix18thCentury = "18th Century",
+                layerPostfix1910 = "1910";
             L.control.layers(
                     {
                         "Present day": tileLayer,
@@ -827,7 +829,7 @@ PublicSpace.maps = (function ($, L) {
                 mapOptions.showBuildings === false ? null : presentDayBuildingLayers,
                 mapOptions.showBuildings === false ? null : leechBuildingLayers,
                 ashmead1828BuildingsOwnershipLayer)
-                .done (function (buildingTypes, ownershipValues, ashmead1828Categories) {
+                .done (function (doomsday1910Data, leechData, buildingTypes, ownershipValues, ashmead1828Categories) {
                     // Add map legend for property type colours
                     var legend = L.control({position: 'topright'});
                     legend.onAdd = function (map) {
@@ -884,10 +886,72 @@ PublicSpace.maps = (function ($, L) {
                                 }
                             }
 
-                            function onLayerChange(evnt) {
+                            // Note: taken from http://stackoverflow.com/questions/5180382/convert-json-data-to-a-html-table
+                            var _table_ = document.createElement('table'),
+                                _tr_ = document.createElement('tr'),
+                                _th_ = document.createElement('th'),
+                                _td_ = document.createElement('td');
+
+                            // Builds the HTML Table out of myList json data from Ivy restful service.
+                             function buildHtmlTable(arr) {
+                                 var table = _table_.cloneNode(false),
+                                     columns = addAllColumnHeaders(arr, table);
+                                 for (var i=0, maxi=arr.length; i < maxi; ++i) {
+                                     var tr = _tr_.cloneNode(false);
+                                     for (var j=0, maxj=columns.length; j < maxj ; ++j) {
+                                         var td = _td_.cloneNode(false);
+                                             cellValue = arr[i][columns[j]];
+                                         td.appendChild(document.createTextNode(arr[i][columns[j]] || ''));
+                                         tr.appendChild(td);
+                                     }
+                                     table.appendChild(tr);
+                                 }
+                                 return table;
+                             }
+
+
+                             // Adds a header row to the table and returns the set of columns.
+                             // Need to do union of keys from all records as some records may not contain
+                             // all records
+                             function addAllColumnHeaders(arr, table)
+                             {
+                                 var columnSet = [],
+                                     tr = _tr_.cloneNode(false);
+                                 for (var i=0, l=arr.length; i < l; i++) {
+                                     for (var key in arr[i]) {
+                                         if (arr[i].hasOwnProperty(key) && columnSet.indexOf(key)===-1) {
+                                             columnSet.push(key);
+                                             var th = _th_.cloneNode(false);
+                                             th.appendChild(document.createTextNode(key));
+                                             tr.appendChild(th);
+                                         }
+                                     }
+                                 }
+                                 table.appendChild(tr);
+                                 return columnSet;
+                             }
+
+                            // From http://stackoverflow.com/questions/280634/endswith-in-javascript
+                            function endsWith(str, suffix) {
+                                return str.indexOf(suffix, str.length - suffix.length) !== -1;
+                            }
+
+                            function onLayerChange (evnt) {
                                 // Change the legend based on the active layer name
                                 var layerName = evnt.name;
                                 setLegendText(div, layerName);
+
+                                console.log(spreadsheetElementId);
+
+                                // Set the spreadsheet below map
+                                $("#" + spreadsheetElementId).html("");
+                                if (endsWith(layerName, layerPostfix18thCentury)) {
+                                    $("#" + spreadsheetElementId).html(buildHtmlTable(leechData));
+                                } else if (endsWith(layerName, layerPostfix1910)) {
+                                    $("#" + spreadsheetElementId).html(buildHtmlTable(doomsday1910Data));
+                                }
+                                // console.log(leechData);
+                                // buildHtmlTable(leechData, "#" + spreadsheetElementId);
                             }
 
                             // Draw the initial legend
