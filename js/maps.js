@@ -256,6 +256,56 @@ PublicSpace.mapLegends = (function () {
     };
 }());
 
+PublicSpace.dataTable = (function () {
+    // Note: taken from http://stackoverflow.com/questions/5180382/convert-json-data-to-a-html-table
+    var _table_ = document.createElement('table'),
+        _tr_ = document.createElement('tr'),
+        _th_ = document.createElement('th'),
+        _td_ = document.createElement('td'),
+
+        // Builds the HTML Table out of myList json data from Ivy restful service.
+        buildHtmlTable = function (arr) {
+             var table = _table_.cloneNode(false),
+                 columns = addAllColumnHeaders(arr, table);
+             for (var i=0, maxi=arr.length; i < maxi; ++i) {
+                 var tr = _tr_.cloneNode(false);
+                 for (var j=0, maxj=columns.length; j < maxj ; ++j) {
+                     var td = _td_.cloneNode(false);
+                         cellValue = arr[i][columns[j]];
+                     td.appendChild(document.createTextNode(arr[i][columns[j]] || ''));
+                     tr.appendChild(td);
+                 }
+                 table.appendChild(tr);
+             }
+             return table;
+        },
+
+
+        // Adds a header row to the table and returns the set of columns.
+        // Need to do union of keys from all records as some records may not contain
+        // all records
+        addAllColumnHeaders = function (arr, table) {
+             var columnSet = [],
+                 tr = _tr_.cloneNode(false);
+             for (var i=0, l=arr.length; i < l; i++) {
+                 for (var key in arr[i]) {
+                     if (arr[i].hasOwnProperty(key) && columnSet.indexOf(key)===-1) {
+                         columnSet.push(key);
+                         var th = _th_.cloneNode(false);
+                         th.appendChild(document.createTextNode(key));
+                         tr.appendChild(th);
+                     }
+                 }
+             }
+             table.appendChild(tr);
+             return columnSet;
+        };
+    return {
+        buildHtmlTable: buildHtmlTable
+    };
+
+}());
+
 PublicSpace.maps = (function ($, L) {
 
     // Private properties
@@ -618,9 +668,6 @@ PublicSpace.maps = (function ($, L) {
                                 distinct18thCenturyBuildingUseLookup,
                                 distinct1910BuildingUseLookup,
                                 distinctPresentDayBuildingUseLookup);
-                                // buildingUse18thCentury,
-                                // buildingUse1910,
-                                // buildingUsePresentDay);
                         });
                 })
                 .fail(function () {
@@ -665,36 +712,31 @@ PublicSpace.maps = (function ($, L) {
             var valuationBuildingOutlines = null,
                 presentDayBuildingOutlines = null;
 
-            // var valuationBuildingPoints = null,
-            //     valuationBuildingOutlines = null,
-            //     presentDayBuildingPoints = null,
-            //     presentDayBuildingOutlines = null;
-
             // Set the fill style for buildings
             var getBuildingFillStyle;
             // Colour scale for building type
             var buildingTypesColourScale = d3.scaleOrdinal(d3.schemeCategory20);
             var buildingFillColourScale = buildingTypesColourScale;
 
-            switch (mapOptions.fillMethod) {
-                // case "buildingCategory":
-                //     getBuildingFillStyle = PublicSpace.buildings.buildingCategoryFillStyle;
-                //     break;
-                case "buildingType":
-                    getBuildingFillStyle = PublicSpace.buildings.colourScaleFillStyle;
-                    break;
-                case "ownership":
-                    getBuildingFillStyle = PublicSpace.buildings.colourScaleFillStyle;
-                    break;
-                case "publiclyaccessible":
-                default:
-                    getBuildingFillStyle = PublicSpace.buildings.publicAccessibilityFillStyle;
-                    break;
-            }
+            // switch (mapOptions.fillMethod) {
+            //     // case "buildingCategory":
+            //     //     getBuildingFillStyle = PublicSpace.buildings.buildingCategoryFillStyle;
+            //     //     break;
+            //     case "buildingType":
+            //         getBuildingFillStyle = PublicSpace.buildings.colourScaleFillStyle;
+            //         break;
+            //     case "ownership":
+            //         getBuildingFillStyle = PublicSpace.buildings.colourScaleFillStyle;
+            //         break;
+            //     case "publiclyaccessible":
+            //     default:
+            //         getBuildingFillStyle = PublicSpace.buildings.publicAccessibilityFillStyle;
+            //         break;
+            // }
 
-            if (typeof mapOptions.fillOpacity !== "undefined") {
-                getBuildingFillStyle.__fillOpacity = mapOptions["fillOpacity"];
-            }
+            // if (typeof mapOptions.fillOpacity !== "undefined") {
+            //     getBuildingFillStyle.__fillOpacity = mapOptions["fillOpacity"];
+            // }
 
             // Map layers (actual data is assigned later, after data files loaded)
             /*
@@ -856,15 +898,6 @@ PublicSpace.maps = (function ($, L) {
                 leechBuildingLayers = [leechBuildingsTypeLayer,
                     leechBuildingsOwnershipLayer];
 
-            // var presentDayBuildingLayers = [presentDayBuildingOutlines,
-            //         presentDayBuildingsTypeLayer,
-            //         presentDayBuildingsOwnershipLayer],
-            //     valuations1910BuildingLayers = [valuationBuildingOutlines, 
-            //         valuationBuildingsTypeLayer,
-            //         valuationBuildingsOwnershipLayer],
-            //     leechBuildingLayers = [leechBuildingsTypeLayer,
-            //         leechBuildingsOwnershipLayer];
-
             loadMapData(null, 
                 mapOptions.showBuildings === false ? null : valuations1910BuildingLayers,
                 null, 
@@ -882,6 +915,7 @@ PublicSpace.maps = (function ($, L) {
                     // Add map legend for property type colours
                     var legend = L.control({position: 'topright'});
                     legend.onAdd = function (map) {
+                            // Add legend text
                             var div = L.DomUtil.create('div', 'map-info map-legend');
 
                             // if (mapOptions["markers"] !== "none") {
@@ -962,54 +996,10 @@ PublicSpace.maps = (function ($, L) {
                                 }
                             }
 
-                            // Note: taken from http://stackoverflow.com/questions/5180382/convert-json-data-to-a-html-table
-                            var _table_ = document.createElement('table'),
-                                _tr_ = document.createElement('tr'),
-                                _th_ = document.createElement('th'),
-                                _td_ = document.createElement('td');
-
-                            // Builds the HTML Table out of myList json data from Ivy restful service.
-                             function buildHtmlTable(arr) {
-                                 var table = _table_.cloneNode(false),
-                                     columns = addAllColumnHeaders(arr, table);
-                                 for (var i=0, maxi=arr.length; i < maxi; ++i) {
-                                     var tr = _tr_.cloneNode(false);
-                                     for (var j=0, maxj=columns.length; j < maxj ; ++j) {
-                                         var td = _td_.cloneNode(false);
-                                             cellValue = arr[i][columns[j]];
-                                         td.appendChild(document.createTextNode(arr[i][columns[j]] || ''));
-                                         tr.appendChild(td);
-                                     }
-                                     table.appendChild(tr);
-                                 }
-                                 return table;
-                             }
-
-
-                             // Adds a header row to the table and returns the set of columns.
-                             // Need to do union of keys from all records as some records may not contain
-                             // all records
-                             function addAllColumnHeaders(arr, table)
-                             {
-                                 var columnSet = [],
-                                     tr = _tr_.cloneNode(false);
-                                 for (var i=0, l=arr.length; i < l; i++) {
-                                     for (var key in arr[i]) {
-                                         if (arr[i].hasOwnProperty(key) && columnSet.indexOf(key)===-1) {
-                                             columnSet.push(key);
-                                             var th = _th_.cloneNode(false);
-                                             th.appendChild(document.createTextNode(key));
-                                             tr.appendChild(th);
-                                         }
-                                     }
-                                 }
-                                 table.appendChild(tr);
-                                 return columnSet;
-                             }
-
                             function onLayerChange (evnt) {
                                 // Change the legend based on the active layer name
-                                var layerName = evnt.name;
+                                var layerName = evnt.name,
+                                    buildHtmlTable = PublicSpace.dataTable.buildHtmlTable;
                                 setLegendText(div, layerName);
 
                                 // Set the spreadsheet below map
