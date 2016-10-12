@@ -1,5 +1,5 @@
-<div id="map-{{ include.areaid }}{{ include.mapid }}" style="width: 100%; height: 500px"></div>
-<div id="spreadsheet-{{ include.areaid }}{{ include.mapid }}" class="map-spreadsheet" style="width: 100%;"></div>
+<div id="map-{{ include.areaid }}{{ include.mapid }}" class="map-container" style=""></div>
+<div id="spreadsheet-{{ include.areaid }}{{ include.mapid }}" class="map-spreadsheet"></div>
 <script>
 	$(document).ready(function () {
 		PublicSpace.maps.drawAreaMap("map-{{ include.areaid }}{{ include.mapid }}", 

@@ -231,6 +231,9 @@ PublicSpace.mapLegends = (function () {
             var txt = "",
                 tmpItem;
 
+            // Order items alphabetically
+            items = items.sort();
+
             txt += "<strong>" + title + ":</strong></br></br>";
             for (var i = 0; i < items.length; i++) {
                 tmpItem = items[i];
@@ -501,20 +504,6 @@ PublicSpace.maps = (function ($, L) {
                                 allFeatures = [],
                                 allValFeatures = [].concat(valBuildingsGeoJson.features); //.concat(valBuildingCentresGeoJson.features),
                                 allPresentDayFeatures = [].concat(presentDayBuildingsGeoJson.features); //.concat(presentDayBuildingCentresGeoJson.features);
-                            
-                            // Extend the 1910 GeoJSON with building type from 1910 Doomsday data
-                            $.each(allValFeatures, function (ind, feature) {
-                                var buildingUse = getDoomsday1910RecordValue(districtValuations, feature, "Type of Property"),
-                                    ownership = getDoomsday1910RecordValue(districtValuations, feature, "Ownership");
-                                
-                                // Match up feature property names with other layers
-                                feature.properties["TypeOfProperty"] = buildingUse;
-                                feature.properties["BuildingUse"] = buildingUse;
-                                feature.properties["Ownership"] = ownership;
-
-                                // Record Building Use for 1910
-                                distinct1910BuildingUseLookup[buildingUse] = true;
-                            });
 
                             // Extend the 18th Century building GeoJSON with Leech spreadsheet
                             $.each(leechBuildingsGeoJson.features, function (ind, feature) {
@@ -527,6 +516,22 @@ PublicSpace.maps = (function ($, L) {
 
                                 // Record Building Use for 18th Century
                                 distinct18thCenturyBuildingUseLookup[buildingUse] = true;
+                            });
+                            
+                            // Extend the 1910 GeoJSON with building type from 1910 Doomsday data
+                            $.each(allValFeatures, function (ind, feature) {
+                                var buildingUse = getDoomsday1910RecordValue(districtValuations, feature, "Type of Property"),
+                                    ownership = getDoomsday1910RecordValue(districtValuations, feature, "Ownership"),
+                                    houseNum = getDoomsday1910RecordValue(districtValuations, feature, "Source: No. of House");
+                                
+                                // Match up feature property names with other layers
+                                // feature.properties["TypeOfProperty"] = buildingUse;
+                                feature.properties["BuildingUse"] = buildingUse;
+                                feature.properties["Ownership"] = ownership;
+                                feature.properties["HouseNum"] = houseNum;
+
+                                // Record Building Use for 1910
+                                distinct1910BuildingUseLookup[buildingUse] = true;
                             });
 
                             $.each(allPresentDayFeatures, function (ind, feature) {
@@ -712,33 +717,33 @@ PublicSpace.maps = (function ($, L) {
             */
             
             // Create the buildings map layer
-            switch (mapOptions.fillMethod) {
-                // case "buildingCategory":
-                //     valuationBuildingOutlines = createBuildingOutlinesLayer("PropertyCategory", getBuildingFillStyle,
-                //         valuationBuildingsPopupTemplate);
-                //     presentDayBuildingOutlines = createBuildingOutlinesLayer("Category", getBuildingFillStyle, 
-                //         presentDayBuildingsPopupTemplate);
-                //     break;
-                case "buildingType":
-                    valuationBuildingOutlines = createBuildingOutlinesLayer("TypeOfProperty", getBuildingFillStyle,
-                        valuationBuildingsPopupTemplate, buildingFillColourScale);
-                    presentDayBuildingOutlines = createBuildingOutlinesLayer("Category", getBuildingFillStyle, 
-                        presentDayBuildingsPopupTemplate, buildingFillColourScale);
-                    break;
-                case "ownership":
-                    valuationBuildingOutlines = createBuildingOutlinesLayer("Ownership", getBuildingFillStyle,
-                        valuationBuildingsPopupTemplate, buildingFillColourScale);
-                    presentDayBuildingOutlines = createBuildingOutlinesLayer("Ownership", getBuildingFillStyle, 
-                        presentDayBuildingsPopupTemplate, buildingFillColourScale);
-                    break;
-                case "publiclyaccessible":
-                default:
-                    valuationBuildingOutlines = createBuildingOutlinesLayer("PropertyCategory", getBuildingFillStyle,
-                        valuationBuildingsPopupTemplate);
-                    presentDayBuildingOutlines = createBuildingOutlinesLayer("Category", getBuildingFillStyle,
-                        presentDayBuildingsPopupTemplate);
-                    break;
-            }
+            // switch (mapOptions.fillMethod) {
+            //     // case "buildingCategory":
+            //     //     valuationBuildingOutlines = createBuildingOutlinesLayer("PropertyCategory", getBuildingFillStyle,
+            //     //         valuationBuildingsPopupTemplate);
+            //     //     presentDayBuildingOutlines = createBuildingOutlinesLayer("Category", getBuildingFillStyle, 
+            //     //         presentDayBuildingsPopupTemplate);
+            //     //     break;
+            //     case "buildingType":
+            //         valuationBuildingOutlines = createBuildingOutlinesLayer("TypeOfProperty", getBuildingFillStyle,
+            //             valuationBuildingsPopupTemplate, buildingFillColourScale);
+            //         presentDayBuildingOutlines = createBuildingOutlinesLayer("Category", getBuildingFillStyle, 
+            //             presentDayBuildingsPopupTemplate, buildingFillColourScale);
+            //         break;
+            //     case "ownership":
+            //         valuationBuildingOutlines = createBuildingOutlinesLayer("Ownership", getBuildingFillStyle,
+            //             valuationBuildingsPopupTemplate, buildingFillColourScale);
+            //         presentDayBuildingOutlines = createBuildingOutlinesLayer("Ownership", getBuildingFillStyle, 
+            //             presentDayBuildingsPopupTemplate, buildingFillColourScale);
+            //         break;
+            //     case "publiclyaccessible":
+            //     default:
+            //         valuationBuildingOutlines = createBuildingOutlinesLayer("PropertyCategory", getBuildingFillStyle,
+            //             valuationBuildingsPopupTemplate);
+            //         presentDayBuildingOutlines = createBuildingOutlinesLayer("Category", getBuildingFillStyle,
+            //             presentDayBuildingsPopupTemplate);
+            //         break;
+            // }
             // valuationBuildingOutlines = createValuationBuildingOutlinesLayer(getBuildingFillStyle);
             // presentDayBuildingOutlines = createPresentDayBuildingOutlinesLayer(getBuildingFillStyle);
 
@@ -844,21 +849,22 @@ PublicSpace.maps = (function ($, L) {
             tileLayer.addTo(mymap);
             valuationBuildingsTypeLayer.addTo(mymap);
 
-            var presentDayBuildingLayers = [presentDayBuildingOutlines,
-                    presentDayBuildingsTypeLayer,
+            var presentDayBuildingLayers = [presentDayBuildingsTypeLayer,
                     presentDayBuildingsOwnershipLayer],
-                valuations1910BuildingLayers = [valuationBuildingOutlines, 
-                    valuationBuildingsTypeLayer,
+                valuations1910BuildingLayers = [valuationBuildingsTypeLayer,
                     valuationBuildingsOwnershipLayer],
                 leechBuildingLayers = [leechBuildingsTypeLayer,
                     leechBuildingsOwnershipLayer];
 
-            // Load spreadsheet and geojson data and apply it to map layers
-            // loadMapData(mapOptions["markers"] === "none" ? null : valuationBuildingPoints, 
-            //     mapOptions.showBuildings === false ? null : valuations1910BuildingLayers,
-            //     mapOptions["markers"] === "none" ? null : presentDayBuildingPoints, 
-            //     mapOptions.showBuildings === false ? null : presentDayBuildingLayers,
-            //     mapOptions.showBuildings === false ? null : leechBuildingLayers)
+            // var presentDayBuildingLayers = [presentDayBuildingOutlines,
+            //         presentDayBuildingsTypeLayer,
+            //         presentDayBuildingsOwnershipLayer],
+            //     valuations1910BuildingLayers = [valuationBuildingOutlines, 
+            //         valuationBuildingsTypeLayer,
+            //         valuationBuildingsOwnershipLayer],
+            //     leechBuildingLayers = [leechBuildingsTypeLayer,
+            //         leechBuildingsOwnershipLayer];
+
             loadMapData(null, 
                 mapOptions.showBuildings === false ? null : valuations1910BuildingLayers,
                 null, 
