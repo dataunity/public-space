@@ -226,13 +226,17 @@ PublicSpace.mapLegends = (function () {
         //     }
         //     return txt;
         // },
-        colourScaleLegendText = function (title, items, colourScale) {
+        colourScaleLegendText = function (title, items, colourScale, includeFilters) {
+            // Param includeFilters: only include these items on legend text
             var txt = "",
                 tmpItem;
 
             txt += "<strong>" + title + ":</strong></br></br>";
             for (var i = 0; i < items.length; i++) {
                 tmpItem = items[i];
+                if (includeFilters && !(includeFilters[tmpItem])) {
+                    continue;
+                }
                 txt +=
                     '<i style="background:' + colourScale(tmpItem) + '"></i> ' +
                     items[i] + (typeof items[i + 1] !== "undefined" ? '<br>' : '');
@@ -483,11 +487,17 @@ PublicSpace.maps = (function ($, L) {
                             var distinctBuildingTypesLookup = {},
                                 //distinctBuildingCategoriesLookup = {},
                                 distinctOwnershipLookup = {},
+                                distinct18thCenturyBuildingUseLookup = {},
+                                distinct1910BuildingUseLookup = {},
+                                distinctPresentDayBuildingUseLookup = {},
                                 distinctAshmead1828CategoriesLookup = {},
                                 buildingTypes = [],
                                 //buildingCategories = [],
                                 ownershipValues = [],
                                 ashmead1828Categories = [],
+                                buildingUse1910 = [],
+                                buildingUsePresentDay = [],
+                                buildingUse18thCentury = [],
                                 allFeatures = [],
                                 allValFeatures = [].concat(valBuildingsGeoJson.features); //.concat(valBuildingCentresGeoJson.features),
                                 allPresentDayFeatures = [].concat(presentDayBuildingsGeoJson.features); //.concat(presentDayBuildingCentresGeoJson.features);
@@ -501,6 +511,9 @@ PublicSpace.maps = (function ($, L) {
                                 feature.properties["TypeOfProperty"] = buildingUse;
                                 feature.properties["BuildingUse"] = buildingUse;
                                 feature.properties["Ownership"] = ownership;
+
+                                // Record Building Use for 1910
+                                distinct1910BuildingUseLookup[buildingUse] = true;
                             });
 
                             // Extend the 18th Century building GeoJSON with Leech spreadsheet
@@ -511,6 +524,9 @@ PublicSpace.maps = (function ($, L) {
                                 // Match up feature property names with other layers
                                 feature.properties["BuildingUse"] = buildingUse;
                                 feature.properties["Ownership"] = ownership;
+
+                                // Record Building Use for 18th Century
+                                distinct18thCenturyBuildingUseLookup[buildingUse] = true;
                             });
 
                             $.each(allPresentDayFeatures, function (ind, feature) {
@@ -521,6 +537,9 @@ PublicSpace.maps = (function ($, L) {
                                 ownership = renameUnknownValue(ownership);
                                 feature.properties["BuildingUse"] = buildingUse;
                                 feature.properties["Ownership"] = ownership;
+
+                                // Record Building Use for present day
+                                distinctPresentDayBuildingUseLookup[buildingUse] = true;
                             });
 
                             // Get unique names of building use/ownership
@@ -580,7 +599,23 @@ PublicSpace.maps = (function ($, L) {
                             //buildingCategories = Object.keys(distinctBuildingCategoriesLookup);
                             ownershipValues = Object.keys(distinctOwnershipLookup);
                             ashmead1828Categories = Object.keys(distinctAshmead1828CategoriesLookup);
-                            deferred.resolve(doomsday1910Records, leechRecords, buildingTypes, ownershipValues, ashmead1828Categories);
+
+                            // Get building use seen in each time period
+                            buildingUse18thCentury = Object.keys(distinct18thCenturyBuildingUseLookup);
+                            buildingUse1910 = Object.keys(distinct1910BuildingUseLookup);
+                            buildingUsePresentDay = Object.keys(distinctPresentDayBuildingUseLookup);
+
+                            deferred.resolve(doomsday1910Records, 
+                                leechRecords, 
+                                buildingTypes, 
+                                ownershipValues, 
+                                ashmead1828Categories,
+                                distinct18thCenturyBuildingUseLookup,
+                                distinct1910BuildingUseLookup,
+                                distinctPresentDayBuildingUseLookup);
+                                // buildingUse18thCentury,
+                                // buildingUse1910,
+                                // buildingUsePresentDay);
                         });
                 })
                 .fail(function () {
@@ -756,7 +791,8 @@ PublicSpace.maps = (function ($, L) {
                 layerPrefixBuildingOwnership = "Building ownership: ",
                 layerPrefixAshmead = "1828 public buildings",
                 layerPostfix18thCentury = "18th Century",
-                layerPostfix1910 = "1910";
+                layerPostfix1910 = "1910",
+                layerPostfixPresentDay = "2016";
             L.control.layers(
                     {
                         "Present day": tileLayer,
@@ -829,7 +865,14 @@ PublicSpace.maps = (function ($, L) {
                 mapOptions.showBuildings === false ? null : presentDayBuildingLayers,
                 mapOptions.showBuildings === false ? null : leechBuildingLayers,
                 ashmead1828BuildingsOwnershipLayer)
-                .done (function (doomsday1910Data, leechData, buildingTypes, ownershipValues, ashmead1828Categories) {
+                .done (function (doomsday1910Data, 
+                    leechData, 
+                    buildingTypes, 
+                    ownershipValues, 
+                    ashmead1828Categories,
+                    buildingUse18thCentury,
+                    buildingUse1910,
+                    buildingUsePresentDay) {
                     // Add map legend for property type colours
                     var legend = L.control({position: 'topright'});
                     legend.onAdd = function (map) {
@@ -867,11 +910,38 @@ PublicSpace.maps = (function ($, L) {
                             //     ownershipValues,
                             //     buildingOwnershipColourScale);
 
+                            // From http://stackoverflow.com/questions/280634/endswith-in-javascript
+                            function endsWith (str, suffix) {
+                                return str.indexOf(suffix, str.length - suffix.length) !== -1;
+                            }
+
+                            function is18thCenturyLayer (layerName) {
+                                return endsWith(layerName, layerPostfix18thCentury);
+                            }
+
+                            function is1910Layer (layerName) {
+                                return endsWith(layerName, layerPostfix1910);
+                            }
+
+                            function isPresentDayLayer (layerName) {
+                                return endsWith(layerName, layerPostfixPresentDay);
+                            }
+
                             function setLegendText(legendDiv, layerName) {
+                                var buildingUseFilter = [];
+                                if (is18thCenturyLayer(layerName)) {
+                                    buildingUseFilter = buildingUse18thCentury;
+                                } else if (is1910Layer(layerName)) {
+                                    buildingUseFilter = buildingUse1910;
+                                } else if (isPresentDayLayer(layerName)) {
+                                    buildingUseFilter = buildingUsePresentDay;
+                                }
+                                
                                 if (layerName.substring(0, layerPrefixBuildingUse.length) === layerPrefixBuildingUse) {
                                     legendDiv.innerHTML = PublicSpace.mapLegends.colourScaleLegendText("Building use",
                                         buildingTypes,
-                                        buildingTypesColourScale);
+                                        buildingTypesColourScale,
+                                        buildingUseFilter);
                                 } else if (layerName.substring(0, layerPrefixBuildingOwnership.length) === layerPrefixBuildingOwnership) {
                                     legendDiv.innerHTML = PublicSpace.mapLegends.colourScaleLegendText("Building ownership",
                                         ownershipValues,
@@ -931,27 +1001,22 @@ PublicSpace.maps = (function ($, L) {
                                  return columnSet;
                              }
 
-                            // From http://stackoverflow.com/questions/280634/endswith-in-javascript
-                            function endsWith(str, suffix) {
-                                return str.indexOf(suffix, str.length - suffix.length) !== -1;
-                            }
-
                             function onLayerChange (evnt) {
                                 // Change the legend based on the active layer name
                                 var layerName = evnt.name;
                                 setLegendText(div, layerName);
 
-                                console.log(spreadsheetElementId);
-
                                 // Set the spreadsheet below map
                                 $("#" + spreadsheetElementId).html("");
-                                if (endsWith(layerName, layerPostfix18thCentury)) {
-                                    $("#" + spreadsheetElementId).html(buildHtmlTable(leechData));
-                                } else if (endsWith(layerName, layerPostfix1910)) {
-                                    $("#" + spreadsheetElementId).html(buildHtmlTable(doomsday1910Data));
+                                if (is18thCenturyLayer(layerName)) {
+                                    $("#" + spreadsheetElementId)
+                                        .append("<h2>18th Century source data:</h2>")
+                                        .append(buildHtmlTable(leechData));
+                                } else if (is1910Layer(layerName)) {
+                                    $("#" + spreadsheetElementId)
+                                        .append("<h2>1910 Doomsday source data:</h2>")
+                                        .append(buildHtmlTable(doomsday1910Data));
                                 }
-                                // console.log(leechData);
-                                // buildHtmlTable(leechData, "#" + spreadsheetElementId);
                             }
 
                             // Draw the initial legend
