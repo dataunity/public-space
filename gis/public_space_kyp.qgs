@@ -6,7 +6,7 @@
     <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="Ordnance_Survey_1880_Epoch1_Buildings20161007150022966" name="Ordnance_Survey_1880_Epoch1_Buildings">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" checked="Qt::Checked" id="Leech_Topography20161004112850058" name="Leech_Topography">
+    <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="Leech_Topography20161004112850058" name="Leech_Topography">
       <customproperties/>
     </layer-tree-layer>
     <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="Valuations_1910_Building_Outline20160907140303168" name="Valuations_1910_Building_Outline">
@@ -24,7 +24,7 @@
     <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="OrderBoundaryNew20160907140723641" name="OrderBoundaryNew">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="Ashmead_1828_public_buildings_20160930150424720" name="Ashmead_1828_public_buildings ">
+    <layer-tree-layer expanded="1" checked="Qt::Checked" id="Ashmead_1828_public_buildings_20160930150424720" name="Ashmead_1828_public_buildings ">
       <customproperties/>
     </layer-tree-layer>
     <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="base_1828_Ashmead_96dpi20160930150140660" name="base_1828_Ashmead_96dpi">
@@ -92,9 +92,9 @@
         <legendlayerfile isInOverview="0" layerid="Ordnance_Survey_1880_Epoch1_Buildings20161007150022966" visible="0"/>
       </filegroup>
     </legendlayer>
-    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="Leech_Topography" showFeatureCount="0">
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="Leech_Topography" showFeatureCount="0">
       <filegroup open="true" hidden="false">
-        <legendlayerfile isInOverview="0" layerid="Leech_Topography20161004112850058" visible="1"/>
+        <legendlayerfile isInOverview="0" layerid="Leech_Topography20161004112850058" visible="0"/>
       </filegroup>
     </legendlayer>
     <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="Valuations_1910_Building_Outline" showFeatureCount="0">
@@ -122,9 +122,9 @@
         <legendlayerfile isInOverview="0" layerid="OrderBoundaryNew20160907140723641" visible="0"/>
       </filegroup>
     </legendlayer>
-    <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="Ashmead_1828_public_buildings " showFeatureCount="0">
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="Ashmead_1828_public_buildings " showFeatureCount="0">
       <filegroup open="true" hidden="false">
-        <legendlayerfile isInOverview="0" layerid="Ashmead_1828_public_buildings_20160930150424720" visible="0"/>
+        <legendlayerfile isInOverview="0" layerid="Ashmead_1828_public_buildings_20160930150424720" visible="1"/>
       </filegroup>
     </legendlayer>
     <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="base_1828_Ashmead_96dpi" showFeatureCount="0">
