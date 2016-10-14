@@ -32,3 +32,5 @@ We adapted the maps from our 1910 layer, then made them match the maps in Leech'
 # Reusing our work
 
 You can download our work from the [GitHub repository for the project](https://github.com/dataunity/public-space). The [GIS](https://en.wikipedia.org/wiki/Geographic_information_system) (Geographic Information System) [Shapefiles](https://en.wikipedia.org/wiki/Shapefile) can be found in [this directory](https://github.com/dataunity/public-space/tree/gh-pages/gis/shapefiles).
+
+There is also a QGIS file will all the layers in [here](https://github.com/dataunity/public-space/tree/gh-pages/gis).

@@ -12,19 +12,19 @@
     <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="Valuations_1910_Building_Outline20160907140303168" name="Valuations_1910_Building_Outline">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="Buildings_Present_Day20160906171823878" name="Buildings_Present_Day">
+    <layer-tree-layer expanded="1" checked="Qt::Checked" id="Buildings_Present_Day20160906171823878" name="Buildings_Present_Day">
       <customproperties/>
     </layer-tree-layer>
     <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="TNA__IR_128_3_226_2__IMG_5575__modified20160907113446127" name="TNA, IR 128_3_226-2 (IMG_5575)_modified">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" checked="Qt::Checked" id="TNA__IR_128_3_231_part_1_1__IMG_5576__modified20160906180511301" name="TNA, IR 128_3_231_part 1-1 (IMG_5576)_modified">
+    <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="TNA__IR_128_3_231_part_1_1__IMG_5576__modified20160906180511301" name="TNA, IR 128_3_231_part 1-1 (IMG_5576)_modified">
       <customproperties/>
     </layer-tree-layer>
     <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="OrderBoundaryNew20160907140723641" name="OrderBoundaryNew">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" checked="Qt::Checked" id="Ashmead_1828_public_buildings_20160930150424720" name="Ashmead_1828_public_buildings ">
+    <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="Ashmead_1828_public_buildings_20160930150424720" name="Ashmead_1828_public_buildings ">
       <customproperties/>
     </layer-tree-layer>
     <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="base_1828_Ashmead_96dpi20160930150140660" name="base_1828_Ashmead_96dpi">
@@ -38,10 +38,10 @@
   <mapcanvas>
     <units>meters</units>
     <extent>
-      <xmin>358852.62803421943681315</xmin>
-      <ymin>173029.58106076886178926</ymin>
-      <xmax>358914.7128730111871846</xmax>
-      <ymax>173095.7349373230827041</ymax>
+      <xmin>358829.52758523233933374</xmin>
+      <ymin>172950.76164772242191248</ymin>
+      <xmax>359077.86694039934081957</xmax>
+      <ymax>173215.37715393930557184</ymax>
     </extent>
     <rotation>0</rotation>
     <projections>1</projections>
@@ -102,9 +102,9 @@
         <legendlayerfile isInOverview="0" layerid="Valuations_1910_Building_Outline20160907140303168" visible="0"/>
       </filegroup>
     </legendlayer>
-    <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="Buildings_Present_Day" showFeatureCount="0">
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="Buildings_Present_Day" showFeatureCount="0">
       <filegroup open="true" hidden="false">
-        <legendlayerfile isInOverview="0" layerid="Buildings_Present_Day20160906171823878" visible="0"/>
+        <legendlayerfile isInOverview="0" layerid="Buildings_Present_Day20160906171823878" visible="1"/>
       </filegroup>
     </legendlayer>
     <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="TNA, IR 128_3_226-2 (IMG_5575)_modified" showFeatureCount="0">
@@ -112,9 +112,9 @@
         <legendlayerfile isInOverview="0" layerid="TNA__IR_128_3_226_2__IMG_5575__modified20160907113446127" visible="0"/>
       </filegroup>
     </legendlayer>
-    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="TNA, IR 128_3_231_part 1-1 (IMG_5576)_modified" showFeatureCount="0">
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="TNA, IR 128_3_231_part 1-1 (IMG_5576)_modified" showFeatureCount="0">
       <filegroup open="true" hidden="false">
-        <legendlayerfile isInOverview="0" layerid="TNA__IR_128_3_231_part_1_1__IMG_5576__modified20160906180511301" visible="1"/>
+        <legendlayerfile isInOverview="0" layerid="TNA__IR_128_3_231_part_1_1__IMG_5576__modified20160906180511301" visible="0"/>
       </filegroup>
     </legendlayer>
     <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="OrderBoundaryNew" showFeatureCount="0">
@@ -122,9 +122,9 @@
         <legendlayerfile isInOverview="0" layerid="OrderBoundaryNew20160907140723641" visible="0"/>
       </filegroup>
     </legendlayer>
-    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="Ashmead_1828_public_buildings " showFeatureCount="0">
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="Ashmead_1828_public_buildings " showFeatureCount="0">
       <filegroup open="true" hidden="false">
-        <legendlayerfile isInOverview="0" layerid="Ashmead_1828_public_buildings_20160930150424720" visible="1"/>
+        <legendlayerfile isInOverview="0" layerid="Ashmead_1828_public_buildings_20160930150424720" visible="0"/>
       </filegroup>
     </legendlayer>
     <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="base_1828_Ashmead_96dpi" showFeatureCount="0">
