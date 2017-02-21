@@ -321,7 +321,6 @@ PublicSpace.maps = (function ($, L) {
 
     // Private methods
         createTileLayer = function () {
-            // TODO: Get fresh access token (this one's from Leaflet demo)
             return L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoia2V2ayIsImEiOiJjaXpmbWZ0emgwMDE1MnFrN2tzem56OTJkIn0.CWbqjdRd_XqaZy1xhQSNFA', {
                 maxZoom: 18,
                 attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
